@@ -1,6 +1,7 @@
 package com.example.backend.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -29,10 +30,18 @@ public class User {
     /*@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private Set<Product> products = new HashSet<>();*/
 
-    
-    /*@JsonManagedReference
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "users_roles",
+            joinColumns = @JoinColumn(
+                    name = "user_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(
+                    name = "role_id", referencedColumnName = "id"))
+    private Collection<Role> roles;
+
+    @JsonManagedReference
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<Orders> orders = new ArrayList<>();*/
+    private List<Orders> orders = new ArrayList<>();
 
     @Override
     public String toString() {
@@ -42,6 +51,7 @@ public class User {
                 ", lastName='" + lastname + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + "*********" + '\'' +
+                ", roles=" + roles +
                 '}';
     }
 
@@ -85,7 +95,15 @@ public class User {
         this.passwd = passwd;
     }
 
-    /*public List<Orders> getOrders() {
+    public Collection<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Collection<Role> roles) {
+        this.roles = roles;
+    }
+
+    public List<Orders> getOrders() {
         return orders;
     }
 
@@ -95,7 +113,7 @@ public class User {
 
     public void setOneOrder(Orders order) {
         this.orders.add(order);
-    }*/
+    }
 
     public Date getLastPasswordResetDate() {
         return lastPasswordResetDate;

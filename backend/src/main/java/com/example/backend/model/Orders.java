@@ -18,14 +18,8 @@ public class Orders {
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonBackReference
     private User user;
+    
     @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "order_products",
-            joinColumns = @JoinColumn(
-                    name = "order_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(
-                    name = "product_id", referencedColumnName = "id"))
-
     private List<Product> products = new ArrayList<>();
 
     public Orders() {

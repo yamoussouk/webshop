@@ -50,7 +50,7 @@ public class ImageServiceImpl implements ImageService {
     @Transactional
     public void saveImageFile(Long productId, MultipartFile file) {
         if (file.isEmpty()) {
-            log.error("File is empty");
+            //log.error("File is empty");
         }
         try {
             Product product = productRepository.findById(productId).get();
@@ -65,7 +65,7 @@ public class ImageServiceImpl implements ImageService {
             Files.write(path, bytes);
             imageRepository.save(uploadedImage);
         } catch (IOException e) {
-            log.error("Error occurred", e);
+            //log.error("Error occurred", e);
             e.printStackTrace();
         }
     }
@@ -74,7 +74,7 @@ public class ImageServiceImpl implements ImageService {
     @Override
     public void saveOneImage(MultipartFile file) {
         if (file.isEmpty()) {
-            log.error("File is empty");
+            //log.error("File is empty");
         }
         try {
             byte[] bytes = file.getBytes();
@@ -84,7 +84,7 @@ public class ImageServiceImpl implements ImageService {
             Files.write(path, bytes);
             imageRepository.save(uploadedImage);
         } catch (IOException e) {
-            log.error("Error occurred", e);
+            //log.error("Error occurred", e);
             e.printStackTrace();
         }
     }

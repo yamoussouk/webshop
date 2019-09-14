@@ -71,7 +71,6 @@ public class UserServiceImpl implements UserService {
         User detachedUser = userCommandToUser.convert(command);
 
         User savedUser = userRepository.save(detachedUser);
-        log.debug("Saved UserId:" + savedUser.getId());
         return userToUserCommand.convert(savedUser);
     }
 

@@ -35,7 +35,14 @@ public class Product {
         this.images.add(image);
     }
 
+    
     @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "order_products",
+            joinColumns = @JoinColumn(
+                    name = "product_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(
+                    name = "order_id", referencedColumnName = "id"))
     private Set<Orders> orders = new HashSet<>();
 
     public Product() {
