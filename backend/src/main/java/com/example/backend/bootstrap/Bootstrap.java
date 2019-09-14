@@ -66,9 +66,9 @@ public class Bootstrap implements CommandLineRunner {
         //TODO
         List<User> allUsers = new ArrayList<>();
         User user = new User();
-        user.setFirstname("Tamás");
-        user.setLastname("Kakuszi");
-        user.setEmail("tamas.kakuszi@gmail.com");
+        user.setFirstname("joseph");
+        user.setLastname("tester");
+        user.setEmail("tester@gmail.com");
         user.setPasswd("12345");
         User productOwner = userRepository.save(user);
 
