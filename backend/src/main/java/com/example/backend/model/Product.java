@@ -18,7 +18,8 @@ public class Product {
     private double price;
     private int quantity;
 
-    private String category;
+    @ElementCollection(targetClass=String.class)
+    private Set<String> category = new HashSet<>();
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
@@ -96,12 +97,12 @@ public class Product {
         this.quantity = quantity;
     }
 
-    public String getCategory() {
+    public Set<String> getCategory() {
         return category;
     }
 
     public void setCategory(String category) {
-        this.category = category;
+        this.category.add(category);
     }
 
     public Set<Image> getImages() {
