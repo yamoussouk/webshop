@@ -1,10 +1,42 @@
 <template>
   <div>
+    <app-top />
+    <app-nav />
     <nuxt />
+    <app-footer />
   </div>
 </template>
 
+<script>
+import AppTop from '~/components/AppTop.vue'
+import AppNav from '~/components/AppNav.vue'
+import AppFooter from '~/components/AppFooter.vue'
+
+export default {
+  components: {
+    AppTop,
+    AppNav,
+    AppFooter
+  }
+}
+</script>
+
 <style>
+@font-face {
+  font-family: Meownella;
+  src: url(/fonts/MeownellaRegular.ttf);
+  src: url(/fonts/MeownellaRegular.woff);
+}
+@font-face {
+  font-family: Audrey;
+  src: url(/fonts/Audrey-Normal.ttf);
+  src: url(/fonts/Audrey-Normal.woff);
+}
+@font-face {
+  font-family: Rock;
+  src: url(/fonts/rock.ttf);
+  src: url(/fonts/rock.woff);
+}
 html {
   font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI',
     Roboto, 'Helvetica Neue', Arial, sans-serif;
@@ -15,6 +47,7 @@ html {
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   box-sizing: border-box;
+  background-color: rgba(163,153,178,0.14);
 }
 
 *,
@@ -51,5 +84,8 @@ html {
 .button--grey:hover {
   color: #fff;
   background-color: #35495e;
+}
+#__layout {
+  background-color: rgba(163,153,178,0.14);
 }
 </style>
