@@ -4,8 +4,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.example.backend.model.Categories;
 import com.example.backend.model.Image;
 import com.example.backend.model.Product;
+import com.example.backend.model.SignUpEmail;
+import com.example.backend.repository.SignUpRepository;
 import com.example.backend.service.ImageService;
 import com.example.backend.service.ProductService;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -19,10 +24,12 @@ public class AdminController {
 
     private final ImageService imageService;
     private final ProductService productService;
+    private final SignUpRepository signUpRepository;
 
-    public AdminController(ImageService imageService, ProductService productService) {
+    public AdminController(ImageService imageService, ProductService productService, SignUpRepository signUpRepository) {
         this.imageService = imageService;
         this.productService = productService;
+        this.signUpRepository = signUpRepository;
     }
 
     @PreAuthorize("hasRole('ADMIN')")
@@ -127,5 +134,17 @@ public class AdminController {
     public Product insertProductFragment(@PathVariable(name = "id") String id) {
         return productService.findById(new Long(id));
     }
+    
+    @PostMapping("/subscribe")
+    public ResponseEntity<?> signUpEmail(@RequestParam("email") String email) {
+		Optional<SignUpEmail> mail = this.signUpRepository.findByEmail(email);
+		if (mail.isPresent()) {
+			return new ResponseEntity<>("User is already signed up!", HttpStatus.OK);
+        } else {
+        	SignUpEmail emailToSave = new SignUpEmail(email);
+        	this.signUpRepository.save(emailToSave);
+        	return new ResponseEntity<>("User is signed up!", HttpStatus.OK);
+        }
+	}
 }
 

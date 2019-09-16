@@ -87,6 +87,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/registration**",
                         "/forgot-password**",
                         "/reset-password**",
+                        "/subscribe**",
                         "/admin/**").permitAll()
                 .antMatchers(
                         "/js/**",
@@ -98,6 +99,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/activate-registration",
                         "/webjars/**").permitAll()
                 .antMatchers("/auth/**").permitAll()
+                .antMatchers("/**").permitAll()
+                .antMatchers("/user/**").permitAll()
                 .antMatchers("/admin/**").authenticated()
                 .anyRequest().authenticated();
 
@@ -121,8 +124,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public CorsConfigurationSource corsConfigurationSource() {
         final CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(ImmutableList.of("*"));
+        //configuration.setAllowedOrigins(Arrays.asList("http://locahost:3000"));
         configuration.setAllowedMethods(ImmutableList.of("HEAD",
-                "GET", "POST", "PUT", "DELETE", "PATCH"));
+                "GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));
         // setAllowCredentials(true) is important, otherwise:
         // The value of the 'Access-Control-Allow-Origin' header in the response must not be the wildcard '*' when the request's credentials mode is 'include'.
         configuration.setAllowCredentials(true);
