@@ -1,5 +1,6 @@
 <template>
   <div id="Footer">
+    <app-feed />
     <app-sign-up />
     <app-logo />
     <app-copyright />
@@ -10,12 +11,14 @@
 import AppSignUp from '~/components/AppSignUp.vue'
 import AppLogo from '~/components/AppLogo.vue'
 import AppCopyright from '~/components/AppCopyright.vue'
+import AppFeed from '~/components/AppFeed.vue'
 
 export default {
   components: {
     AppSignUp,
     AppLogo,
-    AppCopyright
+    AppCopyright,
+    AppFeed
   }
 }
 </script>
