@@ -20,11 +20,12 @@ public class Bootstrap implements CommandLineRunner {
 	private final ProductToProductCommand productConverter;
 	private final UserToUserCommand userConverter;
 	private final AuthorityRepository authorityRepository;
+	private final CategoryRepository categoryRepository;
 
 	public Bootstrap(ProductRepository productRepository, UserRepository userRepository,
 			AuthorityRepository authorityRepository, ImageRepository imageRepository, RoleRepository roleRepository,
 			OrdersRepository ordersRepository, ProductToProductCommand productConverter,
-			UserToUserCommand userConverter) {
+			UserToUserCommand userConverter, CategoryRepository categoryRepository) {
 		this.productRepository = productRepository;
 		this.userRepository = userRepository;
 		this.imageRepository = imageRepository;
@@ -33,9 +34,11 @@ public class Bootstrap implements CommandLineRunner {
 		this.productConverter = productConverter;
 		this.userConverter = userConverter;
 		this.authorityRepository = authorityRepository;
+		this.categoryRepository = categoryRepository;
 	}
 
 	private void deleteAllData() {
+		categoryRepository.deleteAll();
 		productRepository.deleteAll();
 		userRepository.deleteAll();
 		// orderRepository.deleteAll();
@@ -46,23 +49,68 @@ public class Bootstrap implements CommandLineRunner {
 	Image i3 = new Image();
 	Image i4 = new Image();
 	Image i5 = new Image();
-	Image i6 = new Image();
-	Image i7 = new Image();
-	Image i8 = new Image();
-	Image i9 = new Image();
-	Image i10 = new Image();
-	Image i11 = new Image();
-	Image i12 = new Image();
-	Image i13 = new Image();
-	Image i14 = new Image();
-	Image i15 = new Image();
-	Image i16 = new Image();
 
 	Authority admin = new Authority(AuthorityName.ROLE_ADMIN);
 	Authority user = new Authority(AuthorityName.ROLE_USER);
 
+	String mealPlannerDescription = "a4, a5, letter size, printable, digital file, instant download\n" + 
+	"Printable complete Meal planner - 18 pages. \n" +
+	"* 17 planner pages & 1 cover page * \n" +
+	"with... \n" +
+	"--> monthly meal planner (1 or 2-page layouts) \n" +
+	"--> weekly meal planner (1 or 2-page layouts) -- 4 types of layouts \n" +
+	"--> recipe card -- 2 types of layouts \n" +
+	"--> weekly shopping list \n" +
+	"--> shopping list by food categories \n" +
+	"--> inventory trackers for: freezer, fridge, pantry \n" +
+	"--> monthly finances tracker for groceries \n" +
+	"--> favorite meals cards \n" +
+	"-Easy to fill out. \n" +
+	"-Simple and cute pastel blue color \n" +
+	"-The 18 pages can be seen in the pictures above. \n" +
+	"-All pages are separate PDF files so you can print only those you need easily!! \n" +
+	"-Weeks starting on Monday or Sunday \n" +
+	"BOTH versions included for all weekly & monthly layouts! \n" +
+	"•NOTE!: \n" +
+	"-This purchase is a digital file, no physical product will be sent to You via mail. \n" +
+	"•What You will receive: 3 ZIP files \n" +
+	"---1 ZIP file: all planner pages in A4 size (210x297 mm // 8.3x11.7 inches) in PDF format \n" +
+	"---1 ZIP file: all planner pages in A5 size (148,5x210 mm // 5.8x8.3 inches) in PDF format \n" +
+	"---1 ZIP file: all planner pages in US Letter size (216x279 mm // 8.5x11 inches) in PDF format \n" +
+	"•How it works: \n" +
+	"---Purchase \n" +
+	"---Etsy sends You download link \n" +
+	"---Download \n" +
+	"---Print PDF \n" +
+	"---Enjoy! \n" +
+	"This printable is for personal use only! \n" +
+	"*************************************************************************************** \n" +
+	"Same planner with one weekly&monthly layout only, for a lower price: \n" +
+	"Compact Meal Planner \n" +
+	"https://www.etsy.com/listing/594740887/compact-meal-planner-printable-meal \n" +
+	"***************************************************************************************";
+
+	private Set<Category> setCategories() {
+		Category printablePlanners = new Category("Printable Planners");
+		Category inserts = new Category("Inserts");
+		Category lifestylePlanners = new Category("Lifestyle Planners");
+		Category monthlyPlanners = new Category("Monthly Planners");
+		Category weeklyPlanners = new Category("Weekly Planners");
+		Category dailyPlanners = new Category("Daily Planners");
+		Set<Category> allCategories = new HashSet<Category>();
+		allCategories.add(printablePlanners);
+		allCategories.add(inserts);
+		allCategories.add(lifestylePlanners);
+		allCategories.add(monthlyPlanners);
+		allCategories.add(weeklyPlanners);
+		allCategories.add(dailyPlanners);
+		categoryRepository.saveAll(allCategories);
+		return allCategories;
+	}
+
 	private List<Product> setProducts() {
 		List<Product> allProducts = new ArrayList<>();
+		Set<Category> categories = setCategories();
 
 		// TODO
 		List<User> allUsers = new ArrayList<>();
@@ -73,62 +121,71 @@ public class Bootstrap implements CommandLineRunner {
 		user.setPasswd("12345");
 		User productOwner = userRepository.save(user);
 
-		Product bmw = new Product();
-		Set<String> categories = new HashSet<String>();
-		categories.add(Categories.AUTÓ.name());
-		bmw.setCategory(categories);
-		bmw.setShortDescription("Bmw kocsi új eladó");
-		bmw.setLongDescription("Bmw kocsi új eladó");
-		bmw.setName("Eladó új bmw");
-		bmw.setPrice(99.00);
-		bmw.setQuantity(1);
-		bmw.setOneImage(i7);
-		bmw.setOneImage(i8);
-		bmw.setOneImage(i9);
+		Product completeMealPlanner = new Product();
+		completeMealPlanner.setCategory(categories);
+		completeMealPlanner.setLongDescription(mealPlannerDescription);
+		completeMealPlanner.setName("Complete meal planner");
+		completeMealPlanner.setPrice(5.00);
+		completeMealPlanner.setQuantity(1000);
+		completeMealPlanner.setOneImage(i1);
+		completeMealPlanner.setOneImage(i2);
+		completeMealPlanner.setOneImage(i3);
+		completeMealPlanner.setOneImage(i4);
+		completeMealPlanner.setOneImage(i5);
 
-		Product kutya = new Product();
-		categories.clear();
-		categories.add(Categories.ÁLLAT.name());
-		kutya.setCategory(categories);
-		kutya.setShortDescription("Eladó husky kutya");
-		kutya.setLongDescription("Eladó husky kutya");
-		kutya.setName("Eladó husky");
-		kutya.setPrice(23.00);
-		kutya.setQuantity(2);
-		kutya.setOneImage(i11);
-		kutya.setOneImage(i14);
-		kutya.setOneImage(i16);
+		Product completeBusinessPlanner = new Product();
+		completeBusinessPlanner.setCategory(categories);
+		completeBusinessPlanner.setLongDescription(mealPlannerDescription);
+		completeBusinessPlanner.setName("Complete meal planner");
+		completeBusinessPlanner.setPrice(5.00);
+		completeBusinessPlanner.setQuantity(1000);
+		completeBusinessPlanner.setOneImage(i1);
+		completeBusinessPlanner.setOneImage(i2);
+		completeBusinessPlanner.setOneImage(i3);
+		completeBusinessPlanner.setOneImage(i4);
+		completeBusinessPlanner.setOneImage(i5);
 
-		Product pc = new Product();
-		categories.clear();
-		categories.add(Categories.MOBIL.name());
-		pc.setCategory(categories);
-		pc.setShortDescription("Eladó használt pc");
-		pc.setLongDescription("Eladó használt pc");
-		pc.setName("Eladó pc");
-		pc.setPrice(55.00);
-		pc.setQuantity(1);
-		pc.setOneImage(i1);
-		pc.setOneImage(i2);
-		pc.setOneImage(i3);
+		Product completeFinancialPlanner = new Product();
+		completeFinancialPlanner.setCategory(categories);
+		completeFinancialPlanner.setLongDescription(mealPlannerDescription);
+		completeFinancialPlanner.setName("Complete meal planner");
+		completeFinancialPlanner.setPrice(5.00);
+		completeFinancialPlanner.setQuantity(1000);
+		completeFinancialPlanner.setOneImage(i1);
+		completeFinancialPlanner.setOneImage(i2);
+		completeFinancialPlanner.setOneImage(i3);
+		completeFinancialPlanner.setOneImage(i4);
+		completeFinancialPlanner.setOneImage(i5);
 
-		Product mobil = new Product();
-		categories.clear();
-		categories.add(Categories.MOBIL.name());
-		mobil.setCategory(categories);
-		mobil.setShortDescription("Eladó használt nokia");
-		mobil.setLongDescription("Eladó használt nokia");
-		mobil.setName("Eladó mobil");
-		mobil.setPrice(12.00);
-		mobil.setQuantity(3);
-		mobil.setOneImage(i4);
-		mobil.setOneImage(i5);
-		mobil.setOneImage(i6);
+		Product dailyFinancialPlanner = new Product();
+		dailyFinancialPlanner.setCategory(categories);
+		dailyFinancialPlanner.setLongDescription(mealPlannerDescription);
+		dailyFinancialPlanner.setName("Complete meal planner");
+		dailyFinancialPlanner.setPrice(5.00);
+		dailyFinancialPlanner.setQuantity(1000);
+		dailyFinancialPlanner.setOneImage(i1);
+		dailyFinancialPlanner.setOneImage(i2);
+		dailyFinancialPlanner.setOneImage(i3);
+		dailyFinancialPlanner.setOneImage(i4);
+		dailyFinancialPlanner.setOneImage(i5);
 
-		allProducts.add(bmw);
-		allProducts.add(kutya);
-		allProducts.add(pc);
-		allProducts.add(mobil);
+		Product dailyBusinessPlanner = new Product();
+		dailyBusinessPlanner.setCategory(categories);
+		dailyBusinessPlanner.setLongDescription(mealPlannerDescription);
+		dailyBusinessPlanner.setName("Complete meal planner");
+		dailyBusinessPlanner.setPrice(5.00);
+		dailyBusinessPlanner.setQuantity(1000);
+		dailyBusinessPlanner.setOneImage(i1);
+		dailyBusinessPlanner.setOneImage(i2);
+		dailyBusinessPlanner.setOneImage(i3);
+		dailyBusinessPlanner.setOneImage(i4);
+		dailyBusinessPlanner.setOneImage(i5);
+
+		allProducts.add(completeMealPlanner);
+		allProducts.add(completeBusinessPlanner);
+		allProducts.add(completeFinancialPlanner);
+		allProducts.add(dailyBusinessPlanner);
+		allProducts.add(dailyFinancialPlanner);
 
 		productRepository.saveAll(allProducts);
 		return allProducts;
@@ -168,60 +225,17 @@ public class Bootstrap implements CommandLineRunner {
 
 	private List<Image> setImages() {
 		List<Image> i = new ArrayList<>();
-		i1.setImageUrl("excel.jpg");
-		// i1.setOneProduct(productRepository.findById(1L).get());
+		i1.setImageUrl("1.jpg");
 		imageRepository.save(i1);
-		i2.setImageUrl("linux.jpg");
-		// i2.setOneProduct(productRepository.findById(1L).get());
-		imageRepository.save(i2);
-		i3.setImageUrl("mongodb.png");
-		// i3.setOneProduct(productRepository.findById(1L).get());
-		imageRepository.save(i3);
-		i4.setImageUrl("linux.jpg");
-		// i4.setOneProduct(productRepository.findById(2L).get());
-		imageRepository.save(i4);
-		i5.setImageUrl("auto.jpg");
-		// i5.setOneProduct(productRepository.findById(3L).get());
-		imageRepository.save(i5);
-		i6.setImageUrl("mongodb.png");
-		// i6.setOneProduct(productRepository.findById(4L).get());
-		imageRepository.save(i6);
-		i7.setImageUrl("1.jpg");
-		imageRepository.save(i7);
-		i8.setImageUrl("2.jpg");
-		imageRepository.save(i8);
-		i9.setImageUrl("3.jpg");
-		imageRepository.save(i9);
-		i10.setImageUrl("4.jpg");
-		imageRepository.save(i10);
-		i11.setImageUrl("5.jpg");
-		imageRepository.save(i11);
-		i12.setImageUrl("6.jpg");
-		imageRepository.save(i12);
-		i13.setImageUrl("7.jpg");
-		imageRepository.save(i13);
-		i14.setImageUrl("8.jpg");
-		imageRepository.save(i14);
-		i15.setImageUrl("9.jpg");
-		imageRepository.save(i15);
-		i16.setImageUrl("10.jpg");
-		imageRepository.save(i16);
+		i2.setImageUrl("2.jpg");imageRepository.save(i2);
+		i3.setImageUrl("3.png");imageRepository.save(i3);
+		i4.setImageUrl("4.jpg");imageRepository.save(i4);
+		i5.setImageUrl("5.jpg");imageRepository.save(i5);
 		i.add(i1);
 		i.add(i2);
 		i.add(i3);
 		i.add(i4);
 		i.add(i5);
-		i.add(i6);
-		i.add(i7);
-		i.add(i8);
-		i.add(i9);
-		i.add(i10);
-		i.add(i11);
-		i.add(i12);
-		i.add(i13);
-		i.add(i14);
-		i.add(i15);
-		i.add(i16);
 		return i;
 	}
 
@@ -232,7 +246,7 @@ public class Bootstrap implements CommandLineRunner {
 		setUsers();
 		setImages();
 		setProducts();
-		// setImages();
+		//setImages();
 		// setOrders();
 	}
 

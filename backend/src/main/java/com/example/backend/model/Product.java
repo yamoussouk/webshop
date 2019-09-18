@@ -14,12 +14,20 @@ public class Product {
     private Long id;
     private String name;
     private String shortDescription;
+    @Column(length = 3000)
     private String longDescription;
     private double price;
     private int quantity;
+    private String downloadLink;
 
-    @ElementCollection(targetClass=String.class)
-    private Set<String> category = new HashSet<>();
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "product_category",
+            joinColumns = @JoinColumn(
+                    name = "product_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(
+                    name = "category_id", referencedColumnName = "id"))
+    private Set<Category> category = new HashSet<>();
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
@@ -97,11 +105,11 @@ public class Product {
         this.quantity = quantity;
     }
 
-    public Set<String> getCategory() {
+    public Set<Category> getCategory() {
         return category;
     }
 
-    public void setCategory(Set<String> category) {
+    public void setCategory(Set<Category> category) {
         this.category = category;
     }
 
@@ -127,5 +135,13 @@ public class Product {
 
     public void setOneOrder(Orders orders) {
         this.orders.add(orders);
+    }
+
+    public void setDownloadLink (String link) {
+        this.downloadLink = link;
+    }
+
+    public String getDownloadLink () {
+        return this.downloadLink;
     }
 }

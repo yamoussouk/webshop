@@ -18,7 +18,8 @@ public class SignUpEmail {
     }
     
     public SignUpEmail(String email) {
-    	this.email = email;
+        this.email = email;
+        this.isEnabled = true;
     }
     
     public Long getId() {
