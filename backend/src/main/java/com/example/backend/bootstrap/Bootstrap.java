@@ -74,7 +74,9 @@ public class Bootstrap implements CommandLineRunner {
 		User productOwner = userRepository.save(user);
 
 		Product bmw = new Product();
-		bmw.setCategory(Categories.AUTÓ.name());
+		Set<String> categories = new HashSet<String>();
+		categories.add(Categories.AUTÓ.name());
+		bmw.setCategory(categories);
 		bmw.setShortDescription("Bmw kocsi új eladó");
 		bmw.setLongDescription("Bmw kocsi új eladó");
 		bmw.setName("Eladó új bmw");
@@ -85,7 +87,9 @@ public class Bootstrap implements CommandLineRunner {
 		bmw.setOneImage(i9);
 
 		Product kutya = new Product();
-		kutya.setCategory(Categories.ÁLLAT.name());
+		categories.clear();
+		categories.add(Categories.ÁLLAT.name());
+		kutya.setCategory(categories);
 		kutya.setShortDescription("Eladó husky kutya");
 		kutya.setLongDescription("Eladó husky kutya");
 		kutya.setName("Eladó husky");
@@ -96,7 +100,9 @@ public class Bootstrap implements CommandLineRunner {
 		kutya.setOneImage(i16);
 
 		Product pc = new Product();
-		pc.setCategory(Categories.MOBIL.name());
+		categories.clear();
+		categories.add(Categories.MOBIL.name());
+		pc.setCategory(categories);
 		pc.setShortDescription("Eladó használt pc");
 		pc.setLongDescription("Eladó használt pc");
 		pc.setName("Eladó pc");
@@ -107,7 +113,9 @@ public class Bootstrap implements CommandLineRunner {
 		pc.setOneImage(i3);
 
 		Product mobil = new Product();
-		mobil.setCategory(Categories.MOBIL.name());
+		categories.clear();
+		categories.add(Categories.MOBIL.name());
+		mobil.setCategory(categories);
 		mobil.setShortDescription("Eladó használt nokia");
 		mobil.setLongDescription("Eladó használt nokia");
 		mobil.setName("Eladó mobil");

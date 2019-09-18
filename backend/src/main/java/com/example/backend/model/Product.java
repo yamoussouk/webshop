@@ -101,8 +101,8 @@ public class Product {
         return category;
     }
 
-    public void setCategory(String category) {
-        this.category.add(category);
+    public void setCategory(Set<String> category) {
+        this.category = category;
     }
 
     public Set<Image> getImages() {

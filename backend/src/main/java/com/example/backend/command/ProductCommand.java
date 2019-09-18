@@ -12,7 +12,7 @@ public class ProductCommand {
     private String shortDescription;
     private String longDescription;
     private double price;
-    private String category;
+    private Set<String> category;
     private Image image;
     private int quantity;
 
@@ -67,11 +67,11 @@ public class ProductCommand {
         this.price = price;
     }
 
-    public String getCategory() {
+    public Set<String> getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(Set<String> category) {
         this.category = category;
     }
 
