@@ -28,7 +28,8 @@ export default {
   ** Plugins to load before mounting the App
   */
   plugins: [
-    { src: '~/plugins/vueinstagram.js', mode: 'client' }
+    { src: '~/plugins/vueinstagram.js', mode: 'client' },
+    { src: '~/plugins/vuecarousel.js', mode: 'client' }
   ],
   /*
   ** Nuxt.js dev-modules

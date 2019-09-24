@@ -1,8 +1,8 @@
 package com.example.backend.command;
 
+import com.example.backend.model.Category;
 import com.example.backend.model.Image;
 
-import java.util.HashSet;
 import java.util.Set;
 
 public class ProductCommand {
@@ -12,8 +12,9 @@ public class ProductCommand {
     private String shortDescription;
     private String longDescription;
     private double price;
-    private Set<String> category;
-    private Image image;
+    private Set<Category> category;
+    private Set<String> categories;
+    private Set<Image> image;
     private int quantity;
 
     public int getQuantity() {
@@ -67,19 +68,23 @@ public class ProductCommand {
         this.price = price;
     }
 
-    public Set<String> getCategory() {
-        return category;
+    public Set<Category> getCategory() {
+        return this.category;
     }
 
-    public void setCategory(Set<String> category) {
+    public void setCategory(Set<Category> category) {
         this.category = category;
     }
 
-    public Image getImage() {
+    public void setCategories(Set<String> category) {
+        this.categories = category;
+    }
+
+    public Set<Image> getImage() {
         return image;
     }
 
-    public void setImage(Image image) {
+    public void setImage(Set<Image> image) {
         this.image = image;
     }
 }

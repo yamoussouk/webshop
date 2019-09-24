@@ -32,11 +32,11 @@ public class AdminController {
         this.signUpRepository = signUpRepository;
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
-    @GetMapping("/admin/products/all")
+    //@PreAuthorize("hasRole('ADMIN')")
+    /*@GetMapping("/admin/products/all")
     public List<Product> getAllProducts() {
         return this.productService.getProducts();
-    }
+    }*/
 
     @PostMapping("/admin/add/new/product")
     public void addNewProduct(@RequestParam("model") String product, @RequestParam("files") String[] files) {
@@ -129,11 +129,6 @@ public class AdminController {
         model.addAttribute("fragment", fragment);
         return "admin/start";
     }*/
-
-    @GetMapping("/admin/product/show/{id}")
-    public Product insertProductFragment(@PathVariable(name = "id") String id) {
-        return productService.findById(new Long(id));
-    }
     
     @PostMapping("/subscribe")
     public ResponseEntity<?> signUpEmail(@RequestParam("email") String email) {

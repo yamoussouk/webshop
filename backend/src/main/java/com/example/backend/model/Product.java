@@ -17,7 +17,7 @@ public class Product {
     @Column(length = 3000)
     private String longDescription;
     private double price;
-    private int quantity;
+    private Integer quantity;
     private String downloadLink;
 
     @ManyToMany(fetch = FetchType.LAZY)
@@ -106,7 +106,7 @@ public class Product {
     }
 
     public Set<Category> getCategory() {
-        return category;
+        return this.category;
     }
 
     public void setCategory(Set<Category> category) {

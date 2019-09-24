@@ -25,5 +25,6 @@ export default {
 <style>
 #Footer {
     background-color: #fff;
+    clear: both;
 }
 </style>

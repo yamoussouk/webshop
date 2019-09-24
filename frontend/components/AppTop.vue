@@ -22,18 +22,21 @@
       <span class="header_banner_text_bottom">PRINTABLE PLANNERS, LOGO DESIGN AND ILLUSTRATION</span>
     </div>
     <div class="header_cart">
-      <div class="carttotal" v-if="cartCount > 0">{{ cartCount }}</div>
-        <nuxt-link to="/cart"><img :src="cartSource" alt="cart" /></nuxt-link>
+        <app-cart :cartItems="getCart"></app-cart>
       </div>
     </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
+import AppCart from '~/components/AppCart.vue'
 
 export default {
+  components: {
+    AppCart
+  },
   computed: {
-    ...mapGetters(['cartCount']),
+    ...mapGetters(['cartCount', 'getCart']),
     cartSource () {
       return this.cartCount > 0 ? '/page_assets/cart_white.png' : '/page_assets/cart_black.png'
     }
@@ -87,11 +90,32 @@ export default {
 .header_cart {
     float: left;
     width: 6%;
-    display: table;
     height: 240px;
 }
-.header_cart a {
+.header_cart > div {
+    display: table;
+    height: 240px;
+    width: 100%;
+}
+.header_cart > div > div {
     display: table-cell;
     vertical-align: middle;
+}
+.header_cart a {
+    display: table;
+}
+.header_cart a img {
+    position: relative;
+    bottom: 6px;
+    left: 2px;
+}
+.header_cart a span {
+    font-size: 40px;
+    font-family: Audrey;
+    display: table-cell;
+    position: relative;
+    top: 5px;
+    padding-left: 10%;
+    color: #fff;
 }
 </style>

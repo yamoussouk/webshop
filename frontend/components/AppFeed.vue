@@ -2,7 +2,7 @@
   <div class="instagram_feed">
     <h1>Recent posts</h1>
     <transition name="welcome">
-      <vue-instagram token="" :key="componentKey" v-bind:count="counter" mediaType="image" class="columns is-multiline is-mobile">
+      <vue-instagram token="288735132.1677ed0.ab1ad3a0c04d4a1b85c1edd79ee56f1e" :key="componentKey" v-bind:count="counter" mediaType="image" class="columns is-multiline is-mobile">
         <template slot="feeds" slot-scope="props">
           <li class="fancy-list"><a :href="props.feed.link"><img :src=props.feed.images.standard_resolution.url /></a> </li>
           <input type="hidden" :value="feedUrl(props)" />

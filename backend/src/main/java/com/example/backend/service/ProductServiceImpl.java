@@ -36,7 +36,7 @@ public class ProductServiceImpl implements ProductService {
         if (product.isPresent()) {
             return product.get();
         } else {
-            throw new NotFoundException("User with given id has not found!");
+            throw new NotFoundException("Product with given id has not found!");
         }
     }
 

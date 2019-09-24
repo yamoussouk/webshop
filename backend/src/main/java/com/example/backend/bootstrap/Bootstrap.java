@@ -53,9 +53,9 @@ public class Bootstrap implements CommandLineRunner {
 	Authority admin = new Authority(AuthorityName.ROLE_ADMIN);
 	Authority user = new Authority(AuthorityName.ROLE_USER);
 
-	String mealPlannerDescription = "a4, a5, letter size, printable, digital file, instant download\n" + 
+	String mealPlannerDescription = "<p>a4, a5, letter size, printable, digital file, instant download</p>\n" + 
 	"Printable complete Meal planner - 18 pages. \n" +
-	"* 17 planner pages & 1 cover page * \n" +
+	"* 17 planner pages & 1 cover page * \n\n" +
 	"with... \n" +
 	"--> monthly meal planner (1 or 2-page layouts) \n" +
 	"--> weekly meal planner (1 or 2-page layouts) -- 4 types of layouts \n" +
@@ -64,40 +64,41 @@ public class Bootstrap implements CommandLineRunner {
 	"--> shopping list by food categories \n" +
 	"--> inventory trackers for: freezer, fridge, pantry \n" +
 	"--> monthly finances tracker for groceries \n" +
-	"--> favorite meals cards \n" +
+	"--> favorite meals cards \n\n" +
 	"-Easy to fill out. \n" +
 	"-Simple and cute pastel blue color \n" +
 	"-The 18 pages can be seen in the pictures above. \n" +
 	"-All pages are separate PDF files so you can print only those you need easily!! \n" +
 	"-Weeks starting on Monday or Sunday \n" +
-	"BOTH versions included for all weekly & monthly layouts! \n" +
+	"BOTH versions included for all weekly & monthly layouts! \n\n" +
 	"•NOTE!: \n" +
-	"-This purchase is a digital file, no physical product will be sent to You via mail. \n" +
+	"-This purchase is a digital file, no physical product will be sent to You via mail. \n\n" +
 	"•What You will receive: 3 ZIP files \n" +
 	"---1 ZIP file: all planner pages in A4 size (210x297 mm // 8.3x11.7 inches) in PDF format \n" +
 	"---1 ZIP file: all planner pages in A5 size (148,5x210 mm // 5.8x8.3 inches) in PDF format \n" +
-	"---1 ZIP file: all planner pages in US Letter size (216x279 mm // 8.5x11 inches) in PDF format \n" +
+	"---1 ZIP file: all planner pages in US Letter size (216x279 mm // 8.5x11 inches) in PDF format \n\n" +
 	"•How it works: \n" +
 	"---Purchase \n" +
 	"---Etsy sends You download link \n" +
 	"---Download \n" +
 	"---Print PDF \n" +
-	"---Enjoy! \n" +
-	"This printable is for personal use only! \n" +
-	"*************************************************************************************** \n" +
+	"---Enjoy! \n\n" +
+	"This printable is for personal use only! \n\n" +
+	"*************************************************************************************** \n\n" +
 	"Same planner with one weekly&monthly layout only, for a lower price: \n" +
 	"Compact Meal Planner \n" +
-	"https://www.etsy.com/listing/594740887/compact-meal-planner-printable-meal \n" +
+	"https://www.etsy.com/listing/594740887/compact-meal-planner-printable-meal \n\n" +
 	"***************************************************************************************";
 
+	Category printablePlanners = new Category("Printable Planners");
+	Category inserts = new Category("Inserts");
+	Category lifestylePlanners = new Category("Lifestyle Planners");
+	Category monthlyPlanners = new Category("Monthly Planners");
+	Category weeklyPlanners = new Category("Weekly Planners");
+	Category dailyPlanners = new Category("Daily Planners");
+	Set<Category> allCategories = new HashSet<Category>();
+
 	private Set<Category> setCategories() {
-		Category printablePlanners = new Category("Printable Planners");
-		Category inserts = new Category("Inserts");
-		Category lifestylePlanners = new Category("Lifestyle Planners");
-		Category monthlyPlanners = new Category("Monthly Planners");
-		Category weeklyPlanners = new Category("Weekly Planners");
-		Category dailyPlanners = new Category("Daily Planners");
-		Set<Category> allCategories = new HashSet<Category>();
 		allCategories.add(printablePlanners);
 		allCategories.add(inserts);
 		allCategories.add(lifestylePlanners);
@@ -122,11 +123,14 @@ public class Bootstrap implements CommandLineRunner {
 		User productOwner = userRepository.save(user);
 
 		Product completeMealPlanner = new Product();
-		completeMealPlanner.setCategory(categories);
+		Set<Category> categoriescmp = new HashSet<Category>();
+		categoriescmp.add(printablePlanners);
+		categoriescmp.add(inserts);
+		completeMealPlanner.setQuantity(1);
+		completeMealPlanner.setCategory(categoriescmp);
 		completeMealPlanner.setLongDescription(mealPlannerDescription);
 		completeMealPlanner.setName("Complete meal planner");
 		completeMealPlanner.setPrice(5.00);
-		completeMealPlanner.setQuantity(1000);
 		completeMealPlanner.setOneImage(i1);
 		completeMealPlanner.setOneImage(i2);
 		completeMealPlanner.setOneImage(i3);
@@ -134,11 +138,15 @@ public class Bootstrap implements CommandLineRunner {
 		completeMealPlanner.setOneImage(i5);
 
 		Product completeBusinessPlanner = new Product();
-		completeBusinessPlanner.setCategory(categories);
+		Set<Category> categoriescbp = new HashSet<Category>();
+		categoriescbp.add(printablePlanners);
+		categoriescbp.add(monthlyPlanners);
+		categoriescbp.add(weeklyPlanners);
+		completeBusinessPlanner.setCategory(categoriescbp);
+		completeBusinessPlanner.setQuantity(1);
 		completeBusinessPlanner.setLongDescription(mealPlannerDescription);
-		completeBusinessPlanner.setName("Complete meal planner");
+		completeBusinessPlanner.setName("Complete fitness planner");
 		completeBusinessPlanner.setPrice(5.00);
-		completeBusinessPlanner.setQuantity(1000);
 		completeBusinessPlanner.setOneImage(i1);
 		completeBusinessPlanner.setOneImage(i2);
 		completeBusinessPlanner.setOneImage(i3);
@@ -146,11 +154,15 @@ public class Bootstrap implements CommandLineRunner {
 		completeBusinessPlanner.setOneImage(i5);
 
 		Product completeFinancialPlanner = new Product();
-		completeFinancialPlanner.setCategory(categories);
+		Set<Category> categoriescbp2 = new HashSet<Category>();
+		categoriescbp2.add(printablePlanners);
+		categoriescbp2.add(lifestylePlanners);
+		categoriescbp2.add(dailyPlanners);
+		completeFinancialPlanner.setCategory(categoriescbp2);
+		completeFinancialPlanner.setQuantity(1);
 		completeFinancialPlanner.setLongDescription(mealPlannerDescription);
-		completeFinancialPlanner.setName("Complete meal planner");
+		completeFinancialPlanner.setName("Complete business planner");
 		completeFinancialPlanner.setPrice(5.00);
-		completeFinancialPlanner.setQuantity(1000);
 		completeFinancialPlanner.setOneImage(i1);
 		completeFinancialPlanner.setOneImage(i2);
 		completeFinancialPlanner.setOneImage(i3);
@@ -158,11 +170,15 @@ public class Bootstrap implements CommandLineRunner {
 		completeFinancialPlanner.setOneImage(i5);
 
 		Product dailyFinancialPlanner = new Product();
-		dailyFinancialPlanner.setCategory(categories);
+		Set<Category> categoriesdmp = new HashSet<Category>();
+		categoriesdmp.add(printablePlanners);
+		categoriesdmp.add(inserts);
+		categoriesdmp.add(dailyPlanners);
+		dailyFinancialPlanner.setCategory(categoriesdmp);
+		dailyFinancialPlanner.setQuantity(1);
 		dailyFinancialPlanner.setLongDescription(mealPlannerDescription);
-		dailyFinancialPlanner.setName("Complete meal planner");
+		dailyFinancialPlanner.setName("Daily meal planner");
 		dailyFinancialPlanner.setPrice(5.00);
-		dailyFinancialPlanner.setQuantity(1000);
 		dailyFinancialPlanner.setOneImage(i1);
 		dailyFinancialPlanner.setOneImage(i2);
 		dailyFinancialPlanner.setOneImage(i3);
@@ -170,11 +186,15 @@ public class Bootstrap implements CommandLineRunner {
 		dailyFinancialPlanner.setOneImage(i5);
 
 		Product dailyBusinessPlanner = new Product();
-		dailyBusinessPlanner.setCategory(categories);
+		Set<Category> categoriesdfp = new HashSet<Category>();
+		categoriesdfp.add(printablePlanners);
+		categoriesdfp.add(dailyPlanners);
+		categoriesdfp.add(lifestylePlanners);
+		dailyBusinessPlanner.setCategory(categoriesdfp);
+		dailyBusinessPlanner.setQuantity(1);
 		dailyBusinessPlanner.setLongDescription(mealPlannerDescription);
-		dailyBusinessPlanner.setName("Complete meal planner");
+		dailyBusinessPlanner.setName("Daily fitness planner");
 		dailyBusinessPlanner.setPrice(5.00);
-		dailyBusinessPlanner.setQuantity(1000);
 		dailyBusinessPlanner.setOneImage(i1);
 		dailyBusinessPlanner.setOneImage(i2);
 		dailyBusinessPlanner.setOneImage(i3);
@@ -228,7 +248,7 @@ public class Bootstrap implements CommandLineRunner {
 		i1.setImageUrl("1.jpg");
 		imageRepository.save(i1);
 		i2.setImageUrl("2.jpg");imageRepository.save(i2);
-		i3.setImageUrl("3.png");imageRepository.save(i3);
+		i3.setImageUrl("3.jpg");imageRepository.save(i3);
 		i4.setImageUrl("4.jpg");imageRepository.save(i4);
 		i5.setImageUrl("5.jpg");imageRepository.save(i5);
 		i.add(i1);

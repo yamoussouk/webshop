@@ -30,7 +30,7 @@ public class ProductCommandToProduct implements Converter<ProductCommand, Produc
         product.setShortDescription(productCommand.getShortDescription());
         product.setLongDescription(productCommand.getLongDescription());
         product.setCategory(productCommand.getCategory());
-        product.setOneImage(productCommand.getImage());
+        product.setImages(productCommand.getImage());
         product.setQuantity(productCommand.getQuantity());
         return product;
     }

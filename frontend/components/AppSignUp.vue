@@ -86,7 +86,7 @@ form input {
     border-radius: 10px;
     border-color: rgb(235, 235, 235);
 }
-form button {
+.emaillist form button {
     background-color: #544c62;
     color: #fff;
     width: 264px;
