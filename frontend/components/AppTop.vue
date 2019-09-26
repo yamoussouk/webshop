@@ -22,21 +22,27 @@
       <span class="header_banner_text_bottom">PRINTABLE PLANNERS, LOGO DESIGN AND ILLUSTRATION</span>
     </div>
     <div class="header_cart">
-        <app-cart :cartItems="getCart"></app-cart>
+        <app-cart :cartItems="cart"></app-cart>
       </div>
     </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
 import AppCart from '~/components/AppCart.vue'
 
 export default {
+  data () {
+    return {
+      cart: this.$store.state.localStorage.localCart
+    }
+  },
   components: {
     AppCart
   },
   computed: {
-    ...mapGetters(['cartCount', 'getCart']),
+    cartCount () {
+      return this.cart.reduce((ac, next) => ac + next.quantity, 0)
+    },
     cartSource () {
       return this.cartCount > 0 ? '/page_assets/cart_white.png' : '/page_assets/cart_black.png'
     }

@@ -20,3 +20,6 @@ $ npm run generate
 ```
 
 For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
+
+# made changes
+nuxt-vuex-localstorage package.json changed axios dependency to "@nuxtjs/axios": "^5.3.6" dependency to make it work.

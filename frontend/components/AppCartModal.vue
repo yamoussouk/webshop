@@ -4,7 +4,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-body">
-                    <table v-if="getCart.length !== 0" class="table table-cart">
+                    <table v-if="cartItems.length !== 0" class="table table-cart">
                         <thead>
                             <th>Product</th>
                             <th>Quantity</th>
@@ -22,7 +22,7 @@
                         <tfoot>
                             <td><b>Total:</b></td>
                             <td></td>
-                            <td>{{ cartTotal }}</td>
+                            <td>{{ total }}</td>
                             <td></td>
                         </tfoot>
                     </table>
@@ -34,19 +34,18 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
-
 export default {
   props: {
     cartItems: Array
   },
   computed: {
-    ...mapGetters(['cartTotal', 'getCart'])
+    total () {
+      return this.$store.state.localStorage.localCart.reduce((ac, next) => ac + next.quantity * next.price, 0)
+    }
   },
   methods: {
-    ...mapActions(['removeFromCartByIndex']),
     removeFromCart (index) {
-      this.removeFromCartByIndex(index)
+      this.$store.commit('localStorage/removeFromLocalCartByIndex', index)
     }
   }
 }

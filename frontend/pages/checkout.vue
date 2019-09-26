@@ -1,6 +1,6 @@
 <template>
     <div class="checkout-page-wrapper">
-        <b-container v-if="getCart.length !== 0">
+        <b-container v-if="cart.length !== 0">
             <b-row>
                 <b-col md="8">
                     <table class="table table-cart">
@@ -11,7 +11,7 @@
                         <th></th>
                     </thead>
                     <tbody>
-                        <tr v-for="(item, index) in getCart" v-bind:key="item">
+                        <tr v-for="(item, index) in cart" v-bind:key="item">
                             <td>{{ item.name }}</td>
                             <td>{{ item.quantity }}</td>
                             <td>{{ item.price }}</td>
@@ -21,7 +21,7 @@
                     <tfoot>
                         <td><b>Total:</b></td>
                         <td></td>
-                        <td style="border: 1px solid;">{{ cartTotal }}</td>
+                        <td style="border: 1px solid;">{{ total }}</td>
                         <td></td>
                     </tfoot>
                 </table>
@@ -102,8 +102,6 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
-
 export default {
   data () {
     return {
@@ -116,17 +114,19 @@ export default {
         expYear: '',
         expMonth: ''
       },
+      cart: this.$store.state.localStorage.localCart,
       years: [{ text: 'Select One', value: null }, '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30'],
       months: [{ text: 'Select One', value: null }, '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
     }
   },
   computed: {
-    ...mapGetters(['getCart', 'cartTotal'])
+    total () {
+      return this.$store.state.localStorage.localCart.reduce((ac, next) => ac + next.quantity * next.price, 0)
+    }
   },
   methods: {
-    ...mapActions(['removeFromCartByIndex', 'emptyCart']),
     removeFromCart (index) {
-      this.removeFromCartByIndex(index)
+      this.$store.commit('localStorage/removeFromLocalCartByIndex', index)
     },
     validEmail (email) {
       const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/

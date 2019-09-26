@@ -25,7 +25,6 @@
 
 <script>
 import axios from 'axios'
-import { mapActions, mapGetters } from 'vuex'
 import BreadCrumb from '~/components/BreadCrumb.vue'
 // eslint-disable-next-line
 import ImageCarousel from '~/components/ImageCarousel.vue'
@@ -40,7 +39,8 @@ export default {
     return {
       id: this.$route.params.id,
       marginBottom: '0px',
-      height: '0px'
+      height: '0px',
+      cart: []
     }
   },
   created () {
@@ -55,23 +55,30 @@ export default {
         })
     }
   },
-  computed: {
-    ...mapGetters(['getCart'])
-  },
   methods: {
-    ...mapActions(['addProductToCart', 'increaseQuantity']),
+    addProductToLocalCart (product) {
+      this.$store.commit('localStorage/addToLocalCart', this.simplifyProduct(product))
+    },
+    increaseQuantityOnLocalCart (id) {
+      this.$store.commit('localStorage/increaseQuantityInLocalCart', id)
+    },
+    simplifyProduct (product) {
+      return {
+        'id': product.id,
+        'name': product.name,
+        'quantity': product.quantity,
+        'price': product.price
+      }
+    },
     add (product) {
-      // Add the item or increase qty
-      const itemInCart = this.getCart.filter(item => item.id === product.id)
+      const itemInCart = this.$store.state.localStorage.localCart.filter(item => item.id === product.id)
       const isItemInCart = itemInCart.length > 0
 
       if (isItemInCart === false) {
-        this.addProductToCart(product)
+        this.addProductToLocalCart(product)
       } else {
-        this.increaseQuantity(product.id)
+        this.increaseQuantityOnLocalCart(product.id)
       }
-      product.qty = 1
-      // this.addProductToCart(product)
     }
   }
 }
