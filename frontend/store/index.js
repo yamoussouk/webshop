@@ -1,8 +1,8 @@
 export const state = () => ({
   cartUIStatus: 'idle',
   cart: [],
-  localCart: [],
-  products: []
+  products: [],
+  tempImages: []
 })
 
 export const getters = {
@@ -27,20 +27,8 @@ export const getters = {
   getCart: (state) => {
     return state.cart
   },
-  localCart: (state) => {
-    return state.localCart
-  },
-  localCartTotal: (state) => {
-    if (!state.localCart.length) {
-      return 0
-    }
-    return state.localCart.reduce((ac, next) => ac + next.quantity * next.price, 0)
-  },
-  localCartCount: (state) => {
-    if (!state.localCart.length) {
-      return 0
-    }
-    return state.localCart.reduce((ac, next) => ac + next.quantity, 0)
+  getTempImages: (state) => {
+    return state.tempImages
   }
 }
 
@@ -60,17 +48,11 @@ export const mutations = {
   emptyCart: (state) => {
     state.cart = []
   },
-  addToLocalCart: (state, product) => {
-    state.localCart.push(product)
+  saveTempImages: (state, images) => {
+    state.tempImages = images
   },
-  increaseQuantityInLocalCart: (state, id) => {
-    state.localCart.filter(product => product.id === id)[0].quantity += 1
-  },
-  removeFromLocalCartByIndex: (state, index) => {
-    state.localCart.splice(index, 1)
-  },
-  emptyLocalCart: (state) => {
-    state.localCart = []
+  clearTempImages: (state) => {
+    state.tempImages = []
   }
 }
 
@@ -89,5 +71,11 @@ export const actions = {
   },
   removeFromCartByIndex: ({ commit }, index) => {
     commit('removeFromCartByIndex', index)
+  },
+  saveTempImages: ({ commit }, images) => {
+    commit('saveTempImages', images)
+  },
+  clearTempImages: ({ commit }) => {
+    commit('clearTempImages')
   }
 }

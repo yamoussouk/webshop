@@ -3,53 +3,61 @@
     <div class="wrapper">
       <div class="shop_slider">
         <div class="shop_sub_cat left_align">
-          <nuxt-link to="/printablePlanners"><h1>PRINTABLE PLANNERS</h1></nuxt-link>
+          <nuxt-link to="/printablePlanners">
+            <h1>PRINTABLE PLANNERS</h1>
+          </nuxt-link>
         </div>
         <div class="shop_sub_carousel left_align">
           <!-- TODO: replace 1 with id of the product.
         First, make crud actions which creates the folder of the images based on the product's id -->
           <carousel :per-page="4" :mouse-drag="false" :center-mode="true" :paginationEnabled="false">
-            <slide v-for="planner in printablePlanners" v-bind:key="planner">
-              <img :src="'/images/1/' + planner.image[0].imageUrl" />
+            <slide v-for="planner in printablePlanners" :key="planner">
+              <img :src="'/images/1/' + planner.image[0].imageUrl">
             </slide>
           </carousel>
         </div>
       </div>
       <div class="shop_slider">
         <div class="shop_sub_cat right_align">
-          <nuxt-link to="/logodesign"><h1>LOGO DESIGN</h1></nuxt-link>
+          <nuxt-link to="/logodesign">
+            <h1>LOGO DESIGN</h1>
+          </nuxt-link>
         </div>
         <div class="shop_sub_carousel right_align">
           <!-- replace it with valid category products -->
           <carousel :per-page="4" :mouse-drag="false" :center-mode="true" :paginationEnabled="false">
-            <slide v-for="planner in printablePlanners" v-bind:key="planner">
-              <img :src="'/images/1/' + planner.image[0].imageUrl" />
+            <slide v-for="planner in printablePlanners" :key="planner">
+              <img :src="'/images/1/' + planner.image[0].imageUrl">
             </slide>
           </carousel>
         </div>
       </div>
       <div class="shop_slider">
         <div class="shop_sub_cat left_align">
-          <nuxt-link to="/socialmediatemplates"><h1>SOCIAL MEDIA TEMPLATES</h1></nuxt-link>
+          <nuxt-link to="/socialmediatemplates">
+            <h1>SOCIAL MEDIA TEMPLATES</h1>
+          </nuxt-link>
         </div>
         <div class="shop_sub_carousel left_align">
           <!-- replace it with valid category products -->
           <carousel :per-page="4" :mouse-drag="false" :center-mode="true" :paginationEnabled="false">
-            <slide v-for="planner in printablePlanners" v-bind:key="planner">
-              <img :src="'/images/1/' + planner.image[0].imageUrl" />
+            <slide v-for="planner in printablePlanners" :key="planner">
+              <img :src="'/images/1/' + planner.image[0].imageUrl">
             </slide>
           </carousel>
         </div>
       </div>
       <div class="shop_slider">
         <div class="shop_sub_cat right_align">
-          <nuxt-link to="/artprints"><h1>ART PRINTS</h1></nuxt-link>
+          <nuxt-link to="/artprints">
+            <h1>ART PRINTS</h1>
+          </nuxt-link>
         </div>
         <div class="shop_sub_carousel right_align">
           <!-- replace it with valid category products -->
           <carousel :per-page="4" :mouse-drag="false" :center-mode="true" :paginationEnabled="false">
-            <slide v-for="planner in printablePlanners" v-bind:key="planner">
-              <img :src="'/images/1/' + planner.image[0].imageUrl" />
+            <slide v-for="planner in printablePlanners" :key="planner">
+              <img :src="'/images/1/' + planner.image[0].imageUrl">
             </slide>
           </carousel>
         </div>
@@ -71,9 +79,6 @@ export default {
       socialMediaTemplates: [],
       artPrints: []
     }
-  },
-  methods: {
-    ...mapActions(['setProducts'])
   },
   created () {
     axios.get('http://localhost:8083/default/products/all'
@@ -97,6 +102,9 @@ export default {
       .catch(function (error) {
         console.log(error)
       })
+  },
+  methods: {
+    ...mapActions(['setProducts'])
   }
 }
 </script>

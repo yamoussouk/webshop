@@ -1,14 +1,14 @@
 <template>
   <div class="custom_breadcrumb">
     <div class="back_button">
-      <nuxt-link :to="'/' + to">
+      <a @click="$router.go(-1)">
         <div class="wrapper">
-          <img :src="'/page_assets/arrow.png'" alt="back arrow" />
+          <img :src="'/page_assets/arrow.png'" alt="back arrow">
         </div>
         <div class="button_wrapper">
           <span>BACK</span>
         </div>
-      </nuxt-link>
+      </a>
     </div>
     <div class="bc_text">
       <h1>{{ title }}</h1>
@@ -19,8 +19,10 @@
 <script>
 export default {
   props: {
-    title: String,
-    to: String
+    title: {
+      type: String,
+      default: ''
+    }
   }
 }
 </script>

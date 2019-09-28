@@ -3,27 +3,27 @@
     <bread-crumb :title="title" :to="shop" />
     <div class="shop_wrapper">
       <div class="shop_aside">
-          <side-bar :search.sync="search" v-on:filter="showByFilter"></side-bar>
+        <side-bar :search.sync="search" @filter="showByFilter" />
       </div>
       <div class="shop_inner">
         <ul class="products_wrapper">
-          <li class="product" v-for="product in filteredList" v-bind:key="product" >
+          <li v-for="product in filteredList" :key="product" class="product">
             <div class="image_frame">
               <div class="image_wrapper">
-                  <nuxt-link :to="{name: 'product', params: {id: product.id, from: 'printablePlanners'}}">
-                      <!-- TODO: change 1 to valid id -->
-                      <img :src="'/images/1/' + product.image[0].imageUrl" alt="product image" />
-                  </nuxt-link>
+                <nuxt-link :to="{name: `product/${product.id}`, params: {products: filteredList, from: 'printablePlanners'}}">
+                  <!-- TODO: change 1 to valid id -->
+                  <img :src="'/images/1/' + product.image[0].imageUrl" alt="product image">
+                </nuxt-link>
               </div>
             </div>
             <div class="desc">
               <h4>
-                  <nuxt-link :to="{name: 'product', params: {id: product.id, from: 'printablePlanners'}}">
-                      <span class="product_title">{{ product.name }}</span>
-                  </nuxt-link>
+                <nuxt-link :to="`product/${product.id}`">
+                  <span class="product_title">{{ product.name }}</span>
+                </nuxt-link>
               </h4>
               <div class="price">
-                  <span>$ {{ product.price }}</span>
+                <span>$ {{ product.price }}</span>
               </div>
             </div>
           </li>
@@ -52,18 +52,6 @@ export default {
       filteredProducts: []
     }
   },
-  created () {
-    this.products = this.$store.getters.getProducts
-    if (this.products.length === 0) {
-      axios.get('http://localhost:8083/default/products/all'
-      ).then((response) => {
-        this.products = response.data
-      })
-        .catch(function (error) {
-          console.log(error)
-        })
-    }
-  },
   computed: {
     filteredList () {
       if (this.search !== '' || this.filteredProducts.length === 0) {
@@ -75,6 +63,18 @@ export default {
       } else {
         return this.filteredProducts
       }
+    }
+  },
+  created () {
+    this.products = this.$store.getters.getProducts
+    if (this.products.length === 0) {
+      axios.get('http://localhost:8083/default/products/all'
+      ).then((response) => {
+        this.products = response.data
+      })
+        .catch(function (error) {
+          console.log(error)
+        })
     }
   },
   methods: {

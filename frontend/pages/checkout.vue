@@ -1,104 +1,110 @@
 <template>
-    <div class="checkout-page-wrapper">
-        <b-container v-if="cart.length !== 0">
-            <b-row>
-                <b-col md="8">
-                    <table class="table table-cart">
-                    <thead>
-                        <th>Product</th>
-                        <th>Quantity</th>
-                        <th>Price</th>
-                        <th></th>
-                    </thead>
-                    <tbody>
-                        <tr v-for="(item, index) in cart" v-bind:key="item">
-                            <td>{{ item.name }}</td>
-                            <td>{{ item.quantity }}</td>
-                            <td>{{ item.price }}</td>
-                            <td><span class="glyphicon glyphicon-remove" @click="removeFromCart(index)">X</span></td>
-                        </tr>
-                    </tbody>
-                    <tfoot>
-                        <td><b>Total:</b></td>
-                        <td></td>
-                        <td style="border: 1px solid;">{{ total }}</td>
-                        <td></td>
-                    </tfoot>
-                </table>
-                </b-col>
-                <b-col md="4">
-                    <h1>Order details:</h1>
-                    <b-form v-on:submit="order" action="#" method="post">
-                    <b-form-group id="input-group-1" label="Your Email:" label-for="order-email">
-                        <b-form-input
-                            type="email"
-                            id="order-email"
-                            v-model="form.email"
-                            required
-                            placeholder="Enter email">
-                        </b-form-input>
-                    </b-form-group>
-                    <b-form-group id="input-group-2" label="Card Owner:" label-for="order-owner">
-                        <b-form-input
-                            type="string"
-                            id="order-owner"
-                            v-model="form.owner"
-                            required
-                            placeholder="Enter owner">
-                        </b-form-input>
-                    </b-form-group>
-                    <b-form-group id="input-group-3" label="Card Number:" label-for="order-card">
-                        <b-form-input
-                            type="text"
-                            id="order-card"
-                            v-model="form.cardNumber"
-                            required
-                            placeholder="Enter card number">
-                        </b-form-input>
-                    </b-form-group>
-                    <b-form-group id="input-group-4" label="CVV:" label-for="order-cvv">
-                        <b-form-input
-                            type="number"
-                            id="order-cvv"
-                            v-model="form.cvv"
-                            required>
-                        </b-form-input>
-                    </b-form-group>
-                    <b-form-group id="input-group-5" label="Expiring year:" label-for="order-expYear">
-                        <b-form-select
-                        id="order-expYear"
-                        v-model="form.expYear"
-                        :options="years"
-                        required
-                        ></b-form-select>
-                    </b-form-group>
-                    <b-form-group id="input-group-6" label="Expiring month:" label-for="order-expMonth">
-                        <b-form-select
-                        id="order-expMonth"
-                        v-model="form.expMonth"
-                        :options="months"
-                        required
-                        ></b-form-select>
-                    </b-form-group>
-                    <button type="submit">Confirm</button>
-                    <span class="errors" v-show="errors.length > 0">
-                        <span v-for="error in errors" v-bind:key="error">
-                            {{ error }}
-                        </span>
-                    </span>
-                </b-form>
-                </b-col>
-            </b-row>
-        </b-container>
-        <div v-else class="empty-cart">
-            <div>
-                <p>Cart is empty</p>
-            </div>
-            <div>
-                <nuxt-link to="/shop">Back to shop</nuxt-link>
-            </div>
-        </div>
+  <div class="checkout-page-wrapper">
+    <b-container v-if="cart.length !== 0">
+      <b-row>
+        <b-col md="8">
+          <table class="table table-cart">
+            <thead>
+              <th>Product</th>
+              <th>Quantity</th>
+              <th>Price</th>
+              <th />
+            </thead>
+            <tbody>
+              <tr v-for="(item, index) in cart" :key="item">
+                <td>{{ item.name }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>{{ item.price }}</td>
+                <td><span class="glyphicon glyphicon-remove" @click="removeFromCart(index)">X</span></td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <td><b>Total:</b></td>
+              <td />
+              <td style="border: 1px solid;">
+                {{ total }}
+              </td>
+              <td />
+            </tfoot>
+          </table>
+        </b-col>
+        <b-col md="4">
+          <h1>Order details:</h1>
+          <b-form action="#" method="post" @submit="order">
+            <b-form-group id="input-group-1" label="Your Email:" label-for="order-email">
+              <b-form-input
+                id="order-email"
+                v-model="form.email"
+                type="email"
+                required
+                placeholder="Enter email"
+              />
+            </b-form-group>
+            <b-form-group id="input-group-2" label="Card Owner:" label-for="order-owner">
+              <b-form-input
+                id="order-owner"
+                v-model="form.owner"
+                type="string"
+                required
+                placeholder="Enter owner"
+              />
+            </b-form-group>
+            <b-form-group id="input-group-3" label="Card Number:" label-for="order-card">
+              <b-form-input
+                id="order-card"
+                v-model="form.cardNumber"
+                type="text"
+                required
+                placeholder="Enter card number"
+              />
+            </b-form-group>
+            <b-form-group id="input-group-4" label="CVV:" label-for="order-cvv">
+              <b-form-input
+                id="order-cvv"
+                v-model="form.cvv"
+                type="number"
+                required
+              />
+            </b-form-group>
+            <b-form-group id="input-group-5" label="Expiring year:" label-for="order-expYear">
+              <b-form-select
+                id="order-expYear"
+                v-model="form.expYear"
+                :options="years"
+                required
+              />
+            </b-form-group>
+            <b-form-group id="input-group-6" label="Expiring month:" label-for="order-expMonth">
+              <b-form-select
+                id="order-expMonth"
+                v-model="form.expMonth"
+                :options="months"
+                required
+              />
+            </b-form-group>
+            <button type="submit">
+              Confirm
+            </button>
+            <span v-show="errors.length > 0" class="errors">
+              <span v-for="error in errors" :key="error">
+                {{ error }}
+              </span>
+            </span>
+          </b-form>
+        </b-col>
+      </b-row>
+    </b-container>
+    <div v-else class="empty-cart">
+      <div>
+        <p>Cart is empty</p>
+      </div>
+      <div>
+        <nuxt-link to="/shop">
+          Back to shop
+        </nuxt-link>
+      </div>
     </div>
+  </div>
 </template>
 
 <script>
@@ -152,7 +158,6 @@ export default {
       if (!this.errors.length) {
         this.resetForm()
         this.emptyCart()
-        console.log(this.form)
       }
     },
     resetForm () {

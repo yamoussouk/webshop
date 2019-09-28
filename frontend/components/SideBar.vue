@@ -1,55 +1,68 @@
 <template>
-    <div class="sidebar">
-      <div class="sidebar_top">
-          <div class="sidebar_search">
-              <div class="search_with_icon">
-                  <span>
-                      <img :src="'/page_assets/magnifier.png'" alt="magnifier" />
-                  </span>
-                  <div class="search_field">
-                      <input id="product_search_field" placeholder="Search" v-on:keyup="onChange($event)" :value="search"/>
-                  </div>
-              </div>
+  <div class="sidebar">
+    <div class="sidebar_top">
+      <div class="sidebar_search">
+        <div class="search_with_icon">
+          <span>
+            <img :src="'/page_assets/magnifier.png'" alt="magnifier">
+          </span>
+          <div class="search_field">
+            <input id="product_search_field" placeholder="Search" :value="search" @keyup="onChange($event)">
           </div>
-          <div class="sidebar_categories">
-            <ul>
-                <li @click="filterCategory('ALL')">ALL</li>
-                <li @click="filterCategory('INSERTS')">INSERTS</li>
-                <li @click="filterCategory('LIFESTYLE PLANNERS')">LIFESTYLE PLANNERS</li>
-                <li @click="filterCategory('MONTHLY PLANNERS')">MONTHLY PLANNERS</li>
-                <li @click="filterCategory('DAILY PLANNERS')">DAILY PLANNERS</li>
-            </ul>
-          </div>
-          <nuxt-link to="/contact">
-            <div class="contact_me_wrapper">
-              <img :src="'/page_assets/envelop.png'" alt="envelop" />
-              <span>contact me</span>
-            </div>
-          </nuxt-link>
+        </div>
       </div>
-      <div class="sidebar_bottom">
-          <div class="ratings">
-              <img :src="'/page_assets/star.png'" alt="star" />
-              <img :src="'/page_assets/star.png'" alt="star" />
-              <img :src="'/page_assets/star.png'" alt="star" />
-              <img :src="'/page_assets/star.png'" alt="star" />
-              <img :src="'/page_assets/star.png'" alt="star" />
-          </div>
-          <div class="comments">
-              <p>"This is my absolutely favourite daily insert that I've found. Thank you so much!"</p>
-              <p>"This planner is perfect for getting my blog started and going!"</p>
-              <p>"The perfect addition to my digital planner. What a wonderfool tool to keep me on track!"</p>
-              <p>"Love this spread. Even if I'm uninspired on any particular day, one look at this page and I want to fill it ou!"</p>
-              <p>"I am very happy whit this purchase. Definitely made my planner setup very easy."</p>
-          </div>
+      <div class="sidebar_categories">
+        <ul>
+          <li @click="filterCategory('ALL')">
+            ALL
+          </li>
+          <li @click="filterCategory('INSERTS')">
+            INSERTS
+          </li>
+          <li @click="filterCategory('LIFESTYLE PLANNERS')">
+            LIFESTYLE PLANNERS
+          </li>
+          <li @click="filterCategory('MONTHLY PLANNERS')">
+            MONTHLY PLANNERS
+          </li>
+          <li @click="filterCategory('DAILY PLANNERS')">
+            DAILY PLANNERS
+          </li>
+        </ul>
+      </div>
+      <nuxt-link to="/contact">
+        <div class="contact_me_wrapper">
+          <img :src="'/page_assets/envelop.png'" alt="envelop">
+          <span>contact me</span>
+        </div>
+      </nuxt-link>
+    </div>
+    <div class="sidebar_bottom">
+      <div class="ratings">
+        <img :src="'/page_assets/star.png'" alt="star">
+        <img :src="'/page_assets/star.png'" alt="star">
+        <img :src="'/page_assets/star.png'" alt="star">
+        <img :src="'/page_assets/star.png'" alt="star">
+        <img :src="'/page_assets/star.png'" alt="star">
+      </div>
+      <div class="comments">
+        <p>"This is my absolutely favourite daily insert that I've found. Thank you so much!"</p>
+        <p>"This planner is perfect for getting my blog started and going!"</p>
+        <p>"The perfect addition to my digital planner. What a wonderfool tool to keep me on track!"</p>
+        <p>"Love this spread. Even if I'm uninspired on any particular day, one look at this page and I want to fill it ou!"</p>
+        <p>"I am very happy whit this purchase. Definitely made my planner setup very easy."</p>
       </div>
     </div>
+  </div>
 </template>
 
 <script>
 export default {
   props: {
-    search: String
+    search: {
+      type: String,
+      default: ''
+    }
   },
   methods: {
     onChange (event) {

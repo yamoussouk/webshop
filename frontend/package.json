@@ -19,7 +19,6 @@
     "bootstrap-vue": "^2.0.2",
     "nuxt": "^2.0.0",
     "nuxt-vuex-localstorage": "^1.2.6",
-    "vue-async-computed": "^3.7.0",
     "vue-carousel": "^0.18.0",
     "vue-instagram": "^2.0.1"
   },

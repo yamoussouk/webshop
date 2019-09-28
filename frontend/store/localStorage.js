@@ -10,7 +10,6 @@ export const getters = {
     if (!state.localCart.length) {
       return 0
     }
-    console.log(state.localCart)
     return state.localCart.reduce((ac, next) => ac + next.quantity * next.price, 0)
   },
   localCartCount: (state) => {
@@ -26,7 +25,6 @@ export const mutations = {
     state.localCart.push(product)
   },
   increaseQuantityInLocalCart: (state, id) => {
-    console.log(id)
     state.localCart.filter(product => product.id === id)[0].quantity += 1
   },
   removeFromLocalCartByIndex: (state, index) => {

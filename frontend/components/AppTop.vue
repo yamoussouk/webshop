@@ -2,19 +2,19 @@
   <div class="header_banner">
     <div class="header_banner_icons">
       <a class="header_banner_icon" href="#">
-        <img src="/page_assets/facebook.png" alt="facebook" />
+        <img src="/page_assets/facebook.png" alt="facebook">
       </a>
       <a class="header_banner_icon" href="#">
-        <img src="/page_assets/tumblr.png" alt="tumblr" />
+        <img src="/page_assets/tumblr.png" alt="tumblr">
       </a>
       <a class="header_banner_icon" href="#">
-        <img src="/page_assets/pinterest.png" alt="pinterest" />
+        <img src="/page_assets/pinterest.png" alt="pinterest">
       </a>
       <a class="header_banner_icon" href="#">
-         <img src="/page_assets/instagram.png" alt="instagram" />
+        <img src="/page_assets/instagram.png" alt="instagram">
       </a>
       <a class="header_banner_icon" href="#">
-          <img src="/page_assets/etsy.png" alt="etsy" />
+        <img src="/page_assets/etsy.png" alt="etsy">
       </a>
     </div>
     <div class="header_banner_text">
@@ -22,22 +22,22 @@
       <span class="header_banner_text_bottom">PRINTABLE PLANNERS, LOGO DESIGN AND ILLUSTRATION</span>
     </div>
     <div class="header_cart">
-        <app-cart :cartItems="cart"></app-cart>
-      </div>
+      <app-cart :cartItems="cart" />
     </div>
+  </div>
 </template>
 
 <script>
 import AppCart from '~/components/AppCart.vue'
 
 export default {
+  components: {
+    AppCart
+  },
   data () {
     return {
       cart: this.$store.state.localStorage.localCart
     }
-  },
-  components: {
-    AppCart
   },
   computed: {
     cartCount () {

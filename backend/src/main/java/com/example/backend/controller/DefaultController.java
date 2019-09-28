@@ -2,8 +2,10 @@ package com.example.backend.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import com.example.backend.command.ProductCommand;
+import com.example.backend.model.Image;
 import com.example.backend.model.Product;
 import com.example.backend.service.ProductService;
 import com.example.backend.converter.ProductToProductCommand;
@@ -35,5 +37,10 @@ public class DefaultController {
     @GetMapping("/default/product/{id}")
     public Product getProductById(@PathVariable(name = "id") String id) {
         return productService.findById(new Long(id));
+    }
+
+    @GetMapping("/default/product/{id}/images")
+    public Set<Image> getProductImages(@PathVariable(name = "id") String id) {
+        return productService.findById(new Long(id)).getImages();
     }
 }

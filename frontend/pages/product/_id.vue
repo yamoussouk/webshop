@@ -1,41 +1,41 @@
 <template>
-    <div class="single_product">
-      <!-- <bread-crumb :title="product.name" :to="this.$route.params.from" /> -->
-      <div class="product_wrapper">
-        <div class="product_image_wrapper" ref="product_image_wrapper">
-          <div class="product_images">
-            <!-- <image-carousel :images="product.image"></image-carousel> -->
-          </div>
-          <div class="product_price">
-            <span>$ {{ product.price }}</span>
-          </div>
-          <div class="product_cart_buttons">
-              <button class="product_add_to_cart_button" @click="add(product)">Add to cart</button>
-              <button class="product_quick_buy_button">Buy Now</button>
-          </div>
+  <div class="single_product">
+    <bread-crumb :title="product.name" />
+    <div class="product_wrapper">
+      <div ref="product_image_wrapper" class="product_image_wrapper">
+        <div class="product_images">
+          <image-carousel :images="product.images" />
         </div>
-        <div class="summary" ref="summary">
-          <div class="product_details" ref="product_details">
-            <p>{{ product.longDescription }}</p>
-          </div>
+        <div class="product_price">
+          <span>$ {{ product.price }}</span>
+        </div>
+        <div class="product_cart_buttons">
+          <button class="product_add_to_cart_button" @click="add(product)">
+            Add to cart
+          </button>
+          <button class="product_quick_buy_button">
+            Buy Now
+          </button>
+        </div>
+      </div>
+      <div ref="summary" class="summary">
+        <div ref="product_details" class="product_details">
+          <p>{{ product.longDescription }}</p>
         </div>
       </div>
     </div>
+  </div>
 </template>
 
 <script>
-// import Vue from 'vue'
-import { mapGetters } from 'vuex'
 import axios from 'axios'
-// import AsyncComputed from 'vue-async-computed'
-// import BreadCrumb from '~/components/BreadCrumb.vue'
+import BreadCrumb from '~/components/BreadCrumb.vue'
 // eslint-disable-next-line
 import ImageCarousel from '~/components/ImageCarousel.vue'
-// Vue.use(AsyncComputed)
 
 export default {
   components: {
-    // BreadCrumb,
+    BreadCrumb,
     // eslint-disable-next-line
     ImageCarousel
   },
@@ -45,40 +45,17 @@ export default {
   data () {
     return {
       id: parseInt(this.$route.params.id),
-      marginBottom: '0px',
-      height: '0px',
-      cart: []
+      cart: [],
+      product: {}
     }
   },
-  asyncComputed: {
-    ...mapGetters(['getProducts']),
-    product () {
-      if (this.getProducts.length) {
-        return this.getProducts.find(el => el.id === this.id)
-      } else {
-        console.log('else')
-        // return Promise.resolve(this.getProductsByAxios())
-        // console.log(temp)
-        // return temp
-        return axios.get('http://localhost:8083/default/product/' + this.id)
-          .then(response => response.data)
-      }
-    }
-  },
-  created () {
-    // this.fetchData()
+  async asyncData ({ params }) {
+    const { data } = await axios.get(`http://localhost:8083/default/product/${params.id}`)
+    return { product: data }
   },
   methods: {
-    getProductsByAxios () {
-      return new Promise((resolve, reject) => {
-        axios.get('http://localhost:8083/default/product/' + this.id
-        ).then((response) => {
-          // console.log(response.data)
-          resolve(response.data)
-        })
-      })
-      // console.log(product)
-      // return product
+    currentImage () {
+      return '/images/1/' + this.product.images[this.activeImage].imageUrl
     },
     addProductToLocalCart (product) {
       this.$store.commit('localStorage/addToLocalCart', this.simplifyProduct(product))
@@ -102,15 +79,6 @@ export default {
         this.addProductToLocalCart(product)
       } else {
         this.increaseQuantityOnLocalCart(product.id)
-      }
-    },
-    fetchData () {
-      const _this = this
-      if (!this.$store.state.products.length) {
-        this.$store.dispatch('setProductsByAxios', { callback: () => {
-          console.log('callback')
-          _this.product = _this.$store.state.products.find(el => el.id === _this.id)
-        } })
       }
     }
   }

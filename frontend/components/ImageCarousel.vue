@@ -1,32 +1,40 @@
 <template>
-    <div class="card-carousel">
-        <div class="card-img">
-            <img :src="currentImage" alt="">
-            <div class="actions">
-                <span @click="prevImage" class="prev">
-                    &#8249;
-                </span>
-                <span @click="nextImage" class="next">
-                    &#8250;
-                </span>
-            </div>
-        </div>
-        <div class="thumbnails">
-            <div
-                v-for="(image, index) in  images"
-                :key="image.id"
-                :class="['thumbnail-image', (activeImage == index) ? 'active' : '']"
-                @click="activateImage(index)"
-            >
-                <img :src="'images/1/' + image.imageUrl">
-            </div>
-        </div>
+  <div class="card-carousel">
+    <div class="card-img">
+      <img :src="currentImage" alt="">
+      <div class="actions">
+        <span class="prev" @click="prevImage">
+          &#8249;
+        </span>
+        <span class="next" @click="nextImage">
+          &#8250;
+        </span>
+      </div>
     </div>
+    <div class="thumbnails">
+      <div
+        v-for="(image, index) in images"
+        :key="image.id"
+        :class="['thumbnail-image', (activeImage == index) ? 'active' : '']"
+        @click="activateImage(index)"
+      >
+        <img :src="'/images/1/' + image.imageUrl">
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
 export default {
   name: 'Carousel',
+  props: {
+    images: {
+      type: Array,
+      default: () => {
+        return []
+      }
+    }
+  },
   data () {
     return {
       activeImage: 0
@@ -34,9 +42,7 @@ export default {
   },
   computed: {
     currentImage () {
-      // eslint-disable-next-line
-      this.timeLeft = this.autoSlideInterval
-      return 'images/1/' + this.images[this.activeImage].imageUrl
+      return '/images/1/' + this.images[this.activeImage].imageUrl
     }
   },
   methods: {
@@ -57,13 +63,7 @@ export default {
     activateImage (imageIndex) {
       this.activeImage = imageIndex
     }
-  },
-  created () {
-    if (this.startingImage && this.startingImage >= 0 && this.startingImage < this.images.length) {
-      this.activeImage = this.startingImage
-    }
-  },
-  props: ['images']
+  }
 }
 </script>
 
