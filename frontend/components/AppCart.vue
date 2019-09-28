@@ -1,19 +1,23 @@
 <template>
-    <div>
-        <!-- Modal -->
-        <b-modal id="cart-modal" hide-footer>
-            <app-cart-modal :cartItems="cartItems"></app-cart-modal>
-            <b-button class="mt-3" block @click="$bvModal.hide('cart-modal')">OK</b-button>
-            <nuxt-link to="/checkout">
-              <b-button class="mt-3" v-show="cartItems.length > 0" block @click="$bvModal.hide('cart-modal')">Go to checkout page</b-button>
-            </nuxt-link>
-        </b-modal>
-        <div class="cart-wrapper">
-          <a v-b-modal.cart-modal v-bind:class="{ cartWithItem: cartItems.length > 0 }">
-              <img :src="cartSource" alt="cart" /><span v-show="cartItems.length > 0"> {{cartItems.length}}</span>
-          </a>
-        </div>
+  <div>
+    <!-- Modal -->
+    <b-modal id="cart-modal" hide-footer>
+      <app-cart-modal :cart-items="cartItems" />
+      <b-button class="mt-3" block @click="$bvModal.hide('cart-modal')">
+        OK
+      </b-button>
+      <nuxt-link to="/checkout">
+        <b-button v-show="cartItems.length > 0" class="mt-3" block @click="$bvModal.hide('cart-modal')">
+          Go to checkout page
+        </b-button>
+      </nuxt-link>
+    </b-modal>
+    <div class="cart-wrapper">
+      <a v-b-modal.cart-modal :class="{ cartWithItem: cartItems.length > 0 }">
+        <img :src="cartSource" alt="cart"><span v-show="cartItems.length > 0"> {{ cartItems.length }}</span>
+      </a>
     </div>
+  </div>
 </template>
 
 <script>
@@ -24,7 +28,12 @@ export default {
     AppCartModal
   },
   props: {
-    cartItems: Array
+    cartItems: {
+      type: Array,
+      default: () => {
+        return []
+      }
+    }
   },
   computed: {
     cartSource () {

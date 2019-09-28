@@ -1,23 +1,33 @@
 <template>
-<nav class="menu_wrapper">
-  <ul>
-    <li>
-      <nuxt-link exact to="/">HOME</nuxt-link>
-    </li>
-    <li>
-      <nuxt-link to="/shop">SHOP</nuxt-link>
-    </li>
-    <li>
-      <nuxt-link to="/freebies">FREEBIES</nuxt-link>
-    </li>
-    <li>
-      <nuxt-link to="/aboutme">ABOUT ME</nuxt-link>
-    </li>
-    <li>
-      <nuxt-link to="/contact">CONTACT</nuxt-link>
-    </li>
-  </ul>
-</nav>
+  <nav class="menu_wrapper">
+    <ul>
+      <li>
+        <nuxt-link exact to="/">
+          HOME
+        </nuxt-link>
+      </li>
+      <li>
+        <nuxt-link to="/shop">
+          SHOP
+        </nuxt-link>
+      </li>
+      <li>
+        <nuxt-link to="/freebies">
+          FREEBIES
+        </nuxt-link>
+      </li>
+      <li>
+        <nuxt-link to="/aboutme">
+          ABOUT ME
+        </nuxt-link>
+      </li>
+      <li>
+        <nuxt-link to="/contact">
+          CONTACT
+        </nuxt-link>
+      </li>
+    </ul>
+  </nav>
 </template>
 
 <style>

@@ -1,42 +1,49 @@
 <template>
-    <div>
-        <!-- Modal -->
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <table v-if="cartItems.length !== 0" class="table table-cart">
-                        <thead>
-                            <th>Product</th>
-                            <th>Quantity</th>
-                            <th>Price</th>
-                            <th></th>
-                        </thead>
-                        <tbody>
-                            <tr v-for="(item, index) in cartItems" v-bind:key="item">
-                                <td>{{ item.name }}</td>
-                                <td>{{ item.quantity }}</td>
-                                <td>{{ item.price }}</td>
-                                <td><span class="glyphicon glyphicon-remove" @click="removeFromCart(index)">X</span></td>
-                            </tr>
-                        </tbody>
-                        <tfoot>
-                            <td><b>Total:</b></td>
-                            <td></td>
-                            <td>{{ total }}</td>
-                            <td></td>
-                        </tfoot>
-                    </table>
-                    <p v-else>Cart is empty</p>
-                </div>
-            </div>
+  <div>
+    <!-- Modal -->
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          <table v-if="cartItems.length !== 0" class="table table-cart">
+            <thead>
+              <th>Product</th>
+              <th>Quantity</th>
+              <th>Price</th>
+              <th />
+            </thead>
+            <tbody>
+              <tr v-for="(item, index) in cartItems" :key="item">
+                <td>{{ item.name }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>{{ item.price }}</td>
+                <td><span class="glyphicon glyphicon-remove" @click="removeFromCart(index)">X</span></td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <td><b>Total:</b></td>
+              <td />
+              <td>{{ total }}</td>
+              <td />
+            </tfoot>
+          </table>
+          <p v-else>
+            Cart is empty
+          </p>
         </div>
+      </div>
     </div>
+  </div>
 </template>
 
 <script>
 export default {
   props: {
-    cartItems: Array
+    cartItems: {
+      type: Array,
+      default: () => {
+        return []
+      }
+    }
   },
   computed: {
     total () {

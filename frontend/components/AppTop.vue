@@ -22,7 +22,7 @@
       <span class="header_banner_text_bottom">PRINTABLE PLANNERS, LOGO DESIGN AND ILLUSTRATION</span>
     </div>
     <div class="header_cart">
-      <app-cart :cartItems="cart" />
+      <app-cart :cart-items="cart" />
     </div>
   </div>
 </template>

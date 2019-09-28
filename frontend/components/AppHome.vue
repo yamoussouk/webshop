@@ -2,15 +2,17 @@
   <div class="main_section">
     <div class="wrap">
       <div class="wrap-inner">
-        <div class="one-sixth"></div>
+        <div class="one-sixth" />
         <div class="five-sixth">
           <div class="column">
             <div class="home_page_box">
               <div class="grey_line_wrapper left_align">
-                <span class="grey_line"></span>
+                <span class="grey_line" />
               </div>
               <div class="text_wrapper left_align">
-                <nuxt-link to="/shop">SHOP</nuxt-link>
+                <nuxt-link to="/shop">
+                  SHOP
+                </nuxt-link>
               </div>
             </div>
           </div>
@@ -24,29 +26,33 @@
           <div class="column">
             <div class="home_page_box">
               <div class="grey_line_wrapper right_align">
-                <span class="grey_line"></span>
+                <span class="grey_line" />
               </div>
               <div class="text_wrapper right_align">
-                <nuxt-link to="/freebies">FREEBIES</nuxt-link>
+                <nuxt-link to="/freebies">
+                  FREEBIES
+                </nuxt-link>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="one-sixth"></div>
+      <div class="one-sixth" />
     </div>
 
     <div class="wrap">
       <div class="wrap-inner">
-        <div class="one-sixth"></div>
+        <div class="one-sixth" />
         <div class="five-sixth">
           <div class="column">
             <div class="home_page_box">
               <div class="grey_line_wrapper left_align">
-                <span class="grey_line"></span>
+                <span class="grey_line" />
               </div>
               <div class="text_wrapper left_align">
-                <nuxt-link to="/aboutme">ABOUT ME</nuxt-link>
+                <nuxt-link to="/aboutme">
+                  ABOUT ME
+                </nuxt-link>
               </div>
             </div>
           </div>
@@ -60,16 +66,18 @@
           <div class="column">
             <div class="home_page_box">
               <div class="grey_line_wrapper right_align">
-                <span class="grey_line"></span>
+                <span class="grey_line" />
               </div>
               <div class="text_wrapper right_align">
-                <nuxt-link to="/contact">CONTACT</nuxt-link>
+                <nuxt-link to="/contact">
+                  CONTACT
+                </nuxt-link>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="one-sixth"></div>
+      <div class="one-sixth" />
     </div>
   </div>
 </template>

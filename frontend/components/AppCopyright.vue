@@ -1,6 +1,8 @@
 <template>
   <div class="app_copyright">
-    <p class="copyright">&#169; 2019 Create Yourself Designs. All rights reserved. Created by lechero.</p>
+    <p class="copyright">
+      &#169; 2019 Create Yourself Designs. All rights reserved. Created by lechero.
+    </p>
   </div>
 </template>
 

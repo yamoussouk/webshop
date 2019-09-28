@@ -2,19 +2,25 @@
   <div class="sign_up_form">
     <h1>Sign up for my NewsLetter</h1>
     <div class="emaillist">
-      <form v-on:submit="signUp" action="#" method="post">
-        <input v-model="email" placeholder="e-mail" />
-        <button type="submit">Sign Up</button>
+      <form action="#" method="post" @submit="signUp">
+        <input v-model="email" placeholder="e-mail">
+        <button type="submit">
+          Sign Up
+        </button>
       </form>
-      <p class="emaillist_error" v-if="errors.length">
+      <p v-if="errors.length" class="emaillist_error">
         <b>Please correct the following error(s):</b>
         <ul>
-          <li v-for="error in errors" v-bind:key="error">{{ error }}</li>
+          <li v-for="error in errors" :key="error">
+            {{ error }}
+          </li>
         </ul>
       </p>
-      <p class="emaillist_answer" v-if="answers.length">
+      <p v-if="answers.length" class="emaillist_answer">
         <ul>
-          <li v-for="answer in answers" v-bind:key="answer">{{ answer }}</li>
+          <li v-for="answer in answers" :key="answer">
+            {{ answer }}
+          </li>
         </ul>
       </p>
     </div>
