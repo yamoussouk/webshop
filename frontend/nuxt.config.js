@@ -29,7 +29,8 @@ export default {
   */
   plugins: [
     { src: '~/plugins/vueinstagram.js', mode: 'client' },
-    { src: '~/plugins/vuecarousel.js', mode: 'client' }
+    { src: '~/plugins/vuecarousel.js', mode: 'client' },
+    { src: '~/plugins/vueasynccomputed.js' }
   ],
   /*
   ** Nuxt.js dev-modules
