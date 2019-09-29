@@ -11,7 +11,7 @@
               <th />
             </thead>
             <tbody>
-              <tr v-for="(item, index) in cart" :key="item">
+              <tr v-for="(item, index) in cart" :key="item.id">
                 <td>{{ item.name }}</td>
                 <td>{{ item.quantity }}</td>
                 <td>{{ item.price }}</td>
@@ -44,7 +44,7 @@
               <b-form-input
                 id="order-owner"
                 v-model="form.owner"
-                type="string"
+                type="text"
                 required
                 placeholder="Enter owner"
               />
@@ -86,7 +86,7 @@
               Confirm
             </button>
             <span v-show="errors.length > 0" class="errors">
-              <span v-for="error in errors" :key="error">
+              <span v-for="error in errors" :key="error.id">
                 {{ error }}
               </span>
             </span>

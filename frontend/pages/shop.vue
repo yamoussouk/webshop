@@ -11,7 +11,7 @@
           <!-- TODO: replace 1 with id of the product.
         First, make crud actions which creates the folder of the images based on the product's id -->
           <carousel :per-page="4" :mouse-drag="false" :center-mode="true" :pagination-enabled="false">
-            <slide v-for="planner in printablePlanners" :key="planner">
+            <slide v-for="planner in printablePlanners" :key="planner.id">
               <img :src="'/images/1/' + planner.image[0].imageUrl">
             </slide>
           </carousel>
@@ -26,7 +26,7 @@
         <div class="shop_sub_carousel right_align">
           <!-- replace it with valid category products -->
           <carousel :per-page="4" :mouse-drag="false" :center-mode="true" :pagination-enabled="false">
-            <slide v-for="planner in printablePlanners" :key="planner">
+            <slide v-for="planner in printablePlanners" :key="planner.id">
               <img :src="'/images/1/' + planner.image[0].imageUrl">
             </slide>
           </carousel>
@@ -41,7 +41,7 @@
         <div class="shop_sub_carousel left_align">
           <!-- replace it with valid category products -->
           <carousel :per-page="4" :mouse-drag="false" :center-mode="true" :pagination-enabled="false">
-            <slide v-for="planner in printablePlanners" :key="planner">
+            <slide v-for="planner in printablePlanners" :key="planner.id">
               <img :src="'/images/1/' + planner.image[0].imageUrl">
             </slide>
           </carousel>
@@ -56,7 +56,7 @@
         <div class="shop_sub_carousel right_align">
           <!-- replace it with valid category products -->
           <carousel :per-page="4" :mouse-drag="false" :center-mode="true" :pagination-enabled="false">
-            <slide v-for="planner in printablePlanners" :key="planner">
+            <slide v-for="planner in printablePlanners" :key="planner.id">
               <img :src="'/images/1/' + planner.image[0].imageUrl">
             </slide>
           </carousel>

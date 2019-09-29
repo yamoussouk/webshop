@@ -46,6 +46,6 @@ export const actions = {
     commit('removeFromLocalCartByIndex', index)
   },
   emptyLocalCart: ({ commit }) => {
-    commit('emptyCart')
+    commit('emptyLocalCart')
   }
 }

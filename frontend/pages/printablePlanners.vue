@@ -7,10 +7,10 @@
       </div>
       <div class="shop_inner">
         <ul class="products_wrapper">
-          <li v-for="product in filteredList" :key="product" class="product">
+          <li v-for="product in filteredList" :key="product.id" class="product">
             <div class="image_frame">
               <div class="image_wrapper">
-                <nuxt-link :to="{name: `product/${product.id}`, params: {products: filteredList, from: 'printablePlanners'}}">
+                <nuxt-link :to="`product/${product.id}`">
                   <!-- TODO: change 1 to valid id -->
                   <img :src="'/images/1/' + product.image[0].imageUrl" alt="product image">
                 </nuxt-link>

@@ -12,7 +12,7 @@
               <th />
             </thead>
             <tbody>
-              <tr v-for="(item, index) in cartItems" :key="item">
+              <tr v-for="(item, index) in cartItems" :key="item.id">
                 <td>{{ item.name }}</td>
                 <td>{{ item.quantity }}</td>
                 <td>{{ item.price }}</td>

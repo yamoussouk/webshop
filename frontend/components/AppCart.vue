@@ -27,15 +27,10 @@ export default {
   components: {
     AppCartModal
   },
-  props: {
-    cartItems: {
-      type: Array,
-      default: () => {
-        return []
-      }
-    }
-  },
   computed: {
+    cartItems () {
+      return this.$store.state.localStorage.localCart
+    },
     cartSource () {
       return this.$store.state.localStorage.localCartCount > 0 ? '/page_assets/cart_white.png' : '/page_assets/cart_black.png'
     },
