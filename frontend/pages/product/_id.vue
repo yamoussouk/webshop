@@ -13,7 +13,7 @@
           <button class="product_add_to_cart_button" @click="add(product)">
             Add to cart
           </button>
-          <button class="product_quick_buy_button">
+          <button class="product_quick_buy_button" @click="buynow(product)">
             Buy Now
           </button>
         </div>
@@ -80,6 +80,10 @@ export default {
       } else {
         this.increaseQuantityOnLocalCart(product.id)
       }
+    },
+    buynow (product) {
+      this.add(product)
+      this.$router.push('/checkout')
     }
   }
 }
