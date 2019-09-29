@@ -169,7 +169,6 @@ export default {
         this.errors = []
       }
       if (!this.errors.length) {
-        const formData = new FormData()
         const formObject = {
           'price': this.total,
           'purchaseTime': new Date().getTime(),
@@ -180,9 +179,6 @@ export default {
         const headers = {
           'Content-Type': 'application/json'
         }
-        console.log(JSON.stringify(formObject))
-        console.log(headers)
-        formData.append('newOrder', formObject)
         // eslint-disable-next-line
         axios.post('http://localhost:8083/order/add', JSON.stringify(formObject), {
           // eslint-disable-next-line

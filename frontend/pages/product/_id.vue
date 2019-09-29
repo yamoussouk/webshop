@@ -34,14 +34,14 @@ import BreadCrumb from '~/components/BreadCrumb.vue'
 import ImageCarousel from '~/components/ImageCarousel.vue'
 
 export default {
+  validate ({ params }) {
+    return /^\d+$/.test(params.id)
+  },
   components: {
     BreadCrumb,
     // eslint-disable-next-line
     ImageCarousel
   },
-  /* validate ([params]) {
-    return /^\d+$/.test(params.id)
-  }, */
   data () {
     return {
       id: parseInt(this.$route.params.id),
