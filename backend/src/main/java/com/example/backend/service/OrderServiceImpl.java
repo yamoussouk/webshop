@@ -21,12 +21,8 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Map<String, Object> addOrder(Map<String, Object> newOrder) {
-        return JsonConverter.convertOrderToJson(
-                this.ordersRepository.save(
-                        JsonConverter.convertJsonToOrder(newOrder)
-                )
-        );
+    public void addOrder(Orders newOrder) {
+        this.ordersRepository.save(newOrder);
     }
 
     @Override

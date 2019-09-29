@@ -18,6 +18,7 @@ public class Orders {
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonBackReference
     private User user;
+    private String email;
     
     @ManyToMany(fetch = FetchType.LAZY)
     private List<Product> products = new ArrayList<>();
@@ -67,5 +68,13 @@ public class Orders {
 
     public void setOneProduct(Product product) {
         this.products.add(product);
+    }
+
+    public String getEmail() {
+        return this.email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

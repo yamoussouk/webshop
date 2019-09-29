@@ -7,7 +7,7 @@ import java.util.Map;
 
 public interface OrderService {
 
-    Map<String, Object> addOrder(Map<String, Object> newOrder);
+    void addOrder(Orders newOrder);
     Orders findByOrderId(Long orderId);
     List<Orders> findByUserId(Long userId);
     List<Orders> findAllOrder();

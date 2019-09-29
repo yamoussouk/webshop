@@ -15,7 +15,7 @@ public class OrderController {
 
     public OrderController(OrderService orderService) {
         this.orderService = orderService;
-    }
+}
 
     //TODO: Exception handling
 
@@ -26,8 +26,8 @@ public class OrderController {
      */
     //TODO: send email
     @PostMapping("/add")
-    public Map<String, Object> addOrder(@RequestBody Map<String, Object> newOrder) {
-        return orderService.addOrder(newOrder);
+    public void addOrder(@RequestBody Orders newOrder) {
+        orderService.addOrder(newOrder);
     }
 
     /**
