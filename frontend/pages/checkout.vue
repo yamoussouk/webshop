@@ -96,7 +96,7 @@
     </b-container>
     <div v-else class="empty-cart">
       <div v-show="success" class="order-result">
-          <p>{{ message }}</p>
+        <p>{{ message }}</p>
       </div>
       <div class="empty-message">
         <p>Cart is empty</p>

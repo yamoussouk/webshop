@@ -38,6 +38,12 @@ public class AdminController {
         return this.productService.getProducts();
     }*/
 
+    @GetMapping("admin/products/all")
+    public List<Product> getAllProducts() {
+        List<Product> products =  this.productService.getProducts();
+        return products;
+    }
+
     @PostMapping("/admin/add/new/product")
     public void addNewProduct(@RequestParam("model") String product, @RequestParam("files") String[] files) {
         Product p = mapProduct(product);

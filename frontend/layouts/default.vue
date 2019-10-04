@@ -17,6 +17,14 @@ export default {
     AppTop,
     AppNav,
     AppFooter
+  },
+  data () {
+    return {
+      route: this.$route.name
+    }
+  },
+  mounted () {
+    console.log(this.$route.name)
   }
 }
 </script>

@@ -1,8 +1,11 @@
+const cookieparser = process.server ? require('cookieparser') : undefined
+
 export const state = () => ({
   cartUIStatus: 'idle',
   cart: [],
   products: [],
-  tempImages: []
+  tempImages: [],
+  auth: null
 })
 
 export const getters = {
@@ -53,6 +56,10 @@ export const mutations = {
   },
   clearTempImages: (state) => {
     state.tempImages = []
+  },
+  setAuth (state, auth) {
+    state.auth = auth
+    console.log(state.auth)
   }
 }
 
@@ -77,5 +84,19 @@ export const actions = {
   },
   clearTempImages: ({ commit }) => {
     commit('clearTempImages')
+  },
+  nuxtServerInit ({ commit }, { req }) {
+    let auth = null
+    if (req.headers.cookie) {
+      const parsed = cookieparser.parse(req.headers.cookie)
+      try {
+        auth = {
+          'token': parsed.auth
+        }
+      } catch (err) {
+        // No valid cookie found
+      }
+    }
+    commit('setAuth', auth)
   }
 }
