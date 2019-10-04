@@ -32,6 +32,9 @@ export const getters = {
   },
   getTempImages: (state) => {
     return state.tempImages
+  },
+  auth: (state) => {
+    return state.auth
   }
 }
 
@@ -91,7 +94,7 @@ export const actions = {
       const parsed = cookieparser.parse(req.headers.cookie)
       try {
         auth = {
-          'token': parsed.auth
+          'accessToken': parsed.auth
         }
       } catch (err) {
         // No valid cookie found

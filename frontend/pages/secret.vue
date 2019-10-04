@@ -9,10 +9,20 @@
 
 <script>
 import axios from 'axios'
+import { mapGetters } from 'vuex'
+
 export default {
   middleware: 'authenticated',
+  computed: {
+    ...mapGetters(['auth'])
+  },
   created () {
-    axios.get('http://localhost:8083/admin/products/all'
+    const config = {
+      headers: {
+        'Authorization': this.auth.accessToken
+      }
+    }
+    axios.get('http://localhost:8083/admin/products/all', config
     ).then((response) => {
       console.log(response.data)
     })
