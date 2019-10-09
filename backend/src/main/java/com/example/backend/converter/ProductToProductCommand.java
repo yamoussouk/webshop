@@ -1,7 +1,9 @@
 package com.example.backend.converter;
 
+import com.example.backend.command.ImageCommand;
 import com.example.backend.command.ProductCommand;
 import com.example.backend.model.Category;
+import com.example.backend.model.Image;
 import com.example.backend.model.Product;
 import lombok.Synchronized;
 import org.springframework.core.convert.converter.Converter;
@@ -17,7 +19,10 @@ import javax.validation.constraints.NotNull;
 @Component
 public class ProductToProductCommand implements Converter<Product, ProductCommand> {
 
+    final ImageToImageCommand imageToImageCommand;
+
     public ProductToProductCommand() {
+        this.imageToImageCommand = new ImageToImageCommand();
     }
 
     @Synchronized
@@ -41,7 +46,11 @@ public class ProductToProductCommand implements Converter<Product, ProductComman
         productCommand.setName(product.getName());
         productCommand.setPrice(product.getPrice());
         productCommand.setQuantity(product.getQuantity());
-        productCommand.setImage(product.getImages());
+        Set<ImageCommand> images = new HashSet<ImageCommand>();
+        for (Image i : product.getImages()) {
+            images.add(this.imageToImageCommand.convert(i));
+        }
+        productCommand.setImage(images);
         return productCommand;
     }
 }

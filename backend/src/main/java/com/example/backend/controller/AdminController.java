@@ -1,10 +1,12 @@
 package com.example.backend.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.example.backend.model.Categories;
+import com.example.backend.model.Category;
 import com.example.backend.model.Image;
 import com.example.backend.model.Product;
 import com.example.backend.model.SignUpEmail;
+import com.example.backend.dto.ProductDto;
+import com.example.backend.repository.CategoryRepository;
 import com.example.backend.repository.SignUpRepository;
 import com.example.backend.service.ImageService;
 import com.example.backend.service.ProductService;
@@ -25,11 +27,13 @@ public class AdminController {
     private final ImageService imageService;
     private final ProductService productService;
     private final SignUpRepository signUpRepository;
+    private final CategoryRepository categoryRepository;
 
-    public AdminController(ImageService imageService, ProductService productService, SignUpRepository signUpRepository) {
+    public AdminController(ImageService imageService, ProductService productService, SignUpRepository signUpRepository, CategoryRepository categoryRepository) {
         this.imageService = imageService;
         this.productService = productService;
         this.signUpRepository = signUpRepository;
+        this.categoryRepository = categoryRepository;
     }
 
     //@PreAuthorize("hasRole('ADMIN')")
@@ -45,13 +49,16 @@ public class AdminController {
     }
 
     @PostMapping("/admin/add/new/product")
-    public void addNewProduct(@RequestParam("model") String product, @RequestParam("files") String[] files) {
+    public void addNewProduct(@RequestParam("product") String product, @RequestParam("imagefile") MultipartFile[] file) {
+        // Product p = convertdtoToProduct(product);
         Product p = mapProduct(product);
-        for (String id : files) {
-            Image i = imageService.findById(Long.valueOf(id));
-            Objects.requireNonNull(p).setOneImage(i);
+        Set<Image> fileSet = new HashSet<Image>();
+        for (MultipartFile i : file) {
+            Image img = imageService.saveImageFile(p.getId(), i);
+            fileSet.add(img);
         }
-        productService.saveProduct(p);
+        p.setImages(fileSet);
+        this.productService.saveProduct(p);
     }
 
     @PostMapping("/admin/update/product")
@@ -77,15 +84,39 @@ public class AdminController {
 
     private Product mapProduct(String product) {
         ObjectMapper mapper = new ObjectMapper();
-        Product p = null;
+        ProductDto p = null;
         try {
-            p = mapper.readValue(product, Product.class);
+
+            p = mapper.readValue(product, ProductDto.class);
         } catch (IOException e) {
             e.printStackTrace();
         }
+        Product pr = convertdtoToProduct(p);
+        return this.productService.saveProduct(pr);
+    }
+
+    private Product convertdtoToProduct (ProductDto dto) {
+        Product p = new Product();
+        p.setName(dto.getName());
+        p.setShortDescription(dto.getShortDescription());
+        p.setLongDescription(dto.getLongDescription());
+        p.setPrice(dto.getPrice());
+        p.setQuantity(1);
+        p.setDownloadLink(dto.getDownloadLink());
+        p.setEnabled(dto.getEnabled());
+        p.setCategory(getCategories(dto.getCategories()));
+        // continue with categories!!!!
         return p;
     }
 
+    private Set<Category> getCategories (List<String> categories) {
+        Set<Category> cat = new HashSet<Category>();
+        for (String c : categories) {
+            Category temp = this.categoryRepository.findByName(c);
+            cat.add(temp);
+        }
+        return cat;
+    }
     @PostMapping("/admin/add/new/image")
     public List<Image> addNewImage(@RequestParam MultipartFile[] files) {
         for (MultipartFile file : files) {

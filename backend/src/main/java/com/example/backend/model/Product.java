@@ -19,6 +19,7 @@ public class Product {
     private double price;
     private Integer quantity;
     private String downloadLink;
+    private boolean enabled;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
@@ -143,5 +144,13 @@ public class Product {
 
     public String getDownloadLink () {
         return this.downloadLink;
+    }
+
+    public boolean getEnabled () {
+        return this.enabled;
+    }
+
+    public void setEnabled (boolean enabled) {
+        this.enabled = enabled;
     }
 }

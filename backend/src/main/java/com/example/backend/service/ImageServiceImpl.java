@@ -22,8 +22,10 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 @Slf4j
 @Service
@@ -48,8 +50,9 @@ public class ImageServiceImpl implements ImageService {
 
     @Override
     @Transactional
-    public void saveImageFile(Long productId, MultipartFile file) {
+    public Image saveImageFile(Long productId, MultipartFile file) {
         if (file.isEmpty()) {
+            return null;
             //log.error("File is empty");
         }
         try {
@@ -58,15 +61,24 @@ public class ImageServiceImpl implements ImageService {
             if (!new File(UPLOADED_FOLDER + productId).exists()) {
                 new File(UPLOADED_FOLDER + productId).mkdirs();
             }
-            Path path = Paths.get(UPLOADED_FOLDER + productId + "//" + file.getOriginalFilename());
+            int r = new Random().nextInt(10000);
+            System.out.println(file.getOriginalFilename());
+            String[] temp = file.getOriginalFilename().split("\\.");
+            long time = new Date().getTime();
+            System.out.println(new Date(time));
+            String name = time + "_" + r + "." + temp[temp.length - 1];
+            Path path = Paths.get(UPLOADED_FOLDER + productId + "//" + name);
             Image uploadedImage = new Image();
-            uploadedImage.setImageUrl(file.getOriginalFilename());
+            uploadedImage.setImageUrl(name);
             uploadedImage.setOneProduct(product);
+            uploadedImage.setSavedTime(new Date(time));
             Files.write(path, bytes);
             imageRepository.save(uploadedImage);
+            return uploadedImage;
         } catch (IOException e) {
             //log.error("Error occurred", e);
             e.printStackTrace();
+            return null;
         }
     }
 

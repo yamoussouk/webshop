@@ -35,8 +35,9 @@ public class DefaultController {
     }
 
     @GetMapping("/default/product/{id}")
-    public Product getProductById(@PathVariable(name = "id") String id) {
-        return productService.findById(new Long(id));
+    public ProductCommand getProductById(@PathVariable(name = "id") String id) {
+        Product p = productService.findById(new Long(id));
+        return productToProductCommand.convert(p);
     }
 
     @GetMapping("/default/product/{id}/images")

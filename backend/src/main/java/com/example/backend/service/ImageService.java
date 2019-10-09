@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface ImageService {
 
-    void saveImageFile(Long recipeId, MultipartFile file);
+    Image saveImageFile(Long recipeId, MultipartFile file);
     void saveOneImage(MultipartFile file);
     void renderImage(Long id, String imageUrl, HttpServletResponse response) throws IOException;
     void deleteImage(Product product, String imageUrl);
