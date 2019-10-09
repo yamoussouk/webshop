@@ -5,11 +5,13 @@ import com.example.backend.model.Category;
 import com.example.backend.model.Image;
 import com.example.backend.model.Product;
 import com.example.backend.model.SignUpEmail;
+import com.example.backend.command.ProductCommand;
 import com.example.backend.dto.ProductDto;
 import com.example.backend.repository.CategoryRepository;
 import com.example.backend.repository.SignUpRepository;
 import com.example.backend.service.ImageService;
 import com.example.backend.service.ProductService;
+import com.example.backend.converter.ProductToProductCommand;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +30,7 @@ public class AdminController {
     private final ProductService productService;
     private final SignUpRepository signUpRepository;
     private final CategoryRepository categoryRepository;
+    private final ProductToProductCommand productToProductCommand = new ProductToProductCommand();
 
     public AdminController(ImageService imageService, ProductService productService, SignUpRepository signUpRepository, CategoryRepository categoryRepository) {
         this.imageService = imageService;
@@ -43,9 +46,13 @@ public class AdminController {
     }*/
 
     @GetMapping("admin/products/all")
-    public List<Product> getAllProducts() {
+    public List<ProductCommand> getAllProducts() {
         List<Product> products =  this.productService.getProducts();
-        return products;
+        List<ProductCommand> returnedValue = new ArrayList<ProductCommand>();
+        for (Product p : products) {
+            returnedValue.add(productToProductCommand.convert(p));
+        }
+        return returnedValue;
     }
 
     @PostMapping("/admin/add/new/product")
@@ -97,6 +104,8 @@ public class AdminController {
 
     private Product convertdtoToProduct (ProductDto dto) {
         Product p = new Product();
+        // TODO: remove it when reset autogeneration
+        p.setId(dto.getId());
         p.setName(dto.getName());
         p.setShortDescription(dto.getShortDescription());
         p.setLongDescription(dto.getLongDescription());

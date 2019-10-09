@@ -4,7 +4,7 @@
     <div class="product_wrapper">
       <div ref="product_image_wrapper" class="product_image_wrapper">
         <div class="product_images">
-          <image-carousel :images="product.image" />
+          <image-carousel :images="product.image" :id="product.id" />
         </div>
         <div class="product_price">
           <span>$ {{ product.price }}</span>

@@ -18,7 +18,7 @@
         :class="['thumbnail-image', (activeImage == index) ? 'active' : '']"
         @click="activateImage(index)"
       >
-        <img :src="'/images/1/' + image.imageUrl">
+        <img :src="'/uploaded/' + id + '/' + image.imageUrl">
       </div>
     </div>
   </div>
@@ -33,6 +33,10 @@ export default {
       default: () => {
         return []
       }
+    },
+    id: {
+      type: Number,
+      default: 0
     }
   },
   data () {
@@ -42,8 +46,7 @@ export default {
   },
   computed: {
     currentImage () {
-      console.log(this.images)
-      return '/images/1/' + this.images[this.activeImage].imageUrl
+      return '/uploaded/' + this.id + '/' + this.images[this.activeImage].imageUrl
     }
   },
   methods: {

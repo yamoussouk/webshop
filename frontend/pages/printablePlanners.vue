@@ -11,8 +11,7 @@
             <div class="image_frame">
               <div class="image_wrapper">
                 <nuxt-link :to="`product/${product.id}`">
-                  <!-- TODO: change 1 to valid id -->
-                  <img :src="'/images/1/' + product.image[0].imageUrl" alt="product image">
+                  <img :src="'/uploaded/' + product.id + '/' + product.image[0].imageUrl" alt="product image">
                 </nuxt-link>
               </div>
             </div>

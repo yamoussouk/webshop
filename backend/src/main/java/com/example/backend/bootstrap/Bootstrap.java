@@ -126,6 +126,7 @@ public class Bootstrap implements CommandLineRunner {
 		Set<Category> categoriescmp = new HashSet<Category>();
 		categoriescmp.add(printablePlanners);
 		categoriescmp.add(inserts);
+		completeMealPlanner.setId(new Long(66667));
 		completeMealPlanner.setQuantity(1);
 		completeMealPlanner.setCategory(categoriescmp);
 		completeMealPlanner.setLongDescription(mealPlannerDescription);
@@ -142,6 +143,7 @@ public class Bootstrap implements CommandLineRunner {
 		categoriescbp.add(printablePlanners);
 		categoriescbp.add(monthlyPlanners);
 		categoriescbp.add(weeklyPlanners);
+		completeBusinessPlanner.setId(new Long(66671));
 		completeBusinessPlanner.setCategory(categoriescbp);
 		completeBusinessPlanner.setQuantity(1);
 		completeBusinessPlanner.setLongDescription(mealPlannerDescription);
@@ -158,6 +160,7 @@ public class Bootstrap implements CommandLineRunner {
 		categoriescbp2.add(printablePlanners);
 		categoriescbp2.add(lifestylePlanners);
 		categoriescbp2.add(dailyPlanners);
+		completeFinancialPlanner.setId(new Long(66668));
 		completeFinancialPlanner.setCategory(categoriescbp2);
 		completeFinancialPlanner.setQuantity(1);
 		completeFinancialPlanner.setLongDescription(mealPlannerDescription);
@@ -174,6 +177,7 @@ public class Bootstrap implements CommandLineRunner {
 		categoriesdmp.add(printablePlanners);
 		categoriesdmp.add(inserts);
 		categoriesdmp.add(dailyPlanners);
+		dailyFinancialPlanner.setId(new Long(66669));
 		dailyFinancialPlanner.setCategory(categoriesdmp);
 		dailyFinancialPlanner.setQuantity(1);
 		dailyFinancialPlanner.setLongDescription(mealPlannerDescription);
@@ -190,6 +194,7 @@ public class Bootstrap implements CommandLineRunner {
 		categoriesdfp.add(printablePlanners);
 		categoriesdfp.add(dailyPlanners);
 		categoriesdfp.add(lifestylePlanners);
+		dailyBusinessPlanner.setId(new Long(66670));
 		dailyBusinessPlanner.setCategory(categoriesdfp);
 		dailyBusinessPlanner.setQuantity(1);
 		dailyBusinessPlanner.setLongDescription(mealPlannerDescription);

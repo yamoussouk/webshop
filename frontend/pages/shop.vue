@@ -8,11 +8,9 @@
           </nuxt-link>
         </div>
         <div class="shop_sub_carousel left_align">
-          <!-- TODO: replace 1 with id of the product.
-        First, make crud actions which creates the folder of the images based on the product's id -->
           <carousel :per-page="4" :mouse-drag="false" :center-mode="true" :pagination-enabled="false">
             <slide v-for="planner in printablePlanners" :key="planner.id">
-              <img :src="'/images/1/' + planner.image[0].imageUrl">
+              <img :src="'/uploaded/' + planner.id + '/' + planner.image[0].imageUrl">
             </slide>
           </carousel>
         </div>
@@ -27,7 +25,7 @@
           <!-- replace it with valid category products -->
           <carousel :per-page="4" :mouse-drag="false" :center-mode="true" :pagination-enabled="false">
             <slide v-for="planner in printablePlanners" :key="planner.id">
-              <img :src="'/images/1/' + planner.image[0].imageUrl">
+              <img :src="'/uploaded/' + planner.id + '/' + planner.image[0].imageUrl">
             </slide>
           </carousel>
         </div>
@@ -42,7 +40,7 @@
           <!-- replace it with valid category products -->
           <carousel :per-page="4" :mouse-drag="false" :center-mode="true" :pagination-enabled="false">
             <slide v-for="planner in printablePlanners" :key="planner.id">
-              <img :src="'/images/1/' + planner.image[0].imageUrl">
+              <img :src="'/uploaded/' + planner.id + '/' + planner.image[0].imageUrl">
             </slide>
           </carousel>
         </div>
@@ -57,7 +55,7 @@
           <!-- replace it with valid category products -->
           <carousel :per-page="4" :mouse-drag="false" :center-mode="true" :pagination-enabled="false">
             <slide v-for="planner in printablePlanners" :key="planner.id">
-              <img :src="'/images/1/' + planner.image[0].imageUrl">
+              <img :src="'/uploaded/' + planner.id + '/' + planner.image[0].imageUrl">
             </slide>
           </carousel>
         </div>

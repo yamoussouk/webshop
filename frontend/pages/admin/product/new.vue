@@ -107,6 +107,8 @@ export default {
     },
     addNew () {
       const formObject = {
+        // TODO: remove it when reset autogeneration
+        'id': 66672,
         'name': this.form.name,
         'price': parseInt(this.form.price),
         'downloadLink': this.form.dllink,

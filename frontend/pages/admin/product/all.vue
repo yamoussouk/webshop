@@ -3,7 +3,7 @@
     <div class="container-fluid mt--6">
       <div class="row">
         <div class="col-xl-12">
-          <div v-for="product in products" :key="product.id" class="card">
+          <div v-for="product in getProducts" :key="product.id" class="card">
             <div class="card mb-4">
               <div class="card-header">
                 <h3 class="mb-0">
@@ -15,7 +15,7 @@
                   <div class="col-md-2">
                     <div class="row">
                       <div class="col-md-6">
-                        <img :src="product.files[0]" alt="product-image" class="product-thumbnail">
+                        <img :src="'/uploaded/' + product.id + '/' + product.image[0].imageUrl" alt="product-image" class="product-thumbnail">
                       </div>
                       <div class="col-md-6 price">
                         <p>{{ product.price }}</p>
@@ -61,6 +61,7 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
+
 export default {
   middleware: 'authenticated',
   data () {
@@ -69,12 +70,12 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['products'])
+    ...mapGetters(['getProducts', 'auth'])
   },
   methods: {
-    ...mapActions(['changeProductEnabled', 'removeProduct']),
+    ...mapActions(['changeProductEnabled', 'removeProduct', 'setProducts']),
     freezeSource (id) {
-      return this.products.find(pr => parseInt(pr.id) === parseInt(id)).enabled ? '/verified-button.png' : '/freeze-button.png'
+      return this.getProducts.find(pr => parseInt(pr.id) === parseInt(id)).enabled ? '/verified-button.png' : '/freeze-button.png'
     },
     productEnable (id) {
       this.changeProductEnabled(id)
@@ -123,5 +124,9 @@ export default {
 .cat span {
   width: 100%;
   float: left;
+}
+.product-thumbnail {
+  width: 64px;
+  height: 64px;
 }
 </style>

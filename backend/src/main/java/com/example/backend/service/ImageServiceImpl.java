@@ -40,7 +40,7 @@ public class ImageServiceImpl implements ImageService {
 
     private final String UPLOADED_FOLDER = "src/main/resources/static/images/";
     private final String WDIR = System.getProperty("user.dir");
-    private final String UPLOADED = WDIR + "\\frontend\\static\\uploaded\\";
+    private final String UPLOADED = WDIR + "/frontend/static/uploaded/";
 
     public ImageServiceImpl( ProductRepository productRepository, ProductService productService, ImageRepository imageRepository) {
         this.productService = productService;
@@ -58,8 +58,8 @@ public class ImageServiceImpl implements ImageService {
         try {
             Product product = productRepository.findById(productId).get();
             byte[] bytes = file.getBytes();
-            if (!new File(UPLOADED_FOLDER + productId).exists()) {
-                new File(UPLOADED_FOLDER + productId).mkdirs();
+            if (!new File(UPLOADED + productId).exists()) {
+                new File(UPLOADED + productId).mkdirs();
             }
             int r = new Random().nextInt(10000);
             System.out.println(file.getOriginalFilename());
@@ -67,7 +67,7 @@ public class ImageServiceImpl implements ImageService {
             long time = new Date().getTime();
             System.out.println(new Date(time));
             String name = time + "_" + r + "." + temp[temp.length - 1];
-            Path path = Paths.get(UPLOADED_FOLDER + productId + "//" + name);
+            Path path = Paths.get(UPLOADED + productId + "//" + name);
             Image uploadedImage = new Image();
             uploadedImage.setImageUrl(name);
             uploadedImage.setOneProduct(product);
