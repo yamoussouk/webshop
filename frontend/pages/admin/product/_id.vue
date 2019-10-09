@@ -80,6 +80,7 @@ import { VueEditor } from 'vue2-editor'
 import DropImage from '~/components/DropImage'
 
 export default {
+  middleware: 'authenticated',
   components: {
     VueEditor,
     DropImage

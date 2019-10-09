@@ -62,7 +62,6 @@ export const mutations = {
   },
   setAuth (state, auth) {
     state.auth = auth
-    console.log(state.auth)
   }
 }
 
@@ -97,9 +96,9 @@ export const actions = {
           'accessToken': parsed.auth
         }
       } catch (err) {
-        // No valid cookie found
+        console.log('NO VALID COOKIE!!!')
       }
+      commit('setAuth', auth)
     }
-    commit('setAuth', auth)
   }
 }

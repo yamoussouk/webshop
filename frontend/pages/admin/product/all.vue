@@ -62,6 +62,7 @@
 <script>
 import { mapGetters, mapActions } from 'vuex'
 export default {
+  middleware: 'authenticated',
   data () {
     return {
       tempId: ''

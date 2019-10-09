@@ -9,6 +9,7 @@
 import AdminSideBar from '~/components/AdminSidebar.vue'
 
 export default {
+  middleware: 'authenticated',
   components: {
     AdminSideBar
   }

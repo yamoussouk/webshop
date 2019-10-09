@@ -77,6 +77,7 @@ import { VueEditor } from 'vue2-editor'
 import axios from 'axios'
 import DropImage from '~/components/DropImage.vue'
 export default {
+  middleware: 'authenticated',
   components: {
     VueEditor,
     DropImage
