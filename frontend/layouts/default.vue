@@ -1,9 +1,9 @@
 <template>
   <div>
-    <app-top />
-    <app-nav />
+    <app-top v-show="isDefault()"/>
+    <app-nav v-show="isDefault()"/>
     <nuxt />
-    <app-footer />
+    <app-footer v-show="isDefault()"/>
   </div>
 </template>
 
@@ -23,8 +23,10 @@ export default {
       route: this.$route.name
     }
   },
-  mounted () {
-    console.log(this.$route.name)
+  methods: {
+    isDefault () {
+      return this.route !== 'login' && !this.route.includes('admin') && this.route !== 'secret'
+    }
   }
 }
 </script>

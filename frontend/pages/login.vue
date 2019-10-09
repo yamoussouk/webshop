@@ -43,7 +43,10 @@ export default {
           }
           this.$store.commit('setAuth', auth)
           // axios.defaults.headers.common.Authorization = token
-          Cookie.set('auth', 'Bearer ' + token)
+          const exp = new Date(new Date().getTime() + 60 * 60 * 1000)
+          Cookie.set('auth', 'Bearer ' + token, {
+            expires: exp
+          })
           this.$router.push('/admin')
         })
         .catch((err) => {

@@ -42,6 +42,7 @@ export default {
   },
   computed: {
     currentImage () {
+      console.log(this.images)
       return '/images/1/' + this.images[this.activeImage].imageUrl
     }
   },
