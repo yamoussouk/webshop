@@ -62,6 +62,13 @@ export const mutations = {
   },
   setAuth (state, auth) {
     state.auth = auth
+  },
+  changeProductEnabled (state, id) {
+    const product = state.products.find(pr => parseInt(pr.id) === parseInt(id))
+    product.enabled = !product.enabled
+  },
+  removeProduct: (state, id) => {
+    state.products.splice(state.products.findIndex(pr => parseInt(pr.id) === parseInt(id)), 1)
   }
 }
 
@@ -100,5 +107,11 @@ export const actions = {
       }
       commit('setAuth', auth)
     }
+  },
+  changeProductEnabled: ({ commit }, id) => {
+    commit('changeProductEnabled', id)
+  },
+  removeProduct: ({ commit }, id) => {
+    commit('removeProduct', id)
   }
 }

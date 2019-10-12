@@ -131,6 +131,7 @@ public class Bootstrap implements CommandLineRunner {
 		completeMealPlanner.setCategory(categoriescmp);
 		completeMealPlanner.setLongDescription(mealPlannerDescription);
 		completeMealPlanner.setName("Complete meal planner");
+		completeMealPlanner.setEnabled(true);
 		completeMealPlanner.setPrice(5.00);
 		completeMealPlanner.setOneImage(i1);
 		completeMealPlanner.setOneImage(i2);
@@ -148,6 +149,7 @@ public class Bootstrap implements CommandLineRunner {
 		completeBusinessPlanner.setQuantity(1);
 		completeBusinessPlanner.setLongDescription(mealPlannerDescription);
 		completeBusinessPlanner.setName("Complete fitness planner");
+		completeBusinessPlanner.setEnabled(true);
 		completeBusinessPlanner.setPrice(5.00);
 		completeBusinessPlanner.setOneImage(i1);
 		completeBusinessPlanner.setOneImage(i2);
@@ -165,6 +167,7 @@ public class Bootstrap implements CommandLineRunner {
 		completeFinancialPlanner.setQuantity(1);
 		completeFinancialPlanner.setLongDescription(mealPlannerDescription);
 		completeFinancialPlanner.setName("Complete business planner");
+		completeFinancialPlanner.setEnabled(true);
 		completeFinancialPlanner.setPrice(5.00);
 		completeFinancialPlanner.setOneImage(i1);
 		completeFinancialPlanner.setOneImage(i2);
@@ -182,6 +185,7 @@ public class Bootstrap implements CommandLineRunner {
 		dailyFinancialPlanner.setQuantity(1);
 		dailyFinancialPlanner.setLongDescription(mealPlannerDescription);
 		dailyFinancialPlanner.setName("Daily meal planner");
+		dailyFinancialPlanner.setEnabled(true);
 		dailyFinancialPlanner.setPrice(5.00);
 		dailyFinancialPlanner.setOneImage(i1);
 		dailyFinancialPlanner.setOneImage(i2);
@@ -199,6 +203,7 @@ public class Bootstrap implements CommandLineRunner {
 		dailyBusinessPlanner.setQuantity(1);
 		dailyBusinessPlanner.setLongDescription(mealPlannerDescription);
 		dailyBusinessPlanner.setName("Daily fitness planner");
+		dailyBusinessPlanner.setEnabled(true);
 		dailyBusinessPlanner.setPrice(5.00);
 		dailyBusinessPlanner.setOneImage(i1);
 		dailyBusinessPlanner.setOneImage(i2);

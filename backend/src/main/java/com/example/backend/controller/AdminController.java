@@ -39,12 +39,6 @@ public class AdminController {
         this.categoryRepository = categoryRepository;
     }
 
-    //@PreAuthorize("hasRole('ADMIN')")
-    /*@GetMapping("/admin/products/all")
-    public List<Product> getAllProducts() {
-        return this.productService.getProducts();
-    }*/
-
     @GetMapping("admin/products/all")
     public List<ProductCommand> getAllProducts() {
         List<Product> products =  this.productService.getProducts();
@@ -66,6 +60,19 @@ public class AdminController {
         }
         p.setImages(fileSet);
         this.productService.saveProduct(p);
+    }
+
+    @GetMapping("/admin/delete/product/{id}")
+    public void deleteProductById(@PathVariable(name = "id") String id) {
+        this.productService.deleteById(Long.parseLong(id));
+    }
+
+    @GetMapping("/admin/enable/product/{id}")
+    public ResponseEntity<?> setProductEnabled(@PathVariable(name = "id") String id) {
+        Product p = this.productService.findById(new Long(id));
+        p.setEnabled(!p.getEnabled());
+        this.productService.saveProduct(p);
+        return ResponseEntity.ok("Enabled changed");
     }
 
     @PostMapping("/admin/update/product")

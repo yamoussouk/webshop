@@ -61,6 +61,7 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
+import axios from 'axios'
 
 export default {
   middleware: 'authenticated',
@@ -78,12 +79,26 @@ export default {
       return this.getProducts.find(pr => parseInt(pr.id) === parseInt(id)).enabled ? '/verified-button.png' : '/freeze-button.png'
     },
     productEnable (id) {
-      this.changeProductEnabled(id)
+      const headers = {
+        'Authorization': this.auth.accessToken
+      }
+      // eslint-disable-next-line
+      axios.get('http://localhost:8083/admin/enable/product/' + id, { headers: headers }
+      ).then(() => {
+        this.changeProductEnabled(id)
+      })
     },
     remove (id) {
-      this.removeProduct(id)
-      this.tempId = ''
-      this.$bvModal.hide('ensure-modal')
+      const headers = {
+        'Authorization': this.auth.accessToken
+      }
+      // eslint-disable-next-line
+      axios.get('http://localhost:8083/admin/delete/product/' + id, { headers: headers }
+      ).then(() => {
+        this.removeProduct(id)
+        this.tempId = ''
+        this.$bvModal.hide('ensure-modal')
+      })
     },
     setId (id) {
       this.tempId = id

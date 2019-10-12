@@ -16,6 +16,7 @@ public class ProductCommand {
     private Set<String> categories;
     private Set<ImageCommand> image;
     private int quantity;
+    private Boolean enabled;
 
     public int getQuantity() {
         return quantity;
@@ -86,6 +87,14 @@ public class ProductCommand {
 
     public void setImage(Set<ImageCommand> image) {
         this.image = image;
+    }
+
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public Boolean getEnabled() {
+        return this.enabled;
     }
 }
 
