@@ -26,7 +26,7 @@ public class DefaultController {
 
     @GetMapping("/default/products/all")
     public List<ProductCommand> getAllProducts() {
-        List<Product> products =  this.productService.getProducts();
+        List<Product> products =  this.productService.getProducts(true);
         List<ProductCommand> returnedValue = new ArrayList<ProductCommand>();
         for (Product p : products) {
             returnedValue.add(productToProductCommand.convert(p));

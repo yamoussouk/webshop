@@ -8,7 +8,7 @@ import java.util.Set;
 
 public interface ProductService {
 
-    List<Product> getProducts();
+    List<Product> getProducts(boolean enabled);
     Product findById(Long id);
     ProductCommand findCommandById(Long id);
     void deleteById(Long idToDelete);

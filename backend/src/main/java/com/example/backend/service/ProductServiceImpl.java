@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -24,10 +25,14 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> getProducts() {
+    public List<Product> getProducts(boolean enabled) {
         List<Product> allProducts = new ArrayList<>();
         this.productRepository.findAll().iterator().forEachRemaining(allProducts::add);
-        return allProducts;
+        if(enabled) {
+            return allProducts.stream().filter(product -> product.getEnabled() == true).collect(Collectors.toList());
+        } else {
+            return allProducts;
+        }
     }
 
     @Override
