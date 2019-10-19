@@ -78,7 +78,7 @@ public class AdminController {
     }
 
     @PostMapping("/admin/update/product/")
-    public void updateProduct(@RequestParam("product") String product, 
+    public ProductCommand updateProduct(@RequestParam("product") String product, 
         @RequestParam("imagefile") MultipartFile[] files, 
         @RequestParam(value="removed", required = false) List<String> removed) {
         Product p = this.mapProductDto(product, removed);
@@ -88,6 +88,7 @@ public class AdminController {
             p.setOneImage(img);
         }
         this.productService.saveProduct(p);
+        return this.productToProductCommand.convert(p);
     }
 
     private Product mapProductDto(String product, List<String> removed) {

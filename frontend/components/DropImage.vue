@@ -147,6 +147,7 @@ export default {
     },
     getImagePreviews (event) {
       const counter = event.target.attributes[2].value
+      console.log(this.files)
       if (/\.(jpe?g|png|gif)$/i.test(this.files[counter].name)) {
         const reader = new FileReader()
 
@@ -185,13 +186,30 @@ export default {
     removeFile (key) {
       this.$emit('remove', this.files[key])
       this.files.splice(key, 1)
-      this.$refs['preview' + parseInt(key)].src = ''
-      this.$refs['preview' + parseInt(key)].style.width = '0px'
-      this.$refs['preview' + parseInt(key)].style.height = '0px'
-      this.$refs['preview-wrapper' + parseInt(key)].style.width = '0px'
-      this.$refs['preview-wrapper' + parseInt(key)].style.height = '0px'
-      this.$refs['removebutton' + parseInt(key)].text = ''
-      this.$refs['dropicon' + parseInt(key)].style.display = 'block'
+      this.recalculate()
+    },
+    resetDropIcons () {
+      for (let i = 0; i < 10; i++) {
+        this.$refs['preview' + i].src = ''
+        this.$refs['preview' + i].style.width = '0px'
+        this.$refs['preview' + i].style.height = '0px'
+        this.$refs['preview-wrapper' + i].style.width = '0px'
+        this.$refs['preview-wrapper' + i].style.height = '0px'
+        this.$refs['removebutton' + i].text = ''
+        this.$refs['dropicon' + i].style.display = 'block'
+      }
+    },
+    recalculate () {
+      this.resetDropIcons()
+      for (let i = 0; i < this.files.length; i++) {
+        this.$refs['preview' + parseInt(i)].src = '/uploaded/' + this.productid + '/' + this.files[i].imageUrl
+        this.$refs['dropicon' + parseInt(i)].style.display = 'none'
+        this.$refs['preview' + parseInt(i)].style.height = '100px'
+        this.$refs['preview' + parseInt(i)].style.width = '100px'
+        this.$refs['preview-wrapper' + parseInt(i)].style.width = '100px'
+        this.$refs['preview-wrapper' + parseInt(i)].style.height = '100px'
+        this.$refs['removebutton' + parseInt(i)].text = 'X'
+      }
     },
     submitFiles () {
       const formData = new FormData()

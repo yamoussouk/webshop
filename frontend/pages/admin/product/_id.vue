@@ -55,7 +55,7 @@
                 </div>
                 <div class="row">
                   <div class="mb-0">
-                    <drop-image :alreadyin="product.image" :productid="product.id" @images="addImages" @remove="removeImages" />
+                    <drop-image :rerender="rerender" :alreadyin="product.image" :productid="product.id" @images="addImages" @remove="removeImages" />
                     <!-- <div v-for="image in product.files" :key="image.size" class="image-wrapper">
                       <img :src="'/images/1/' + image" alt="product-image">
                     </div> -->
@@ -111,7 +111,8 @@ export default {
       },
       success: false,
       message: '',
-      type: 'success'
+      type: 'success',
+      rerender: 0
     }
   },
   computed: {
@@ -132,21 +133,15 @@ export default {
   },
   mounted () {
     this.form.original = [...this.product.image]
-    console.log('original FILES array')
-    console.log(this.form.files)
   },
   methods: {
-    ...mapActions(['saveProduct', 'setCategory']),
+    ...mapActions(['saveProduct', 'setCategory', 'refreshPoduct']),
     addImages (imageFile) {
       this.form.files.push(imageFile)
-      console.log('files')
-      console.log(this.form.files)
     },
     removeImages (imageFile) {
       this.form.original.splice(this.form.original.indexOf(imageFile), 1)
       this.form.removed.push(imageFile)
-      console.log('REMOVED')
-      console.log(imageFile.id)
     },
     updateName (e) {
       this.form.name = e.target.value
@@ -181,7 +176,6 @@ export default {
       const formData = new FormData()
       formData.append('product', JSON.stringify(prod))
       for (let i = 0; i < this.form.removed.length; i++) {
-        console.log(this.form.removed[i])
         formData.append('removed', this.form.removed[i].id)
       }
       for (let i = 0; i < this.form.files.length; i++) {
@@ -196,6 +190,9 @@ export default {
         this.success = true
         this.message = 'Modification saved!'
         this.type = 'success'
+        this.refreshPoduct(response.data)
+        this.form.removed = []
+        this.rerender++
       })
         .catch(function (error) {
           console.log(error)

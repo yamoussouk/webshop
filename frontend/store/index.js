@@ -85,6 +85,10 @@ export const mutations = {
   saveProduct: (state, product) => {
     const idx = state.products.findIndex(e => e.id === product.id)
     state.products[idx] = product
+  },
+  refreshProduct: (state, product) => {
+    const index = state.products.findIndex(item => item.id === product.id)
+    state.products.splice(index, 1, product)
   }
 }
 
@@ -135,5 +139,8 @@ export const actions = {
   },
   saveProduct: ({ commit }, product) => {
     commit('saveProduct', product)
+  },
+  refreshPoduct: ({ commit }, product) => {
+    commit('refreshProduct', product)
   }
 }
