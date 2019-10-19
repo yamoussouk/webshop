@@ -68,9 +68,9 @@
                     </button>
                   </div>
                 </div>
-                <div v-show="success" class="row">
+                <div class="row">
                   <div class="col-md-12">
-                    <b-alert :variant="type" dismissible show>
+                    <b-alert v-model="showDismissibleAlert" :variant="type" dismissible show>
                       {{ message }}
                     </b-alert>
                   </div>
@@ -109,7 +109,7 @@ export default {
         removed: [],
         cats: []
       },
-      success: false,
+      showDismissibleAlert: false,
       message: '',
       type: 'success',
       rerender: 0
@@ -187,7 +187,7 @@ export default {
         headers: headers
       }).then((response) => {
         this.saveProduct(prod)
-        this.success = true
+        this.showDismissibleAlert = true
         this.message = 'Modification saved!'
         this.type = 'success'
         this.refreshPoduct(response.data)
@@ -196,7 +196,7 @@ export default {
       })
         .catch(function (error) {
           console.log(error)
-          this.success = true
+          this.showDismissibleAlert = true
           this.message = 'Something went wrong!'
           this.type = 'danger'
         })

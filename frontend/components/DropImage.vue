@@ -153,6 +153,7 @@ export default {
 
         reader.addEventListener('load', function () {
           this.$refs['preview' + parseInt(counter)].src = reader.result
+          this.files[counter].readerresult = reader.result
           // this.addImage(this.files[counter])
           // this.$emit('images', this.files[counter - 1])
           this.$emit('images', this.files[counter])
@@ -202,7 +203,8 @@ export default {
     recalculate () {
       this.resetDropIcons()
       for (let i = 0; i < this.files.length; i++) {
-        this.$refs['preview' + parseInt(i)].src = '/uploaded/' + this.productid + '/' + this.files[i].imageUrl
+        const src = this.productid === 0 || this.files[i].imageUrl === undefined ? this.files[i].readerresult : '/uploaded/' + this.productid + '/' + this.files[i].imageUrl
+        this.$refs['preview' + parseInt(i)].src = src
         this.$refs['dropicon' + parseInt(i)].style.display = 'none'
         this.$refs['preview' + parseInt(i)].style.height = '100px'
         this.$refs['preview' + parseInt(i)].style.width = '100px'
@@ -218,22 +220,6 @@ export default {
 
         formData.append('files[' + i + ']', file)
       }
-      /* axios.post('/file-drag-drop',
-        formData,
-        {
-          headers: {
-            'Content-Type': 'multipart/form-data'
-          },
-          onUploadProgress: function( progressEvent ) {
-            this.uploadPercentage = parseInt( Math.round( ( progressEvent.loaded * 100 ) / progressEvent.total ) );
-          }.bind(this)
-        }
-      ).then(function () {
-        console.log('SUCCESS!!')
-      })
-        .catch(function () {
-          console.log('FAILURE!!')
-        }) */
     }
   }
 }
