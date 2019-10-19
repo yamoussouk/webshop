@@ -73,6 +73,10 @@ export default {
   computed: {
     ...mapGetters(['getProducts', 'auth'])
   },
+  mounted () {
+    console.log(this.getProducts)
+    console.log(this.auth.accessToken)
+  },
   methods: {
     ...mapActions(['changeProductEnabled', 'removeProduct', 'setProducts']),
     freezeSource (id) {

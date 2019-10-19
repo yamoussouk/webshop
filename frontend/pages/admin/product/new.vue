@@ -26,9 +26,12 @@
                     </label>
                     <div class="has-name">
                       <select v-model="form.categories" multiple="multiple" class="form-control">
-                        <option>Printable planners</option>
+                        <option>Printable Planners</option>
                         <option>Inserts</option>
-                        <option>Daily planners</option>
+                        <option>Daily Planners</option>
+                        <option>Lifestyle Planners</option>
+                        <option>Monthly Planners</option>
+                        <option>Weekly Planners</option>
                       </select>
                     </div>
                   </div>

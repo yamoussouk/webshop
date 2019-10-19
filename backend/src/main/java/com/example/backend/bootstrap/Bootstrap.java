@@ -41,6 +41,7 @@ public class Bootstrap implements CommandLineRunner {
 		categoryRepository.deleteAll();
 		productRepository.deleteAll();
 		userRepository.deleteAll();
+		imageRepository.deleteAll();
 		// orderRepository.deleteAll();
 	}
 
@@ -132,6 +133,7 @@ public class Bootstrap implements CommandLineRunner {
 		completeMealPlanner.setLongDescription(mealPlannerDescription);
 		completeMealPlanner.setName("Complete meal planner");
 		completeMealPlanner.setEnabled(true);
+		completeMealPlanner.setDownloadLink("https://valami.teszt.hu");
 		completeMealPlanner.setPrice(5.00);
 		completeMealPlanner.setOneImage(i1);
 		completeMealPlanner.setOneImage(i2);
@@ -150,6 +152,7 @@ public class Bootstrap implements CommandLineRunner {
 		completeBusinessPlanner.setLongDescription(mealPlannerDescription);
 		completeBusinessPlanner.setName("Complete fitness planner");
 		completeBusinessPlanner.setEnabled(true);
+		completeBusinessPlanner.setDownloadLink("https://valami.teszt.hu");
 		completeBusinessPlanner.setPrice(5.00);
 		completeBusinessPlanner.setOneImage(i1);
 		completeBusinessPlanner.setOneImage(i2);
@@ -168,6 +171,7 @@ public class Bootstrap implements CommandLineRunner {
 		completeFinancialPlanner.setLongDescription(mealPlannerDescription);
 		completeFinancialPlanner.setName("Complete business planner");
 		completeFinancialPlanner.setEnabled(true);
+		completeFinancialPlanner.setDownloadLink("https://valami.teszt.hu");
 		completeFinancialPlanner.setPrice(5.00);
 		completeFinancialPlanner.setOneImage(i1);
 		completeFinancialPlanner.setOneImage(i2);
@@ -186,6 +190,7 @@ public class Bootstrap implements CommandLineRunner {
 		dailyFinancialPlanner.setLongDescription(mealPlannerDescription);
 		dailyFinancialPlanner.setName("Daily meal planner");
 		dailyFinancialPlanner.setEnabled(true);
+		dailyFinancialPlanner.setDownloadLink("https://valami.teszt.hu");
 		dailyFinancialPlanner.setPrice(5.00);
 		dailyFinancialPlanner.setOneImage(i1);
 		dailyFinancialPlanner.setOneImage(i2);
@@ -204,6 +209,7 @@ public class Bootstrap implements CommandLineRunner {
 		dailyBusinessPlanner.setLongDescription(mealPlannerDescription);
 		dailyBusinessPlanner.setName("Daily fitness planner");
 		dailyBusinessPlanner.setEnabled(true);
+		dailyBusinessPlanner.setDownloadLink("https://valami.teszt.hu");
 		dailyBusinessPlanner.setPrice(5.00);
 		dailyBusinessPlanner.setOneImage(i1);
 		dailyBusinessPlanner.setOneImage(i2);

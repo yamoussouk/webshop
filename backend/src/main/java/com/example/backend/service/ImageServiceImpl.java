@@ -117,8 +117,10 @@ public class ImageServiceImpl implements ImageService {
 
     @Transactional
     @Override
-    public void deleteImage(Product product, String imageUrl) {
-        imageRepository.deleteByImageUrl(imageUrl);
+    public void deleteImage(Product product, Image image) {
+        imageRepository.deleteById(image.getId());
+        File file = new File(System.getProperty("user.dir") + "/frontend/static/uploaded/" + Long.toString(product.getId()) + "/" + image.getImageUrl());
+        file.delete();
         imageRepository.findAll().iterator().forEachRemaining(System.out::println);
     }
 

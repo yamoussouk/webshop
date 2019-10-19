@@ -78,7 +78,6 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
 export default {
   props: {
     images: {
@@ -92,6 +91,10 @@ export default {
       default: () => {
         return []
       }
+    },
+    productid: {
+      type: Number,
+      default: 0
     }
   },
   data () {
@@ -107,8 +110,8 @@ export default {
       // const reader = new FileReader()
       for (let i = 0; i < this.$props.alreadyin.length; i++) {
         // reader.readAsDataURL(this.$props.alreadyin[i])
-        this.$refs['preview' + parseInt(i)].src = this.$props.alreadyin[i]
-        this.$emit('images', this.$props.alreadyin[i])
+        this.$refs['preview' + parseInt(i)].src = '/uploaded/' + this.productid + '/' + this.$props.alreadyin[i].imageUrl
+        // this.$emit('images', this.$props.alreadyin[i])
         this.$refs['dropicon' + parseInt(i)].style.display = 'none'
         // show preview and remove button
         this.$refs['preview' + parseInt(i)].style.height = '100px'
@@ -135,7 +138,6 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['addImage', 'removeImage']),
     determineDragAndDropCapable () {
       const div = document.createElement('div')
       return (('draggable' in div) ||
@@ -150,7 +152,7 @@ export default {
 
         reader.addEventListener('load', function () {
           this.$refs['preview' + parseInt(counter)].src = reader.result
-          this.addImage(this.files[counter])
+          // this.addImage(this.files[counter])
           // this.$emit('images', this.files[counter - 1])
           this.$emit('images', this.files[counter])
         }.bind(this), false)
@@ -181,9 +183,8 @@ export default {
       }
     },
     removeFile (key) {
-      this.removeImage(this.files[key])
       this.$emit('remove', this.files[key])
-      this.files.splice(key - 1, 1)
+      this.files.splice(key, 1)
       this.$refs['preview' + parseInt(key)].src = ''
       this.$refs['preview' + parseInt(key)].style.width = '0px'
       this.$refs['preview' + parseInt(key)].style.height = '0px'

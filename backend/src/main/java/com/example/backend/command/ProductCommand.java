@@ -17,6 +17,7 @@ public class ProductCommand {
     private Set<ImageCommand> image;
     private int quantity;
     private Boolean enabled;
+    private String downloadLink;
 
     public int getQuantity() {
         return quantity;
@@ -81,6 +82,10 @@ public class ProductCommand {
         this.categories = category;
     }
 
+    public Set<String> getCategories() {
+        return this.categories;
+    }
+
     public Set<ImageCommand> getImage() {
         return image;
     }
@@ -95,6 +100,14 @@ public class ProductCommand {
 
     public Boolean getEnabled() {
         return this.enabled;
+    }
+
+    public String getDownloadLink() {
+        return this.downloadLink;
+    }
+
+    public void setDownloadLink(String link) {
+        this.downloadLink = link;
     }
 }
 

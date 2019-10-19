@@ -34,10 +34,13 @@
                       Select category
                     </label>
                     <div class="has-name">
-                      <select v-model="product.categories" multiple="multiple" class="form-control" @input="updateCategory($event)">
-                        <option>Printable planners</option>
-                        <option>Insert</option>
-                        <option>Daily planners</option>
+                      <select v-model="categories" multiple="multiple" class="form-control" @input="updateCategory($event)">
+                        <option>Printable Planners</option>
+                        <option>Inserts</option>
+                        <option>Daily Planners</option>
+                        <option>Lifestyle Planners</option>
+                        <option>Monthly Planners</option>
+                        <option>Weekly Planners</option>
                       </select>
                     </div>
                   </div>
@@ -46,13 +49,13 @@
                       Product download link
                     </label>
                     <div class="has-name">
-                      <input :value="product.dllink" type="text" class="form-control" @input="updateDllink($event)">
+                      <input :value="product.downloadLink" type="text" class="form-control" @input="updateDllink($event)">
                     </div>
                   </div>
                 </div>
                 <div class="row">
                   <div class="mb-0">
-                    <drop-image :alreadyin="product.files" @images="addImages" @remove="removeImages" />
+                    <drop-image :alreadyin="product.image" :productid="product.id" @images="addImages" @remove="removeImages" />
                     <!-- <div v-for="image in product.files" :key="image.size" class="image-wrapper">
                       <img :src="'/images/1/' + image" alt="product-image">
                     </div> -->
@@ -63,6 +66,13 @@
                     <button class="submitButton" @click="save">
                       Save Product
                     </button>
+                  </div>
+                </div>
+                <div v-show="success" class="row">
+                  <div class="col-md-12">
+                    <b-alert :variant="type" dismissible show>
+                      {{ message }}
+                    </b-alert>
                   </div>
                 </div>
               </div>
@@ -76,6 +86,7 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
+import axios from 'axios'
 import { VueEditor } from 'vue2-editor'
 import DropImage from '~/components/DropImage'
 
@@ -93,59 +104,105 @@ export default {
         price: 0,
         content: '',
         dllink: '',
-        categories: [],
-        files: []
-      }
+        original: [],
+        files: [],
+        removed: [],
+        cats: []
+      },
+      success: false,
+      message: '',
+      type: 'success'
     }
   },
   computed: {
-    ...mapGetters(['products']),
+    ...mapGetters(['getProducts', 'auth']),
     product () {
-      return this.products.find(pr => parseInt(pr.id) === parseInt(this.id))
+      return this.getProducts.find(pr => parseInt(pr.id) === parseInt(this.id))
+    },
+    categories: {
+      // eslint-disable-next-line
+      get: function () {
+        return this.product.categories
+      },
+      // eslint-disable-next-line
+      set: function (value) {
+
+      }
     }
   },
   mounted () {
-    console.log(this.product)
+    this.form.original = [...this.product.image]
+    console.log('original FILES array')
+    console.log(this.form.files)
   },
   methods: {
-    ...mapActions(['saveProduct']),
+    ...mapActions(['saveProduct', 'setCategory']),
     addImages (imageFile) {
       this.form.files.push(imageFile)
+      console.log('files')
+      console.log(this.form.files)
     },
     removeImages (imageFile) {
-      this.form.files.splice(this.form.files.indexOf(imageFile), 1)
+      this.form.original.splice(this.form.original.indexOf(imageFile), 1)
+      this.form.removed.push(imageFile)
+      console.log('REMOVED')
+      console.log(imageFile.id)
     },
     updateName (e) {
       this.form.name = e.target.value
-      console.log(this.form.name)
     },
     updatePrice (e) {
       this.form.price = e.target.value
-      console.log(this.form.price)
     },
     updateContent (e) {
       this.form.content = e.target.value
-      console.log(this.form.content)
     },
     updateDllink (e) {
       this.form.dllink = e.target.value
-      console.log(this.form.dllink)
     },
     updateCategory (e) {
-      console.log(e.target._value)
-      if (!this.form.categories.includes(e.target.value)) {
-        this.form.categories.push(e.target.value)
-      }
-      console.log(this.form.categories)
+      this.setCategory(this.product.id, e.target.value)
     },
     save () {
-      console.log(this.form.files)
       const prod = {
+        'id': parseInt(this.id),
         'name': this.form.name === '' ? this.product.name : this.form.name,
-        'id': this.id,
-        'files': this.form.files
+        'longDescription': this.form.longDescription === '' ? this.product.longDescription : this.form.longDescription,
+        'price': this.form.price === 0 ? this.product.price : this.form.price,
+        'categories': this.categories,
+        'quantity': 1,
+        'enabled': this.product.enabled,
+        'downloadLink': this.form.dllink === '' ? this.product.downloadLink : this.form.dllink
       }
-      this.saveProduct(prod)
+      const headers = {
+        'Authorization': this.auth.accessToken,
+        'Content-Type': 'application/json'
+      }
+      const formData = new FormData()
+      formData.append('product', JSON.stringify(prod))
+      for (let i = 0; i < this.form.removed.length; i++) {
+        console.log(this.form.removed[i])
+        formData.append('removed', this.form.removed[i].id)
+      }
+      for (let i = 0; i < this.form.files.length; i++) {
+        formData.append('imagefile', this.form.files[i])
+      }
+      // eslint-disable-next-line
+      axios.post('http://localhost:8083/admin/update/product/', formData, {
+        // eslint-disable-next-line
+        headers: headers
+      }).then((response) => {
+        this.saveProduct(prod)
+        this.success = true
+        this.message = 'Modification saved!'
+        this.type = 'success'
+      })
+        .catch(function (error) {
+          console.log(error)
+          this.success = true
+          this.message = 'Something went wrong!'
+          this.type = 'danger'
+        })
     }
   }
 }

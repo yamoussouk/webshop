@@ -5,8 +5,10 @@ import com.example.backend.model.Category;
 import com.example.backend.model.Image;
 import com.example.backend.model.Product;
 import com.example.backend.model.SignUpEmail;
+import com.example.backend.command.ImageCommand;
 import com.example.backend.command.ProductCommand;
 import com.example.backend.dto.ProductDto;
+import com.example.backend.exception.NotFoundException;
 import com.example.backend.repository.CategoryRepository;
 import com.example.backend.repository.SignUpRepository;
 import com.example.backend.service.ImageService;
@@ -52,7 +54,7 @@ public class AdminController {
     @PostMapping("/admin/add/new/product")
     public void addNewProduct(@RequestParam("product") String product, @RequestParam("imagefile") MultipartFile[] file) {
         // Product p = convertdtoToProduct(product);
-        Product p = mapProduct(product);
+        Product p = mapProductDto(product, null);
         Set<Image> fileSet = new HashSet<Image>();
         for (MultipartFile i : file) {
             Image img = imageService.saveImageFile(p.getId(), i);
@@ -75,28 +77,20 @@ public class AdminController {
         return ResponseEntity.ok("Enabled changed");
     }
 
-    @PostMapping("/admin/update/product")
-    public void updateProduct(@RequestParam("model") String product, @RequestParam("files") String[] files) {
-        Product updateProduct = mapProduct(product);
-        Product original = productService.findById(updateProduct.getId());
-        original.setName(updateProduct.getName());
-        original.setShortDescription(updateProduct.getShortDescription());
-        original.setLongDescription(updateProduct.getLongDescription());
-        original.setCategory(updateProduct.getCategory());
-        original.setQuantity(updateProduct.getQuantity());
-        original.setPrice(updateProduct.getPrice());
-        //imageService.deleteAllByProductId(original.getId());
-        //TODO: megnézni, hogy az originalból lekérhető-e egyáltalán a hozzátartozó kép és annak az id-je alapján törölni és cserélni!!
-        Set<Image> sentImages = new HashSet<>();
-        for (String id : files) {
-            Image i = imageService.findById(Long.valueOf(id));
-            sentImages.add(i);
+    @PostMapping("/admin/update/product/")
+    public void updateProduct(@RequestParam("product") String product, 
+        @RequestParam("imagefile") MultipartFile[] files, 
+        @RequestParam(value="removed", required = false) List<String> removed) {
+        Product p = this.mapProductDto(product, removed);
+
+        for (MultipartFile i : files) {
+            Image img = imageService.saveImageFile(p.getId(), i);
+            p.setOneImage(img);
         }
-        Objects.requireNonNull(original).setImages(sentImages);
-        productService.saveProduct(original);
+        this.productService.saveProduct(p);
     }
 
-    private Product mapProduct(String product) {
+    private Product mapProductDto(String product, List<String> removed) {
         ObjectMapper mapper = new ObjectMapper();
         ProductDto p = null;
         try {
@@ -105,11 +99,11 @@ public class AdminController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Product pr = convertdtoToProduct(p);
+        Product pr = convertdtoToProduct(p, removed);
         return this.productService.saveProduct(pr);
     }
 
-    private Product convertdtoToProduct (ProductDto dto) {
+    private Product convertdtoToProduct (ProductDto dto, List<String> removed) {
         Product p = new Product();
         // TODO: remove it when reset autogeneration
         p.setId(dto.getId());
@@ -121,8 +115,27 @@ public class AdminController {
         p.setDownloadLink(dto.getDownloadLink());
         p.setEnabled(dto.getEnabled());
         p.setCategory(getCategories(dto.getCategories()));
+        Set<Image> i = imagesLeft(dto.getId(), removed);
+        p.setImages(i);
         // continue with categories!!!!
         return p;
+    }
+
+    private Set<Image> imagesLeft(Long productId, List<String> removed) {
+        try {
+            Product p = this.productService.findById(productId);
+            Set<Image> productImages = p.getImages();
+            if (removed != null) {
+                for (String imageId : removed) {
+                    productImages.removeIf(obj -> obj.getId().equals(new Long(imageId)));
+                    Image img = imageService.findById(new Long(imageId));
+                    imageService.deleteImage(p, img);
+                }
+            }
+            return productImages;
+        } catch (NotFoundException e) {
+            return new HashSet<Image>();
+        }
     }
 
     private Set<Category> getCategories (List<String> categories) {
@@ -167,22 +180,6 @@ public class AdminController {
         }
     }
 
-    /*@GetMapping("/admin/fragment/{fragment}")
-    public String insertFragment(@PathVariable(name = "fragment") String fragment, Model model) {
-        switch (fragment) {
-            case "new":
-                model.addAttribute("product", new Product());
-                break;
-            case "all":
-                model.addAttribute("products", productService.getProducts());
-                break;
-            case "product":
-
-        }
-        model.addAttribute("fragment", fragment);
-        return "admin/start";
-    }*/
-    
     @PostMapping("/subscribe")
     public ResponseEntity<?> signUpEmail(@RequestParam("email") String email) {
 		Optional<SignUpEmail> mail = this.signUpRepository.findByEmail(email);

@@ -69,6 +69,22 @@ export const mutations = {
   },
   removeProduct: (state, id) => {
     state.products.splice(state.products.findIndex(pr => parseInt(pr.id) === parseInt(id)), 1)
+  },
+  setCategory: (state, id, value) => {
+    const product = state.products.find(pr => parseInt(pr.id) === parseInt(id))
+    console.log(product)
+    if (!product.categories.includes(value)) {
+      state.products.find(pr => parseInt(pr.id) === parseInt(id)).categories.push(value)
+    } else {
+      const index = state.product.categories.indexOf(value)
+      if (index !== -1) {
+        state.products.find(pr => parseInt(pr.id) === parseInt(id)).categories.splice(index, 1)
+      }
+    }
+  },
+  saveProduct: (state, product) => {
+    const idx = state.products.findIndex(e => e.id === product.id)
+    state.products[idx] = product
   }
 }
 
@@ -113,5 +129,11 @@ export const actions = {
   },
   removeProduct: ({ commit }, id) => {
     commit('removeProduct', id)
+  },
+  setCategory: ({ commit }, id, value) => {
+    commit('setCategory', id, value)
+  },
+  saveProduct: ({ commit }, product) => {
+    commit('saveProduct', product)
   }
 }

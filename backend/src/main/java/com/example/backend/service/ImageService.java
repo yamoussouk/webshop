@@ -13,7 +13,7 @@ public interface ImageService {
     Image saveImageFile(Long recipeId, MultipartFile file);
     void saveOneImage(MultipartFile file);
     void renderImage(Long id, String imageUrl, HttpServletResponse response) throws IOException;
-    void deleteImage(Product product, String imageUrl);
+    void deleteImage(Product product, Image image);
     List<Image> getAllImages();
     Image findById(Long id);
     void saveImage(Image image);

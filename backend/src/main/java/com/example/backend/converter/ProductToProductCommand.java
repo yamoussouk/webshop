@@ -52,6 +52,7 @@ public class ProductToProductCommand implements Converter<Product, ProductComman
         }
         productCommand.setImage(images);
         productCommand.setEnabled(product.getEnabled());
+        productCommand.setDownloadLink(product.getDownloadLink());
         return productCommand;
     }
 }
