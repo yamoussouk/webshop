@@ -6,7 +6,8 @@ export const state = () => ({
   products: [],
   tempImages: [],
   auth: null,
-  orders: []
+  orders: [],
+  subscribers: []
 })
 
 export const getters = {
@@ -39,6 +40,9 @@ export const getters = {
   },
   orders: (state) => {
     return state.orders
+  },
+  subscribers: (state) => {
+    return state.subscribers
   }
 }
 
@@ -96,6 +100,9 @@ export const mutations = {
   },
   setOrders: (state, orders) => {
     state.orders = orders
+  },
+  setSubscribers: (state, subscribers) => {
+    state.subscribers = subscribers
   }
 }
 
@@ -152,5 +159,8 @@ export const actions = {
   },
   setOrders: ({ commit }, orders) => {
     commit('setOrders', orders)
+  },
+  setSubscribers: ({ commit }, subscribers) => {
+    commit('setSubscribers', subscribers)
   }
 }

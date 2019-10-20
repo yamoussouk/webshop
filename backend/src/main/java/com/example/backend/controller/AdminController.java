@@ -1,29 +1,35 @@
 package com.example.backend.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import com.example.backend.command.ProductCommand;
+import com.example.backend.converter.ProductToProductCommand;
+import com.example.backend.dto.ProductDto;
+import com.example.backend.exception.NotFoundException;
 import com.example.backend.model.Category;
 import com.example.backend.model.Image;
 import com.example.backend.model.Product;
 import com.example.backend.model.SignUpEmail;
-import com.example.backend.command.ImageCommand;
-import com.example.backend.command.ProductCommand;
-import com.example.backend.dto.ProductDto;
-import com.example.backend.exception.NotFoundException;
 import com.example.backend.repository.CategoryRepository;
 import com.example.backend.repository.SignUpRepository;
 import com.example.backend.service.ImageService;
 import com.example.backend.service.ProductService;
-import com.example.backend.converter.ProductToProductCommand;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.io.IOException;
-import java.util.*;
-import java.util.stream.Collectors;
 
 @RestController
 public class AdminController {
@@ -191,6 +197,13 @@ public class AdminController {
         	this.signUpRepository.save(emailToSave);
         	return new ResponseEntity<>("User is signed up!", HttpStatus.OK);
         }
-	}
+    }
+    
+    @GetMapping("/admin/subscribers/all")
+    public List<SignUpEmail> getAllSubscribers() {
+        List<SignUpEmail> subscribers = new ArrayList<>();
+        this.signUpRepository.findAll().iterator().forEachRemaining(subscribers::add);
+        return subscribers;
+    }
 }
 

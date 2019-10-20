@@ -55,6 +55,12 @@
               </ul>
             </b-collapse>
           </li>
+          <li class="nav-item">
+            <nuxt-link class="sidebar-menu-item" to="/admin/subscribers">
+              <i class="ni ni-shop text-primary" />
+              <span class="nav-link-text">Subscribers</span>
+            </nuxt-link>
+          </li>
         </ul>
       </div>
     </div>
