@@ -1,28 +1,45 @@
 package com.example.backend.service;
 
-import com.example.backend.converter.JsonConverter;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import com.example.backend.model.Mail;
 import com.example.backend.model.Orders;
 import com.example.backend.repository.OrdersRepository;
 import com.example.backend.repository.UserRepository;
-import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Map;
+import org.springframework.stereotype.Service;
 
 @Service
 public class OrderServiceImpl implements OrderService {
 
     private OrdersRepository ordersRepository;
     private UserRepository userRepository;
+    private EmailService mailService;
 
-    public OrderServiceImpl(OrdersRepository ordersRepository, UserRepository userRepository) {
+    public OrderServiceImpl(OrdersRepository ordersRepository, UserRepository userRepository, EmailService mailService) {
         this.ordersRepository = ordersRepository;
         this.userRepository = userRepository;
+        this.mailService = mailService;
     }
 
     @Override
     public void addOrder(Orders newOrder) {
-        this.ordersRepository.save(newOrder);
+        Orders order = this.ordersRepository.save(newOrder);
+        if (order != null) {
+            Mail orderSuccess = new Mail();
+            orderSuccess.setFrom("valaki@gmail.com");
+            orderSuccess.setTo(order.getEmail());
+            orderSuccess.setSubject("Item successfully ordered!");
+            Map<String, Object> model = new HashMap<>();
+            model.put("email", order.getEmail());
+            model.put("products", order.getProducts());
+            model.put("price", order.getPrice());
+            model.put("purchaseTime", order.getPurchaseTime());
+            orderSuccess.setModel(model);
+            mailService.sendEmail(orderSuccess, "order-success");
+        }
     }
 
     @Override

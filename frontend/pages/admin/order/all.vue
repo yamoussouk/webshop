@@ -7,7 +7,7 @@
             <div class="card mb-4">
               <div class="card-header">
                 <h3 class="mb-0">
-                  {{ order.purchasedTime }}
+                  {{ order.purchaseTime }}
                 </h3>
               </div>
               <div class="card-body">

@@ -41,4 +41,3 @@ public class Mail {
         this.model = model;
     }
 }
-

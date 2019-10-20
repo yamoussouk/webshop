@@ -1,15 +1,17 @@
 package com.example.backend.service;
 
+import java.nio.charset.StandardCharsets;
+
+import javax.mail.internet.MimeMessage;
+
 import com.example.backend.model.Mail;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring5.SpringTemplateEngine;
-
-import javax.mail.internet.MimeMessage;
-import java.nio.charset.StandardCharsets;
 
 @Service
 public class EmailService {
@@ -34,6 +36,8 @@ public class EmailService {
                 html = templateEngine.process("email/email-template", context);
             } else if (template.equals("simple")) {
                 html = templateEngine.process("email/simple-email-template", context);
+            } else if (template.equals("order-success")) {
+                html = templateEngine.process("email/order-success-email-template", context);
             } else {
                 html = templateEngine.process("email/activation-email-template", context);
             }

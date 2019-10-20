@@ -5,7 +5,8 @@ export const state = () => ({
   cart: [],
   products: [],
   tempImages: [],
-  auth: null
+  auth: null,
+  orders: []
 })
 
 export const getters = {
@@ -35,6 +36,9 @@ export const getters = {
   },
   auth: (state) => {
     return state.auth
+  },
+  orders: (state) => {
+    return state.orders
   }
 }
 
@@ -89,6 +93,9 @@ export const mutations = {
   refreshProduct: (state, product) => {
     const index = state.products.findIndex(item => item.id === product.id)
     state.products.splice(index, 1, product)
+  },
+  setOrders: (state, orders) => {
+    state.orders = orders
   }
 }
 
@@ -142,5 +149,8 @@ export const actions = {
   },
   refreshPoduct: ({ commit }, product) => {
     commit('refreshProduct', product)
+  },
+  setOrders: ({ commit }, orders) => {
+    commit('setOrders', orders)
   }
 }

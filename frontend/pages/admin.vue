@@ -27,9 +27,15 @@ export default {
     ).then((response) => {
       this.setProducts(response.data)
     })
+
+    // eslint-disable-next-line
+    axios.get('http://localhost:8083/order/all', { headers: headers }
+    ).then((response) => {
+      this.setOrders(response.data)
+    })
   },
   methods: {
-    ...mapActions(['setProducts'])
+    ...mapActions(['setProducts', 'setOrders'])
   }
 }
 </script>
