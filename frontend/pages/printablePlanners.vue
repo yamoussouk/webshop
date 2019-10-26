@@ -100,7 +100,6 @@ export default {
 .shop_aside {
     width: 31.333%;
     float: left;
-    margin: 0 1% 40px;
 }
 .shop_inner {
     width: 64.666%;
@@ -158,16 +157,16 @@ export default {
     overflow: hidden;
 }
 .desc h4 a {
-    font-family: Meownella;
-    font-size: 28px;
-    font-weight: bold;
+    font-family: Daun;
+    font-size: 38px;
     color: #000;
 }
 .desc .price {
     text-align: center;
     color: #8f9194;
-    font-family: Meownella;
-    font-size: 30px;
+    font-family: Daun;
+    font-size: 40px;
     margin-bottom: 1%;
+    margin-top: -4%;
 }
 </style>

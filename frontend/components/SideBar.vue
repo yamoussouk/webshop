@@ -7,26 +7,29 @@
             <img :src="'/page_assets/magnifier.png'" alt="magnifier">
           </span>
           <div class="search_field">
-            <input id="product_search_field" placeholder="Search" :value="search" @keyup="onChange($event)">
+            <input id="product_search_field" placeholder="search items" :value="search" @keyup="onChange($event)">
           </div>
         </div>
       </div>
       <div class="sidebar_categories">
         <ul>
-          <li @click="filterCategory('ALL')">
+          <li class="active" ref="all" @click="filterCategory('ALL')">
             ALL
           </li>
-          <li @click="filterCategory('INSERTS')">
-            INSERTS
-          </li>
-          <li @click="filterCategory('LIFESTYLE PLANNERS')">
+          <li ref="lifestyle" @click="filterCategory('LIFESTYLE PLANNERS')">
             LIFESTYLE PLANNERS
           </li>
-          <li @click="filterCategory('MONTHLY PLANNERS')">
+          <li ref="monthly" @click="filterCategory('MONTHLY PLANNERS')">
             MONTHLY PLANNERS
           </li>
-          <li @click="filterCategory('DAILY PLANNERS')">
+          <li ref="weekly" @click="filterCategory('WEEKLY PLANNERS')">
+            WEEKLY PLANNERS
+          </li>
+          <li ref="daily" @click="filterCategory('DAILY PLANNERS')">
             DAILY PLANNERS
+          </li>
+          <li ref="digital" @click="filterCategory('DIGITAL PLANNERS')">
+            DIGITAL PLANNERS
           </li>
         </ul>
       </div>
@@ -70,6 +73,11 @@ export default {
     },
     filterCategory (filter) {
       this.$emit('filter', filter)
+      const f = filter.split(' ')[0].toLowerCase()
+      for (const ref in this.$refs) {
+        this.$refs[ref].classList.remove('active')
+      }
+      this.$refs[f].classList.add('active')
     }
   }
 }
@@ -96,31 +104,31 @@ export default {
     width: 78% !important;
     height: 60px;
     border-radius: 10px;
-    font-family: Audrey !important;
-    font-size: 25px;
-    padding-left: 10px;
+    font-family: Daun !important;
+    font-size: 45px;
+    padding: 20px 0 0 10px;
+    border: 1px solid #000;
 }
 .sidebar_categories {
     margin-bottom: 10%;
 }
 .sidebar_categories ul {
-    margin-left: 15%;
     padding-top: 5%;
     list-style: none;
     padding-left: 0;
 }
 .sidebar_categories ul li {
-    margin-top: 5%;
     color: #000;
-    font-family: Audrey;
-    font-size: 36px;
+    font-family: Daun;
+    font-size: 50px;
     letter-spacing: 3px;
+    padding-left: 15%;
+    padding-top: 3%;
 }
 .contact_me_wrapper {
     border: 1px solid #000;
     border-radius: 10px;
-    width: 75%;
-    padding: 3% 0;
+    width: 70%;
     margin-left: 15%;
     display: table;
 }
@@ -128,16 +136,18 @@ export default {
     float: left;
     position: relative;
     left: 80px;
-    top: 10px;
+    top: 20px;
 }
 .contact_me_wrapper span {
     color: #000;
-    font-family: Audrey;
-    font-size: 36px;
+    font-family: Daun;
+    font-size: 50px;
     letter-spacing: 3px;
     display: table-cell;
     vertical-align: middle;
     text-align: center;
+    position: relative;
+    top: 5px;
 }
 .sidebar_bottom {
     background-color: #fff;
@@ -154,10 +164,14 @@ export default {
     margin: 5% 10% 0 15%;
 }
 .comments p {
-    font-family: Audrey;
-    font-size: 30px;
+    font-family: Daun;
+    font-size: 40px;
     line-height: 40px;
     text-align: justify;
     margin-bottom: 8%;
+}
+.sidebar_categories ul li.active {
+  background-color: #cd9e8f;
+  color: #fff;
 }
 </style>

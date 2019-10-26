@@ -71,13 +71,13 @@ export default {
     padding-top: 40%;
 }
 .custom_breadcrumb .back_button span {
-    font-family: Audrey;
-    font-size: 40px;
+    font-family: Daun;
+    font-size: 60px;
     display: table-cell;
     vertical-align: middle;
     position: relative;
     padding-left: 10%;
-    padding-top: 10px;
+    padding-top: 25px;
 }
 .bc_text {
     width: 100%;
@@ -88,13 +88,13 @@ export default {
     text-align: center;
 }
 .bc_text h1 {
-    font-family: Audrey;
-    font-size: 40px;
+    font-family: Daun;
+    font-size: 60px;
     text-transform: uppercase;
     letter-spacing: 6px;
     position: relative;
     display: table-cell;
     vertical-align: middle;
-    padding-top: 10px;
+    padding-top: 25px;
 }
 </style>
