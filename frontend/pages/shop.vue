@@ -14,7 +14,7 @@
         </nuxt-link>
       </div>
       <div class="shop_categories logo">
-        <nuxt-link to="/logodesign">
+        <nuxt-link to="/logoDesign">
           <div class="category_img">
             <h1>logo design</h1>
           </div>

@@ -13,23 +13,8 @@
       </div>
       <div class="sidebar_categories">
         <ul>
-          <li class="active" ref="all" @click="filterCategory('ALL')">
-            ALL
-          </li>
-          <li ref="lifestyle" @click="filterCategory('LIFESTYLE PLANNERS')">
-            LIFESTYLE PLANNERS
-          </li>
-          <li ref="monthly" @click="filterCategory('MONTHLY PLANNERS')">
-            MONTHLY PLANNERS
-          </li>
-          <li ref="weekly" @click="filterCategory('WEEKLY PLANNERS')">
-            WEEKLY PLANNERS
-          </li>
-          <li ref="daily" @click="filterCategory('DAILY PLANNERS')">
-            DAILY PLANNERS
-          </li>
-          <li ref="digital" @click="filterCategory('DIGITAL PLANNERS')">
-            DIGITAL PLANNERS
+          <li v-for="(category, index) in cats" :key="index" ref="cats" @click="filterCategory(category.toUpperCase(), index)">
+            {{ category.toUpperCase() }}
           </li>
         </ul>
       </div>
@@ -65,19 +50,32 @@ export default {
     search: {
       type: String,
       default: ''
+    },
+    categories: {
+      type: Array,
+      default: () => {
+        return []
+      }
+    }
+  },
+  mounted () {
+    this.$refs.cats[0].classList.add('active')
+  },
+  computed: {
+    cats () {
+      return this.$props.categories
     }
   },
   methods: {
     onChange (event) {
       this.$emit('update:search', event.target.value)
     },
-    filterCategory (filter) {
+    filterCategory (filter, index) {
       this.$emit('filter', filter)
-      const f = filter.split(' ')[0].toLowerCase()
-      for (const ref in this.$refs) {
-        this.$refs[ref].classList.remove('active')
+      for (const ref in this.$refs.cats) {
+        this.$refs.cats[ref].classList.remove('active')
       }
-      this.$refs[f].classList.add('active')
+      this.$refs.cats[index].classList.add('active')
     }
   }
 }

@@ -1,5 +1,5 @@
 <template>
-  <div class="planners">
+  <div class="logos">
     <bread-crumb :title="title" :to="shop" />
     <div class="shop_wrapper">
       <div class="shop_aside">
@@ -44,12 +44,12 @@ export default {
   },
   data () {
     return {
-      title: 'printable planners',
+      title: 'logo design',
       shop: 'shop',
       products: [],
       search: '',
       filteredProducts: [],
-      categories: ['all', 'lifestyle planners', 'monthly planners', 'weekly planners', 'daily planners', 'digital planners']
+      categories: ['all', 'single logo', 'logo set', 'custom logo']
     }
   },
   computed: {
