@@ -15,7 +15,7 @@
     color: #696a6d;
     text-align: center;
     float: none;
-    font-size: 40px;
-    font-family: Times new roman;
+    font-size: 50px;
+    font-family: Daun;
 }
 </style>

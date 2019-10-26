@@ -47,7 +47,7 @@ export default {
     vertical-align: middle;
 }
 .cartWithItem {
-    background-color: rgba(163, 153, 178, 0.77);
+    background-color: rgba(226,212,203, 0.89);
     border-radius: 10px;
 }
 </style>

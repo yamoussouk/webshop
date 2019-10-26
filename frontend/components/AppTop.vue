@@ -18,7 +18,7 @@
       </a>
     </div>
     <div class="header_banner_text">
-      <span class="header_banner_text_top">CREATE YOURSELF</span>
+      <span class="header_banner_text_top">create yourself</span>
       <span class="header_banner_text_bottom">PRINTABLE PLANNERS, LOGO DESIGN AND ILLUSTRATION</span>
     </div>
     <div class="header_cart">
@@ -54,58 +54,53 @@ export default {
     height: 240px;
     margin-top: 70px;
     background-color: #fff;
-    -webkit-box-shadow: 3px 3px 5px 6px #ccc;
-    box-shadow: 3px 3px 5px 6px #ccc;
-    -moz-box-shadow: 3px 3px 5px 6px #ccc;
-    border-top: 1px solid #ccc;
 }
 .header_banner_icons {
     float: left;
     width: 20%;
-    margin-left: 5%;
-    display: table;
     height: 240px;
+    padding-top: 2%;
 }
 .header_banner_icon {
     text-decoration: none;
     margin: 0 2%;
     cursor: pointer;
-    display: table-cell;
-    vertical-align: middle;
+}
+.header_banner_icon:nth-child(1) {
+    margin-left: 10%;
 }
 .header_banner_text {
     float: left;
-    width: 55%;
-    margin-left: 10%;
+    width: 60%;
     height: 240px;
 }
 .header_banner_text_top {
-    font-size: 92px;
+    font-size: 100px;
     text-align: center;
-    font-family: Rock;
-    width: 60%;
+    font-family: Monoline;
+    width: 100%;
     float: left;
-    margin-bottom: 30px;
+    margin-bottom: -15px;
+    margin-top: 20px;
+    color: #393839;
 }
 .header_banner_text_bottom {
-    font-size: 22px;
-    font-family: Audrey;
+    font-size: 53px;
+    font-family: Daun;
     text-align: center;
     float: left;
+    color: #7d7e81;
+    width: 100%;
 }
 .header_cart {
     float: left;
-    width: 6%;
+    width: 20%;
     height: 240px;
+    padding-top: 2%;
 }
 .header_cart > div {
-    display: table;
     height: 240px;
     width: 100%;
-}
-.header_cart > div > div {
-    display: table-cell;
-    vertical-align: middle;
 }
 .header_cart a {
     display: table;
@@ -123,5 +118,10 @@ export default {
     top: 5px;
     padding-left: 10%;
     color: #fff;
+}
+.cart-wrapper a {
+    float: right;
+    position: relative;
+    right: 115px;
 }
 </style>

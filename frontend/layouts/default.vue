@@ -47,6 +47,16 @@ export default {
   src: url(/fonts/rock.ttf);
   src: url(/fonts/rock.woff);
 }
+@font-face {
+  font-family: Monoline;
+  src: url(/fonts/monoline.ttf);
+  src: url(/fonts/monoline.woff);
+}
+@font-face {
+  font-family: Daun;
+  src: url(/fonts/DaunPenh.ttf);
+  src: url(/fonts/DaunPenh.woff);
+}
 html {
   font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI',
     Roboto, 'Helvetica Neue', Arial, sans-serif;
@@ -57,7 +67,7 @@ html {
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   box-sizing: border-box;
-  background-color: rgba(163,153,178,0.14);
+  background-color: rgba(226,212,203,0.34);
 }
 
 *,
@@ -96,6 +106,6 @@ html {
   background-color: #35495e;
 }
 #__layout {
-  background-color: rgba(163,153,178,0.14);
+  background-color: rgba(226,212,203,0.34);
 }
 </style>

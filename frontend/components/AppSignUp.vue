@@ -76,32 +76,37 @@ export default {
     padding-top: 3%;
 }
 .sign_up_form h1 {
-    font-family: Audrey;
-    font-size: 43px;
-    color: rgba(163, 153, 178, 0.77);
+    font-family: Daun;
+    font-size: 60px;
+    color: #000;
     margin-bottom: 5%;
+    letter-spacing: 6px;
 }
 form input {
-    width: 60%;
+    width: 65%;
     float: left;
-    height: 70px;
-    font-family: Audrey;
-    font-size: 43px;
+    height: 80px;
+    font-family: Daun;
+    font-size: 60px;
     color: #bcbec0;
     font-style: italic;
     border-radius: 10px;
-    border-color: rgb(235, 235, 235);
+    border-color: #000;
+    letter-spacing: 3px;
+    padding: 25px 0 0 20px;
 }
 .emaillist form button {
-    background-color: #544c62;
+    background-color: rgba(31,89,97, 0.77);
     color: #fff;
     width: 264px;
-    font-size: 43px;
-    font-family: Audrey;
-    height: 70px;
+    font-size: 60px;
+    font-family: Daun;
+    height: 80px;
     opacity: 0.77;
-    line-height: 60px;
+    line-height: 95px;
     border-radius: 10px;
+    letter-spacing: 3px;
+    width: 30%;
 }
 .emaillist_error, .emaillist_answer {
     text-align: center;

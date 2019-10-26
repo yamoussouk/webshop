@@ -2,19 +2,18 @@
   <div class="main_section">
     <div class="wrap">
       <div class="wrap-inner">
-        <div class="one-sixth" />
-        <div class="five-sixth">
+        <div class="full-width">
           <div class="column">
-            <div class="home_page_box">
-              <div class="grey_line_wrapper left_align">
-                <span class="grey_line" />
-              </div>
-              <div class="text_wrapper left_align">
+            <div class="anchor_box left_box">
+              <div class="text_wrapper left_align" style="background-color: #c8b65e;">
                 <nuxt-link to="/shop">
-                  SHOP
+                  shop
                 </nuxt-link>
               </div>
             </div>
+            <img class="shop-image left-image" alt="shop-image" src="/page_assets/shop_photos-01.png"/>
+            <img class="shop-image left-image" alt="shop-image" src="/page_assets/shop_photos-02.png"/>
+            <img class="shop-image left-image" alt="shop-image" src="/page_assets/shop_photos-03.png"/>
           </div>
         </div>
       </div>
@@ -22,39 +21,37 @@
 
     <div class="wrap">
       <div class="wrap-inner">
-        <div class="five-sixth">
+        <div class="full-width">
           <div class="column">
-            <div class="home_page_box">
-              <div class="grey_line_wrapper right_align">
-                <span class="grey_line" />
-              </div>
-              <div class="text_wrapper right_align">
+            <img class="shop-image right-image" alt="freebies-image" src="/page_assets/freebies_photos-01.png"/>
+            <img class="shop-image right-image" alt="freebies-image" src="/page_assets/freebies_photos-02.png"/>
+            <img class="shop-image right-image" alt="freebies-image" src="/page_assets/freebies_photos-03.png"/>
+            <div class="anchor_box right_box">
+              <div class="text_wrapper right_align" style="background-color: #cd9e8f;">
                 <nuxt-link to="/freebies">
-                  FREEBIES
+                  freebies
                 </nuxt-link>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="one-sixth" />
     </div>
 
     <div class="wrap">
       <div class="wrap-inner">
-        <div class="one-sixth" />
-        <div class="five-sixth">
+        <div class="full-width">
           <div class="column">
-            <div class="home_page_box">
-              <div class="grey_line_wrapper left_align">
-                <span class="grey_line" />
-              </div>
-              <div class="text_wrapper left_align">
+            <div class="anchor_box left_box">
+              <div class="text_wrapper left_align" style="background-color: #5ea99e;">
                 <nuxt-link to="/aboutme">
-                  ABOUT ME
+                  about me
                 </nuxt-link>
               </div>
             </div>
+            <img class="shop-image left-image" alt="shop-image" src="/page_assets/aboutme_photos-01.png"/>
+            <img class="shop-image left-image" alt="shop-image" src="/page_assets/aboutme_photos-02.png"/>
+            <img class="shop-image left-image" alt="shop-image" src="/page_assets/aboutme_photos-03.png"/>
           </div>
         </div>
       </div>
@@ -62,22 +59,21 @@
 
     <div class="wrap">
       <div class="wrap-inner">
-        <div class="five-sixth">
+        <div class="full-width">
           <div class="column">
-            <div class="home_page_box">
-              <div class="grey_line_wrapper right_align">
-                <span class="grey_line" />
-              </div>
-              <div class="text_wrapper right_align">
+            <img class="shop-image right-image" alt="freebies-image" src="/page_assets/contact_photos-01.png"/>
+            <img class="shop-image right-image" alt="freebies-image" src="/page_assets/contact_photos-02.png"/>
+            <img class="shop-image right-image" alt="freebies-image" src="/page_assets/contact_photos-03.png"/>
+            <div class="anchor_box right_box">
+              <div class="text_wrapper right_align" style="background-color: #1f5961;">
                 <nuxt-link to="/contact">
-                  CONTACT
+                  contact
                 </nuxt-link>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="one-sixth" />
     </div>
   </div>
 </template>
@@ -99,23 +95,17 @@
     float: left;
     margin: 0 1% 40px;
 }
-.five-sixth {
-    width: 81.333%;
-    float: left;
+.full-width {
+    width: 100%;
     margin: 0 1% 40px;
 }
 .column {
     transition: all .4s ease-in-out;
-    border: 1px solid;
     text-align: left;
 }
-.home_page_box {
+.anchor_box {
     height: 290px;
-    background-color: #fff;
-}
-.grey_line_wrapper {
-    margin: 0 5%;
-    height: 290px;
+    width: 23%;
 }
 .left_align {
     float: left;
@@ -123,35 +113,48 @@
 .right_align {
     float: right;
 }
-.grey_line {
-    width: 55px;
-    background-color: rgba(84, 76, 98, 0.54);
-    height: 290px;
-    display: inline-block;
-}
 .text_wrapper {
     text-align: center;
     position: relative;
     height: 290px;
     display: table;
+    width: 90%;
 }
 .text_wrapper a {
     font-size: 79px;
-    font-family: rock;
+    font-family: Monoline;
     text-align: center;
-    color: #393839;
+    color: #ffffff;
     display: table-cell;
     vertical-align: middle;
 }
 .text_wrapper a:hover {
     text-decoration: none;
 }
-.column:hover {
-    -webkit-transform: scale(1.1);
-    -ms-transform: scale(1.1);
-    transform: scale(1.1);
-    -webkit-box-shadow: 4px 4px 5px 0px rgba(204, 204, 204, 1);
-    -moz-box-shadow: 4px 4px 5px 0px rgba(204, 204, 204, 1);
-    box-shadow: 4px 4px 5px 0px rgba(204, 204, 204, 1);
+.text_wrapper:hover {
+    opacity: 0.5;
+}
+.left_box {
+    margin-right: 2%;
+    float: left;
+}
+.left-image {
+    margin-right: 2%;
+}
+.right_box {
+  margin-right: 1.4%;
+  float: right;
+}
+.right-image {
+    margin-right: 2%;
+}
+.shop-image {
+    width: 23%;
+}
+.left-image.shop-image:nth-child(4) {
+    margin-right: 0;
+}
+.right-image.shop-image:nth-child(3) {
+    margin-right: 0;
 }
 </style>

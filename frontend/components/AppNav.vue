@@ -1,32 +1,34 @@
 <template>
   <nav class="menu_wrapper">
-    <ul>
-      <li>
-        <nuxt-link exact to="/">
-          HOME
-        </nuxt-link>
-      </li>
-      <li>
-        <nuxt-link to="/shop">
-          SHOP
-        </nuxt-link>
-      </li>
-      <li>
-        <nuxt-link to="/freebies">
-          FREEBIES
-        </nuxt-link>
-      </li>
-      <li>
-        <nuxt-link to="/aboutme">
-          ABOUT ME
-        </nuxt-link>
-      </li>
-      <li>
-        <nuxt-link to="/contact">
-          CONTACT
-        </nuxt-link>
-      </li>
-    </ul>
+    <div class="inner">
+      <ul>
+        <li>
+          <nuxt-link exact to="/">
+            <span>HOME</span>
+          </nuxt-link>
+        </li>
+        <li>
+          <nuxt-link to="/shop">
+            <span>SHOP</span>
+          </nuxt-link>
+        </li>
+        <li>
+          <nuxt-link to="/freebies">
+            <span>FREEBIES</span>
+          </nuxt-link>
+        </li>
+        <li>
+          <nuxt-link to="/aboutme">
+            <span>ABOUT ME</span>
+          </nuxt-link>
+        </li>
+        <li>
+          <nuxt-link to="/contact">
+            <span>CONTACT</span>
+          </nuxt-link>
+        </li>
+      </ul>
+    </div>
   </nav>
 </template>
 
@@ -37,8 +39,12 @@
     clear: both;
     line-height: 0;
     height: 70px;
-    background-color: rgba(163, 153, 178, 0.34);
     margin-top: 50px;
+    background-color: rgba(228,214,206,0.88);
+}
+.menu_wrapper div.inner {
+    width: 70%;
+    margin-left: 15%;
 }
 .menu_wrapper ul {
     list-style: none outside;
@@ -54,14 +60,16 @@
 }
 .menu_wrapper ul li a {
     color: #000;
-    padding: 0 125px;
-    font-family: Audrey;
-    font-size: 29px;
-    line-height: 60px;
-    white-space: nowrap;
+    padding: 0 55px;
+    font-family: Daun;
     height: 70px;
     display: table-cell;
     vertical-align: middle;
+}
+.menu_wrapper ul li a span {
+    vertical-align: text-bottom;
+    font-size: 40px;
+    letter-spacing: 6px;
 }
 .menu_wrapper ul li a:hover {
     text-decoration: none;

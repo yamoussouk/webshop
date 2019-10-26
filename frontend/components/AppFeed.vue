@@ -72,6 +72,7 @@ export default {
 .columns {
     width: 100%;
     height: 493px;
+    padding: 0 5%;
 }
 .instagram_feed {
     padding-top: 4%;
@@ -79,28 +80,30 @@ export default {
     text-align: center;
 }
 .instagram_feed h1 {
-    font-family: Audrey;
-    font-size: 43px;
-    color: rgba(163, 153, 178, 0.77);
+    font-family: Daun;
+    font-size: 60px;
+    color: #000;
     margin-bottom: 2%;
+    letter-spacing: 6px;
 }
 .follow_button {
-    background-color: #544c62;
+    background-color: rgba(31,89,97, 0.77);
     color: #fff;
-    width: 50%;
-    font-size: 43px;
-    font-family: Audrey;
-    height: 70px;
+    width: 100%;
+    font-size: 60px;
+    font-family: Daun;
+    height: 80px;
     opacity: 0.77;
-    line-height: 60px;
+    line-height: 50px;
     border-radius: 10px;
     cursor: pointer;
     float: right;
     display: table;
+    letter-spacing: 3px;
 }
 .follow_button span {
     display: table-cell;
-    vertical-align: middle;
+    vertical-align: bottom;
 }
 .welcome-enter {
   opacity: 0;
@@ -114,31 +117,37 @@ export default {
 }
 .show_more {
     background-color: #fff;
-    color: #544c62;
-    width: 50%;
-    font-size: 43px;
-    font-family: Audrey;
-    height: 70px;
+    color: #1f5961;
+    width: 100%;
+    font-size: 60px;
+    font-family: Daun;
+    height: 80px;
     opacity: 0.77;
-    line-height: 60px;
+    line-height: 50px;
     border-radius: 10px;
     cursor: pointer;
-    border: 1px solid #544c62;
+    border: 1px solid #1f5961;
     float: left;
     display: table;
 }
 .show_more span {
     display: table-cell;
-    vertical-align: middle;
+    vertical-align: bottom;
 }
 .left_wrapper {
     margin-right: 0.5%;
+    margin-left: 19.75%;
 }
 .right_wrapper {
     margin-left: 0.5%;
 }
 .left_wrapper, .right_wrapper {
     float: left;
-    width: 49.5%;
+    width: 30%;
+}
+.feed_buttons {
+    max-width: 1140px;
+    text-align: center;
+    margin: 0 auto;
 }
 </style>
