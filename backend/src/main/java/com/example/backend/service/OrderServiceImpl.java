@@ -27,19 +27,21 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public void addOrder(Orders newOrder) {
         Orders order = this.ordersRepository.save(newOrder);
-        if (order != null) {
-            Mail orderSuccess = new Mail();
-            orderSuccess.setFrom("valaki@gmail.com");
-            orderSuccess.setTo(order.getEmail());
-            orderSuccess.setSubject("Item successfully ordered!");
-            Map<String, Object> model = new HashMap<>();
-            model.put("email", order.getEmail());
-            model.put("products", order.getProducts());
-            model.put("price", order.getPrice());
-            model.put("purchaseTime", order.getPurchaseTime());
-            orderSuccess.setModel(model);
-            mailService.sendEmail(orderSuccess, "order-success");
-        }
+        // no need mail currently!!!
+        // if (order != null) {
+        //     Mail orderSuccess = new Mail();
+        //     orderSuccess.setFrom("valaki@gmail.com");
+        //     orderSuccess.setTo(order.getEmail());
+        //     orderSuccess.setSubject("Item successfully ordered!");
+        //     Map<String, Object> model = new HashMap<>();
+        //     model.put("email", order.getEmail());
+        //     model.put("products", order.getProducts());
+        //     model.put("price", order.getPrice());
+        //     model.put("purchaseTime", order.getPurchaseTime());
+        //     orderSuccess.setModel(model);
+        //     mailService.sendEmail(orderSuccess, "order-success");
+        // }
+        // some size and starting day logic here
     }
 
     @Override

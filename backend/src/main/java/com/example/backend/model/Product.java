@@ -1,13 +1,33 @@
 package com.example.backend.model;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
-import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+
 @Entity
 public class Product {
+
+    public enum Size {
+        A4,
+        A5,
+        USLETTER,
+        PERSONAL,
+        HALFSIZE
+    }
+
+    public enum StartingDay {
+        SUNDAY,
+        MONDAY
+    }
 
     @Id
     // @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,6 +40,12 @@ public class Product {
     private Integer quantity;
     private String downloadLink;
     private boolean enabled;
+
+    @Enumerated(EnumType.STRING)
+    private Size size;
+
+    @Enumerated(EnumType.STRING)
+    private StartingDay startingDay; 
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
@@ -152,5 +178,21 @@ public class Product {
 
     public void setEnabled (boolean enabled) {
         this.enabled = enabled;
+    }
+
+    public String getSize() {
+        return this.size.name();
+    }
+
+    public void setSize(Size size) {
+        this.size = size;
+    }
+
+    public String getStrartingDay() {
+        return this.startingDay.name();
+    }
+
+    public void setStartingDay(StartingDay day) {
+        this.startingDay = day;
     }
 }

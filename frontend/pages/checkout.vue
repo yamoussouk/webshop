@@ -7,6 +7,8 @@
             <thead>
               <th>Product</th>
               <th>Quantity</th>
+              <th>Size</th>
+              <th>Starting day</th>
               <th>Price</th>
               <th />
             </thead>
@@ -14,12 +16,16 @@
               <tr v-for="(item, index) in cart" :key="item.id">
                 <td>{{ item.name }}</td>
                 <td>{{ item.quantity }}</td>
+                <td>{{ item.size }}</td>
+                <td>{{ item.startingDay }}</td>
                 <td>{{ item.price }}</td>
                 <td><span class="glyphicon glyphicon-remove" @click="removeFromCart(index)">X</span></td>
               </tr>
             </tbody>
             <tfoot>
               <td><b>Total:</b></td>
+              <td />
+              <td />
               <td />
               <td style="border: 1px solid;">
                 {{ total }}
