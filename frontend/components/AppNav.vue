@@ -67,11 +67,15 @@
     vertical-align: middle;
 }
 .menu_wrapper ul li a span {
-    vertical-align: text-bottom;
+    position: relative;
+    top: 8px;
     font-size: 40px;
     letter-spacing: 6px;
 }
 .menu_wrapper ul li a:hover {
     text-decoration: none;
+}
+li a.nuxt-link-active {
+    background-color: rgba(255,255,255,0.4);
 }
 </style>

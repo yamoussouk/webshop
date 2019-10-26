@@ -31,7 +31,6 @@ export default {
 .custom_breadcrumb {
     background-color: #fff;
     height: 120px;
-    margin-top: 2%;
     margin-bottom: 2%;
 }
 .custom_breadcrumb .back_button {

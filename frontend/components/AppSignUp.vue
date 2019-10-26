@@ -109,11 +109,17 @@ form input {
     width: 30%;
 }
 .emaillist_error, .emaillist_answer {
-    text-align: center;
+    text-align: left;
     font-size: 20px;
+    margin-top: 1%;
+}
+.emaillist_error b, .emaillist_answer b {
+    float: left;
 }
 .emaillist_error ul, .emaillist_answer ul {
     list-style: none;
     padding: 0;
+    margin-left: 2%;
+    float: left;
 }
 </style>
