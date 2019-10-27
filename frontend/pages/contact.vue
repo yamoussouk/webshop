@@ -4,6 +4,7 @@
     <input type="email" class="email_input" v-model="email" />
     <span id="message_label">MESSAGE</span>
     <textarea class="message_input" v-model="text" />
+    <div v-show="error" id="error">Something went wrong. Try it again!</div>
     <span @click="sendEmail" id="send">send</span>
   </div>
 </template>
@@ -14,18 +15,24 @@ export default {
   data () {
     return {
       email: '',
-      text: ''
+      text: '',
+      error: false
     }
   },
   methods: {
     sendEmail () {
+      this.error = false
       const formData = new FormData()
       formData.append('from', this.email)
       formData.append('text', this.text)
       axios.post('http://localhost:8083/default/contact', formData, {}
       ).then((response) => {
-        console.log(response.data)
-        // this.answers.push(response.data)
+        if (response.data === 'OK') {
+          this.email = ''
+          this.text = ''
+        } else {
+          this.error = true
+        }
       })
         .catch(function (error) {
           console.log(error)
@@ -93,5 +100,11 @@ input.email_input {
     text-align: center;
     position: relative;
     right: 2%;
+}
+#error {
+    font-family: Daun;
+    font-size: 50px;
+    color: #ff0000;
+    float: left;
 }
 </style>

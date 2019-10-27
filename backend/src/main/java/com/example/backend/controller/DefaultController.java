@@ -60,7 +60,7 @@ public class DefaultController {
 
     @PostMapping("/default/contact")
     public ResponseEntity<?> contact(@RequestParam("from") String from, @RequestParam("text") String email) {
-        // this.emailService.sendEmail(mailAssembler(from, email), "contact");
+        this.emailService.sendEmail(mailAssembler(from, email), "contact");
         return new ResponseEntity<>("OK", HttpStatus.OK);
     }
 
