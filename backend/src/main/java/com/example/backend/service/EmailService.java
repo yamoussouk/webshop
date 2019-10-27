@@ -38,6 +38,8 @@ public class EmailService {
                 html = templateEngine.process("email/simple-email-template", context);
             } else if (template.equals("order-success")) {
                 html = templateEngine.process("email/order-success-email-template", context);
+            } else if (template.equals("contact")) {
+                html = templateEngine.process("email/contact-message-template", context);
             } else {
                 html = templateEngine.process("email/activation-email-template", context);
             }
@@ -46,7 +48,6 @@ public class EmailService {
             helper.setText(html, true);
             helper.setSubject(mail.getSubject());
             helper.setFrom(mail.getFrom());
-
 
             emailSender.send(message);
         } catch (Exception e){
