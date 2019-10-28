@@ -6,36 +6,31 @@
         <div class="product_images">
           <image-carousel :images="product.image" :id="product.id" />
         </div>
-        <div class="product-attributes">
-          <div id="product-size">
-            <span>Size of the product</span>
-            <select v-model="size">
-              <option value="select">SELECT A SIZE</option>
-              <option value="A4">A4</option>
-              <option value="A5">A5</option>
-              <option value="USLETTER">US LETTER</option>
-              <option value="HALFSIZE">HALF SIZE</option>
-              <option value="PERSONAL">PERSONAL</option>
-            </select>
-          </div>
-          <div id="product-starting-day">
-            <span>Starting day of the product</span>
-            <select v-model="startingDay">
-              <option value="select">SELECT A STARTING DAY</option>
-              <option value="MONDAY">MONDAY</option>
-              <option value="SUNDAY">SUNDAY</option>
-            </select>
-          </div>
-        </div>
         <div class="product_price">
           <span>$ {{ product.price }}</span>
         </div>
+        <div class="product-attributes">
+          <custom-select
+                  ref="ref_size"
+                  refs="size"
+                  :options="sizes"
+                  value-key="id"
+                  label-key="name"
+                  v-model="selected_size"></custom-select>
+          <custom-select
+                  ref="ref_day"
+                  refs="day"
+                  :options="days"
+                  value-key="id"
+                  label-key="name"
+                  v-model="selected_day"></custom-select>
+        </div>
         <div class="product_cart_buttons">
           <button class="product_add_to_cart_button" @click="add(product)">
-            Add to cart
+            add to cart
           </button>
           <button class="product_quick_buy_button" @click="buynow(product)">
-            Buy Now
+            buy it now
           </button>
         </div>
       </div>
@@ -51,6 +46,7 @@
 <script>
 import axios from 'axios'
 import BreadCrumb from '~/components/BreadCrumb.vue'
+import CustomSelect from '~/components/CustomSelect.vue'
 // eslint-disable-next-line
 import ImageCarousel from '~/components/ImageCarousel.vue'
 
@@ -61,7 +57,8 @@ export default {
   components: {
     BreadCrumb,
     // eslint-disable-next-line
-    ImageCarousel
+    ImageCarousel,
+    CustomSelect
   },
   data () {
     return {
@@ -69,6 +66,21 @@ export default {
       cart: [],
       product: {},
       size: 'select',
+      sizes: [
+        { name: 'SELECT SIZE', id: 0 },
+        { name: 'A4', id: 1 },
+        { name: 'A5', id: 2 },
+        { name: 'US LETTER', id: 3 },
+        { name: 'HALF SIZE', id: 4 },
+        { name: 'PERSONAL', id: 5 }
+      ],
+      days: [
+        { name: 'FIRST DAY OF THE WEEK', id: 0 },
+        { name: 'SUNDAY', id: 1 },
+        { name: 'MONDAY', id: 2 }
+      ],
+      selected_size: { name: 'SELECT SIZE', id: 0 },
+      selected_day: { name: 'FIRST DAY OF THE WEEK', id: 0 },
       startingDay: 'select'
     }
   },
@@ -92,14 +104,14 @@ export default {
         'name': product.name,
         'quantity': product.quantity,
         'price': product.price,
-        'size': this.size,
-        'startingDay': this.startingDay
+        'size': this.selected_size.name,
+        'startingDay': this.selected_day.name
       }
     },
     add (product) {
-      if (this.size === 'select') {
+      if (this.selected_size.id === 0) {
         console.log('MISSING SIZE')
-      } else if (this.startingDay === 'select') {
+      } else if (this.selected_day.id === 0) {
         console.log('MISSING STARTING DAY')
       } else {
         const itemInCart = this.$store.state.localStorage.localCart.filter(item => item.id === product.id)
@@ -113,11 +125,13 @@ export default {
       }
     },
     buynow (product) {
-      if (this.size === 'select') {
-        console.log('MISSING SIZE')
-      } else if (this.startingDay === 'select') {
-        console.log('MISSING STARTING DAY')
+      if (this.selected_size.id === 0) {
+        this.$refs.ref_size.$refs.size.style.border = '1px solid #ff0000'
+      } else if (this.selected_day.id === 0) {
+        this.$refs.ref_size.$refs.size.style.border = 'none'
+        this.$refs.ref_day.$refs.day.style.border = '1px solid #ff0000'
       } else {
+        this.$refs.ref_day.$refs.day.style.border = 'none'
         this.add(product)
         this.$router.push('/checkout')
       }
@@ -131,12 +145,11 @@ export default {
     margin-bottom: 2%;
 }
 .product_image_wrapper {
-    width: 48%;
-    margin-left: 2%;
+    width: 50%;
     float: left;
 }
 .summary {
-    width: 46%;
+    width: 44%;
     margin-right: 1%;
     margin-left: 2%;
     float: right;
@@ -146,35 +159,37 @@ export default {
     background-color: #fff;
 }
 .product_images {
-    width: 100%;
+    width: 93%;
     height: auto;
+    margin-left: 7%;
 }
 .product_price {
     color: #000;
-    font-family: Audrey;
-    font-size: 46pt;
+    font-family: Daun;
+    font-size: 90px;
     width: 100%;
     background-color: #fff;
     line-height: 120px;
     text-align: center;
     height: 100px;
+    margin-top: 5%;
 }
 .product_add_to_cart_button, .product_quick_buy_button {
     width: 100%;
     height: 100px;
-    background-color: rgba(163,153,178,1);
+    background-color: rgb(205, 158, 143);
     color: #fff;
-    font-family: Audery;
-    font-size: 46pt;
+    font-family: Daun;
+    font-size: 90px;
     margin-bottom: 0px;
+    border: none;
 }
 .product_add_to_cart_button {
-    margin-top: 10%;
-    margin-bottom: 10%;
+    margin-bottom: 3%;
 }
 .summary .product_details p {
-    font-family: Audrey;
-    font-size: 30px;
+    font-family: Daun;
+    font-size: 40px;
     color: #000;
     padding-left: 5%;
     padding-right: 5%;
@@ -182,20 +197,14 @@ export default {
     overflow: auto;
     word-break: break-word;
 }
-#product-size span, #product-starting-day span {
-  display: block;
-  color: #000;
-  font-family: Audrey;
-  font-size: 26px;
-  padding-bottom: 2%;
-}
 .product-attributes {
-  padding-top: 3%;
-  padding-bottom: 3%;
+    padding-top: 3%;
+    padding-bottom: 3%;
 }
-.product-attributes select {
-  height: 40px;
-  width: 100%;
+.product-attributes .select:nth-child(1) {
+    margin-bottom: 3%;
 }
-
+.card-img > img {
+    width: 100%;
+}
 </style>

@@ -4,10 +4,10 @@
       <img :src="currentImage" alt="">
       <div class="actions">
         <span class="prev" @click="prevImage">
-          &#8249;
+          <img id="prev-arrow" :src="'/page_assets/arrow-02.png'" alt="left-arrow"/>
         </span>
         <span class="next" @click="nextImage">
-          &#8250;
+          <img id="next-arrow" :src="'/page_assets/arrow-02.png'" alt="right-arrow"/>
         </span>
       </div>
     </div>
@@ -111,12 +111,12 @@ export default {
     position: absolute;
     top: 50%;
     margin-top: -20px;
-    width: 91.5%;
+    width: 112%;
     display: flex;
     align-items: center;
     justify-content: space-between;
     color: #585858;
-    left: 4%;
+    left: -6%;
 }
 .actions > span {
     cursor: pointer;
@@ -131,5 +131,11 @@ export default {
 }
 .actions > span:hover {
     color: #eee;
+}
+#prev-arrow {
+    transform: rotate(90deg);
+}
+#next-arrow {
+    transform: rotate(270deg);
 }
 </style>
