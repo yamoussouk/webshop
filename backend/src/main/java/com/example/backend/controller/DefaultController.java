@@ -6,13 +6,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.example.backend.command.ProductCommand;
+import com.example.backend.command.PlannerCommand;
+import com.example.backend.command.LogoCommand;
 import com.example.backend.model.Image;
 import com.example.backend.model.Mail;
-import com.example.backend.model.Product;
+import com.example.backend.model.Planner;
+import com.example.backend.model.Logo;
 import com.example.backend.service.EmailService;
-import com.example.backend.service.ProductService;
-import com.example.backend.converter.ProductToProductCommand;
+import com.example.backend.service.PlannerService;
+import com.example.backend.service.LogoService;
+import com.example.backend.converter.PlannerToPlannerCommand;
+import com.example.backend.converter.LogoToLogoCommand;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,36 +30,49 @@ import org.springframework.beans.factory.annotation.Value;
 @RestController
 public class DefaultController {
 
-    private final ProductService productService;
-    private final ProductToProductCommand productToProductCommand = new ProductToProductCommand();
+    private final PlannerService plannerService;
+    private final LogoService logoService;
+    private final PlannerToPlannerCommand PlannerToPlannerCommand = new PlannerToPlannerCommand();
+    private final LogoToLogoCommand logoToLogoCommand = new LogoToLogoCommand();
     private final EmailService emailService = new EmailService();
 
     @Value("${owner.email}")
     private String ownerEmail;
 
-    public DefaultController (ProductService productService) {
-        this.productService = productService;
+    public DefaultController (PlannerService plannerService, LogoService logoService) {
+        this.plannerService = plannerService;
+        this.logoService = logoService;
     }
 
-    @GetMapping("/default/products/all")
-    public List<ProductCommand> getAllProducts() {
-        List<Product> products =  this.productService.getProducts(true);
-        List<ProductCommand> returnedValue = new ArrayList<ProductCommand>();
-        for (Product p : products) {
-            returnedValue.add(productToProductCommand.convert(p));
+    @GetMapping("/default/planners/all")
+    public List<PlannerCommand> getAllPlanners() {
+        List<Planner> products =  this.plannerService.getPlanners(true);
+        List<PlannerCommand> returnedValue = new ArrayList<PlannerCommand>();
+        for (Planner p : products) {
+            returnedValue.add(PlannerToPlannerCommand.convert(p));
+        }
+        return returnedValue;
+    }
+
+    @GetMapping("/default/logos/all")
+    public List<LogoCommand> getAllLogos() {
+        List<Logo> products =  this.logoService.getLogos(true);
+        List<LogoCommand> returnedValue = new ArrayList<LogoCommand>();
+        for (Logo p : products) {
+            returnedValue.add(logoToLogoCommand.convert(p));
         }
         return returnedValue;
     }
 
     @GetMapping("/default/product/{id}")
-    public ProductCommand getProductById(@PathVariable(name = "id") String id) {
-        Product p = productService.findById(new Long(id));
-        return productToProductCommand.convert(p);
+    public PlannerCommand getProductById(@PathVariable(name = "id") String id) {
+        Planner p = plannerService.findById(new Long(id));
+        return PlannerToPlannerCommand.convert(p);
     }
 
     @GetMapping("/default/product/{id}/images")
     public Set<Image> getProductImages(@PathVariable(name = "id") String id) {
-        return productService.findById(new Long(id)).getImages();
+        return plannerService.findById(new Long(id)).getImages();
     }
 
     @PostMapping("/default/contact")

@@ -1,6 +1,6 @@
 package com.example.backend.bootstrap;
 
-import com.example.backend.converter.ProductToProductCommand;
+import com.example.backend.converter.PlannerToPlannerCommand;
 import com.example.backend.converter.UserToUserCommand;
 import com.example.backend.model.*;
 import com.example.backend.repository.*;
@@ -17,15 +17,18 @@ public class Bootstrap implements CommandLineRunner {
 	private final ImageRepository imageRepository;
 	private final RoleRepository roleRepository;
 	private final OrdersRepository ordersRepository;
-	private final ProductToProductCommand productConverter;
+	private final PlannerToPlannerCommand productConverter;
 	private final UserToUserCommand userConverter;
 	private final AuthorityRepository authorityRepository;
 	private final CategoryRepository categoryRepository;
+	private final PlannerRepository plannerRepository;
+	private final LogoRepository logoRepository;
 
 	public Bootstrap(ProductRepository productRepository, UserRepository userRepository,
 			AuthorityRepository authorityRepository, ImageRepository imageRepository, RoleRepository roleRepository,
-			OrdersRepository ordersRepository, ProductToProductCommand productConverter,
-			UserToUserCommand userConverter, CategoryRepository categoryRepository) {
+			OrdersRepository ordersRepository, PlannerToPlannerCommand productConverter,
+			UserToUserCommand userConverter, CategoryRepository categoryRepository, PlannerRepository plannerRepository,
+			LogoRepository logoRepository) {
 		this.productRepository = productRepository;
 		this.userRepository = userRepository;
 		this.imageRepository = imageRepository;
@@ -35,13 +38,16 @@ public class Bootstrap implements CommandLineRunner {
 		this.userConverter = userConverter;
 		this.authorityRepository = authorityRepository;
 		this.categoryRepository = categoryRepository;
+		this.plannerRepository = plannerRepository;
+		this.logoRepository = logoRepository;
 	}
 
 	private void deleteAllData() {
 		categoryRepository.deleteAll();
-		productRepository.deleteAll();
+		plannerRepository.deleteAll();
 		userRepository.deleteAll();
 		imageRepository.deleteAll();
+		logoRepository.deleteAll();
 		// orderRepository.deleteAll();
 	}
 
@@ -110,8 +116,8 @@ public class Bootstrap implements CommandLineRunner {
 		return allCategories;
 	}
 
-	private List<Product> setProducts() {
-		List<Product> allProducts = new ArrayList<>();
+	private List<Planner> setPlanners() {
+		List<Planner> allPlanners = new ArrayList<>();
 		Set<Category> categories = setCategories();
 
 		// TODO
@@ -123,7 +129,7 @@ public class Bootstrap implements CommandLineRunner {
 		user.setPasswd("12345");
 		User productOwner = userRepository.save(user);
 
-		Product completeMealPlanner = new Product();
+		Planner completeMealPlanner = new Planner();
 		Set<Category> categoriescmp = new HashSet<Category>();
 		categoriescmp.add(printablePlanners);
 		categoriescmp.add(inserts);
@@ -141,7 +147,7 @@ public class Bootstrap implements CommandLineRunner {
 		completeMealPlanner.setOneImage(i4);
 		completeMealPlanner.setOneImage(i5);
 
-		Product completeBusinessPlanner = new Product();
+		Planner completeBusinessPlanner = new Planner();
 		Set<Category> categoriescbp = new HashSet<Category>();
 		categoriescbp.add(printablePlanners);
 		categoriescbp.add(monthlyPlanners);
@@ -160,7 +166,7 @@ public class Bootstrap implements CommandLineRunner {
 		completeBusinessPlanner.setOneImage(i4);
 		completeBusinessPlanner.setOneImage(i5);
 
-		Product completeFinancialPlanner = new Product();
+		Planner completeFinancialPlanner = new Planner();
 		Set<Category> categoriescbp2 = new HashSet<Category>();
 		categoriescbp2.add(printablePlanners);
 		categoriescbp2.add(lifestylePlanners);
@@ -179,7 +185,7 @@ public class Bootstrap implements CommandLineRunner {
 		completeFinancialPlanner.setOneImage(i4);
 		completeFinancialPlanner.setOneImage(i5);
 
-		Product dailyFinancialPlanner = new Product();
+		Planner dailyFinancialPlanner = new Planner();
 		Set<Category> categoriesdmp = new HashSet<Category>();
 		categoriesdmp.add(printablePlanners);
 		categoriesdmp.add(inserts);
@@ -198,7 +204,7 @@ public class Bootstrap implements CommandLineRunner {
 		dailyFinancialPlanner.setOneImage(i4);
 		dailyFinancialPlanner.setOneImage(i5);
 
-		Product dailyBusinessPlanner = new Product();
+		Planner dailyBusinessPlanner = new Planner();
 		Set<Category> categoriesdfp = new HashSet<Category>();
 		categoriesdfp.add(printablePlanners);
 		categoriesdfp.add(dailyPlanners);
@@ -217,14 +223,39 @@ public class Bootstrap implements CommandLineRunner {
 		dailyBusinessPlanner.setOneImage(i4);
 		dailyBusinessPlanner.setOneImage(i5);
 
-		allProducts.add(completeMealPlanner);
-		allProducts.add(completeBusinessPlanner);
-		allProducts.add(completeFinancialPlanner);
-		allProducts.add(dailyBusinessPlanner);
-		allProducts.add(dailyFinancialPlanner);
+		allPlanners.add(completeMealPlanner);
+		allPlanners.add(completeBusinessPlanner);
+		allPlanners.add(completeFinancialPlanner);
+		allPlanners.add(dailyBusinessPlanner);
+		allPlanners.add(dailyFinancialPlanner);
 
-		productRepository.saveAll(allProducts);
-		return allProducts;
+		plannerRepository.saveAll(allPlanners);
+		return allPlanners;
+	}
+
+	private List<Logo> setLogos() {
+		Category singleLogo = new Category("Single Logo");
+		categoryRepository.save(singleLogo);
+		List<Logo> allLogos = new ArrayList<>();
+		Logo logo = new Logo();
+		Set<Category> categoriesdmp = new HashSet<Category>();
+		categoriesdmp.add(singleLogo);
+		logo.setId(new Long(66677));
+		logo.setCategory(categoriesdmp);
+		logo.setQuantity(1);
+		logo.setLongDescription(mealPlannerDescription);
+		logo.setName("New Single Logo");
+		logo.setEnabled(true);
+		logo.setDownloadLink("https://valami.teszt.hu");
+		logo.setPrice(5.00);
+		logo.setOneImage(i1);
+		logo.setOneImage(i2);
+		logo.setOneImage(i3);
+		logo.setOneImage(i4);
+		logo.setOneImage(i5);
+		allLogos.add(logo);
+		logoRepository.saveAll(allLogos);
+		return allLogos;
 	}
 
 	private List<User> setUsers() {
@@ -248,7 +279,7 @@ public class Bootstrap implements CommandLineRunner {
 	private List<Orders> setOrders() {
 		List<Orders> orders = new ArrayList<>();
 		Orders order = new Orders();
-		Product prod1 = productRepository.findById(1L).get();
+		Planner prod1 = plannerRepository.findById(1L).get();
 		User user = userRepository.findById(1L).get();
 		order.setOneProduct(prod1);
 		order.setPrice(99.0);
@@ -281,7 +312,8 @@ public class Bootstrap implements CommandLineRunner {
 		setAuthorities();
 		setUsers();
 		setImages();
-		setProducts();
+		setPlanners();
+		setLogos();
 		//setImages();
 		// setOrders();
 	}

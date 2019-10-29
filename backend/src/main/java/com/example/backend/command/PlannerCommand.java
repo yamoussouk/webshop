@@ -5,7 +5,7 @@ import com.example.backend.command.ImageCommand;
 
 import java.util.Set;
 
-public class ProductCommand {
+public class PlannerCommand {
 
     private Long id;
     private String name;
@@ -29,7 +29,7 @@ public class ProductCommand {
         this.quantity = quantity;
     }
 
-    public ProductCommand() {
+    public PlannerCommand() {
     }
 
     public Long getId() {

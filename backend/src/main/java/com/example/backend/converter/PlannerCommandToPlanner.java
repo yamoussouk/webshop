@@ -1,7 +1,7 @@
 package com.example.backend.converter;
 
 import com.example.backend.command.ImageCommand;
-import com.example.backend.command.ProductCommand;
+import com.example.backend.command.PlannerCommand;
 import com.example.backend.model.Image;
 import com.example.backend.model.Product;
 import com.example.backend.model.User;
@@ -14,34 +14,34 @@ import java.util.Set;
 import javax.validation.constraints.NotNull;
 
 @Component
-public class ProductCommandToProduct implements Converter<ProductCommand, Product> {
+public class PlannerCommandToPlanner implements Converter<PlannerCommand, Product> {
 
     public final ImageCommandToImage imageCommandToImage;
 
-    public ProductCommandToProduct(ImageCommandToImage imageCommandToImage) {
+    public PlannerCommandToPlanner(ImageCommandToImage imageCommandToImage) {
         this.imageCommandToImage = imageCommandToImage;
     }
 
     @Synchronized
     @NotNull
     @Override
-    public Product convert(ProductCommand productCommand) {
-        if (productCommand == null) {
+    public Product convert(PlannerCommand PlannerCommand) {
+        if (PlannerCommand == null) {
             return null;
         }
 
         Product product = new Product();
-        product.setId(productCommand.getId());
-        product.setName(productCommand.getName());
-        product.setPrice(productCommand.getPrice());
-        product.setShortDescription(productCommand.getShortDescription());
-        product.setLongDescription(productCommand.getLongDescription());
-        product.setCategory(productCommand.getCategory());
-        Set<ImageCommand> images = productCommand.getImage();
+        product.setId(PlannerCommand.getId());
+        product.setName(PlannerCommand.getName());
+        product.setPrice(PlannerCommand.getPrice());
+        product.setShortDescription(PlannerCommand.getShortDescription());
+        product.setLongDescription(PlannerCommand.getLongDescription());
+        product.setCategory(PlannerCommand.getCategory());
+        Set<ImageCommand> images = PlannerCommand.getImage();
         for (ImageCommand i : images) {
             product.setImage(this.imageCommandToImage.convert(i));
         }
-        product.setQuantity(productCommand.getQuantity());
+        product.setQuantity(PlannerCommand.getQuantity());
         return product;
     }
 }

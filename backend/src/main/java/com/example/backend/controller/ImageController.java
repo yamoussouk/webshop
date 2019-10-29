@@ -2,7 +2,7 @@ package com.example.backend.controller;
 
 import com.example.backend.model.Image;
 import com.example.backend.service.ImageService;
-import com.example.backend.service.ProductService;
+import com.example.backend.service.PlannerService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -17,16 +17,16 @@ import java.util.List;
 public class ImageController {
 
     private final ImageService imageService;
-    private final ProductService productService;
+    private final PlannerService PlannerService;
 
-    public ImageController(ImageService imageService, ProductService productService) {
+    public ImageController(ImageService imageService, PlannerService PlannerService) {
         this.imageService = imageService;
-        this.productService = productService;
+        this.PlannerService = PlannerService;
     }
 
     /*@GetMapping("product/{id}/image")
     public String showUploadForm(@PathVariable String id, Model model){
-        model.addAttribute("product", productService.findCommandById(Long.valueOf(id)));
+        model.addAttribute("product", PlannerService.findCommandById(Long.valueOf(id)));
         return "product/imageuploadform";
     }*/
 

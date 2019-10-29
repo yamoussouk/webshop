@@ -13,9 +13,9 @@ import java.util.Arrays;
 @Component
 public class UserCommandToUser implements Converter<UserCommand, User> {
 
-    private final ProductCommandToProduct converter;
+    private final PlannerCommandToPlanner converter;
 
-    public UserCommandToUser(ProductCommandToProduct converter) {
+    public UserCommandToUser(PlannerCommandToPlanner converter) {
         this.converter = converter;
     }
 

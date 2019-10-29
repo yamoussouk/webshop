@@ -8,8 +8,8 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import com.example.backend.command.ProductCommand;
-import com.example.backend.converter.ProductToProductCommand;
+import com.example.backend.command.PlannerCommand;
+import com.example.backend.converter.PlannerToPlannerCommand;
 import com.example.backend.dto.ProductDto;
 import com.example.backend.exception.NotFoundException;
 import com.example.backend.model.Category;
@@ -19,7 +19,7 @@ import com.example.backend.model.SignUpEmail;
 import com.example.backend.repository.CategoryRepository;
 import com.example.backend.repository.SignUpRepository;
 import com.example.backend.service.ImageService;
-import com.example.backend.service.ProductService;
+import com.example.backend.service.PlannerService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.springframework.http.HttpStatus;
@@ -35,24 +35,24 @@ import org.springframework.web.multipart.MultipartFile;
 public class AdminController {
 
     private final ImageService imageService;
-    private final ProductService productService;
+    private final PlannerService PlannerService;
     private final SignUpRepository signUpRepository;
     private final CategoryRepository categoryRepository;
-    private final ProductToProductCommand productToProductCommand = new ProductToProductCommand();
+    private final PlannerToPlannerCommand PlannerToPlannerCommand = new PlannerToPlannerCommand();
 
-    public AdminController(ImageService imageService, ProductService productService, SignUpRepository signUpRepository, CategoryRepository categoryRepository) {
+    public AdminController(ImageService imageService, PlannerService PlannerService, SignUpRepository signUpRepository, CategoryRepository categoryRepository) {
         this.imageService = imageService;
-        this.productService = productService;
+        this.PlannerService = PlannerService;
         this.signUpRepository = signUpRepository;
         this.categoryRepository = categoryRepository;
     }
 
     @GetMapping("admin/products/all")
-    public List<ProductCommand> getAllProducts() {
-        List<Product> products =  this.productService.getProducts(false);
-        List<ProductCommand> returnedValue = new ArrayList<ProductCommand>();
+    public List<PlannerCommand> getAllProducts() {
+        List<Product> products =  this.PlannerService.getProducts(false);
+        List<PlannerCommand> returnedValue = new ArrayList<PlannerCommand>();
         for (Product p : products) {
-            returnedValue.add(productToProductCommand.convert(p));
+            returnedValue.add(PlannerToPlannerCommand.convert(p));
         }
         return returnedValue;
     }
@@ -67,24 +67,24 @@ public class AdminController {
             fileSet.add(img);
         }
         p.setImages(fileSet);
-        this.productService.saveProduct(p);
+        this.PlannerService.saveProduct(p);
     }
 
     @GetMapping("/admin/delete/product/{id}")
     public void deleteProductById(@PathVariable(name = "id") String id) {
-        this.productService.deleteById(Long.parseLong(id));
+        this.PlannerService.deleteById(Long.parseLong(id));
     }
 
     @GetMapping("/admin/enable/product/{id}")
     public ResponseEntity<?> setProductEnabled(@PathVariable(name = "id") String id) {
-        Product p = this.productService.findById(new Long(id));
+        Product p = this.PlannerService.findById(new Long(id));
         p.setEnabled(!p.getEnabled());
-        this.productService.saveProduct(p);
+        this.PlannerService.saveProduct(p);
         return ResponseEntity.ok("Enabled changed");
     }
 
     @PostMapping("/admin/update/product/")
-    public ProductCommand updateProduct(@RequestParam("product") String product, 
+    public PlannerCommand updateProduct(@RequestParam("product") String product, 
         @RequestParam("imagefile") MultipartFile[] files, 
         @RequestParam(value="removed", required = false) List<String> removed) {
         Product p = this.mapProductDto(product, removed);
@@ -93,8 +93,8 @@ public class AdminController {
             Image img = imageService.saveImageFile(p.getId(), i);
             p.setOneImage(img);
         }
-        this.productService.saveProduct(p);
-        return this.productToProductCommand.convert(p);
+        this.PlannerService.saveProduct(p);
+        return this.PlannerToPlannerCommand.convert(p);
     }
 
     private Product mapProductDto(String product, List<String> removed) {
@@ -107,7 +107,7 @@ public class AdminController {
             e.printStackTrace();
         }
         Product pr = convertdtoToProduct(p, removed);
-        return this.productService.saveProduct(pr);
+        return this.PlannerService.saveProduct(pr);
     }
 
     private Product convertdtoToProduct (ProductDto dto, List<String> removed) {
@@ -130,7 +130,7 @@ public class AdminController {
 
     private Set<Image> imagesLeft(Long productId, List<String> removed) {
         try {
-            Product p = this.productService.findById(productId);
+            Product p = this.PlannerService.findById(productId);
             Set<Image> productImages = p.getImages();
             if (removed != null) {
                 for (String imageId : removed) {

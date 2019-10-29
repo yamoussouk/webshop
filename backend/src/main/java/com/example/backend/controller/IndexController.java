@@ -1,7 +1,7 @@
 package com.example.backend.controller;
 
 import com.example.backend.model.Product;
-import com.example.backend.service.ProductService;
+import com.example.backend.service.PlannerService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,16 +11,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class IndexController {
 
-    private final ProductService productService;
+    private final PlannerService PlannerService;
 
-    public IndexController(ProductService productService) {
-        this.productService = productService;
+    public IndexController(PlannerService PlannerService) {
+        this.PlannerService = PlannerService;
     }
 
     @RequestMapping("/products")
     public String getIndexPage(Model model) {
 
-        model.addAttribute("products", productService.getProducts());
+        model.addAttribute("products", PlannerService.getProducts());
 
         return "products.html";
     }

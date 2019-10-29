@@ -1,6 +1,6 @@
 package com.example.backend.service;
 
-import com.example.backend.command.ProductCommand;
+import com.example.backend.command.PlannerCommand;
 import com.example.backend.model.Image;
 import com.example.backend.model.Product;
 import com.example.backend.repository.ImageRepository;
@@ -32,7 +32,7 @@ import java.util.Random;
 public class ImageServiceImpl implements ImageService {
 
     private final ProductRepository productRepository;
-    private final ProductService productService;
+    private final PlannerService PlannerService;
     private final ImageRepository imageRepository;
 
     @Autowired
@@ -42,8 +42,8 @@ public class ImageServiceImpl implements ImageService {
     private final String WDIR = System.getProperty("user.dir");
     private final String UPLOADED = WDIR + "/frontend/static/uploaded/";
 
-    public ImageServiceImpl( ProductRepository productRepository, ProductService productService, ImageRepository imageRepository) {
-        this.productService = productService;
+    public ImageServiceImpl( ProductRepository productRepository, PlannerService PlannerService, ImageRepository imageRepository) {
+        this.PlannerService = PlannerService;
         this.productRepository = productRepository;
         this.imageRepository = imageRepository;
     }
@@ -104,8 +104,8 @@ public class ImageServiceImpl implements ImageService {
     @Override
     @Transactional
     public void renderImage(Long id, String imageUrl, HttpServletResponse response) throws IOException {
-        ProductCommand productCommand = productService.findCommandById(id);
-        ClassPathResource imgFile = new ClassPathResource("static/images/" + productCommand.getId() + "/" + imageUrl);
+        PlannerCommand PlannerCommand = PlannerService.findCommandById(id);
+        ClassPathResource imgFile = new ClassPathResource("static/images/" + PlannerCommand.getId() + "/" + imageUrl);
         System.out.println("TODO: DELETE IT! " + imgFile);
         response.setContentType(MediaType.IMAGE_JPEG_VALUE);
         try {

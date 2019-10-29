@@ -24,9 +24,9 @@ public class UserCommand {
     private String role;
     private List<String> productIds;
 
-    //private Set<ProductCommand> products = new HashSet<>();
+    //private Set<PlannerCommand> products = new HashSet<>();
 
-    /*public void setProduct(ProductCommand product) {
+    /*public void setProduct(PlannerCommand product) {
         products.add(product);
     }*/
 

@@ -9,11 +9,16 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.InheritanceType;
 
 @Entity
+@Inheritance(
+    strategy = InheritanceType.JOINED
+)
 public class Product {
 
     public enum Size {
@@ -40,6 +45,7 @@ public class Product {
     private Integer quantity;
     private String downloadLink;
     private boolean enabled;
+    private String type;
 
     @Enumerated(EnumType.STRING)
     private Size size;
@@ -194,5 +200,13 @@ public class Product {
 
     public void setStartingDay(StartingDay day) {
         this.startingDay = day;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getType() {
+        return this.type;
     }
 }

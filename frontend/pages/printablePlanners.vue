@@ -68,7 +68,7 @@ export default {
   created () {
     this.products = this.$store.getters.getProducts
     if (this.products.length === 0) {
-      axios.get('http://localhost:8083/default/products/all'
+      axios.get('http://localhost:8083/default/planners/all'
       ).then((response) => {
         this.products = response.data
       })

@@ -11,9 +11,9 @@ import javax.validation.constraints.NotNull;
 @Component
 public class UserToUserCommand implements Converter<User, UserCommand> {
 
-    private final ProductToProductCommand productConverter;
+    private final PlannerToPlannerCommand productConverter;
 
-    public UserToUserCommand(ProductToProductCommand productConverter) {
+    public UserToUserCommand(PlannerToPlannerCommand productConverter) {
         this.productConverter = productConverter;
     }
 

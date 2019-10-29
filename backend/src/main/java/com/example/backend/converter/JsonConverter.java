@@ -1,7 +1,10 @@
 package com.example.backend.converter;
 
-import com.example.backend.command.ProductCommand;
+import com.example.backend.command.PlannerCommand;
+import com.example.backend.command.LogoCommand;
 import com.example.backend.model.Orders;
+import com.example.backend.model.Planner;
+import com.example.backend.model.Logo;
 import com.example.backend.model.Product;
 import com.example.backend.repository.ProductRepository;
 import com.example.backend.repository.UserRepository;
@@ -20,14 +23,20 @@ public class JsonConverter {
     private static UserRepository userRepository;
     private static UserToUserCommand userConverter;
     private static ProductRepository productRepository;
-    private static ProductToProductCommand productConverter;
+    private static PlannerToPlannerCommand plannerConverter;
+    private static LogoToLogoCommand logoConverter;
 
     @Autowired
-    public JsonConverter(UserRepository userRepository, UserToUserCommand userConverter, ProductRepository productRepository, ProductToProductCommand productConverter) {
+    public JsonConverter(UserRepository userRepository, 
+    UserToUserCommand userConverter, 
+    ProductRepository productRepository, 
+    PlannerToPlannerCommand plannerConverter, 
+    LogoToLogoCommand logoToLogoCommand) {
         JsonConverter.userRepository = userRepository;
         JsonConverter.userConverter = userConverter;
         JsonConverter.productRepository = productRepository;
-        JsonConverter.productConverter = productConverter;
+        JsonConverter.plannerConverter = plannerConverter;
+        JsonConverter.logoConverter = logoConverter;
     }
 
     public static Orders convertJsonToOrder(Map<String, Object> object) {
@@ -65,9 +74,17 @@ public class JsonConverter {
         json.put("ptime", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(order.getPurchaseTime()));
         json.put("uid", order.getUser().getId());
         JSONArray productIds = new JSONArray();
-        List<ProductCommand> pids = new ArrayList<>();
-        order.getProducts().forEach(product -> pids.add(productConverter.convert(product)));
+        List<PlannerCommand> pids = new ArrayList<>();
+        List<LogoCommand> lids = new ArrayList<>();
+        order.getProducts().forEach(product -> {
+            if (product.getType().equals("Planner")) {
+                pids.add(plannerConverter.convert((Planner) product));
+            } else {
+                lids.add(logoConverter.convert((Logo) product));
+            }
+        });
         productIds.addAll(pids);
+        productIds.addAll(lids);
         json.put("products", productIds);
         return json;
     }

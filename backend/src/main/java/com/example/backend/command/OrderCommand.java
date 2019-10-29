@@ -10,7 +10,7 @@ public class OrderCommand {
     private double price;
     private Date purchaseTime;
     private Long userid;
-    private List<ProductCommand> products;
+    private List<PlannerCommand> products;
 
     public OrderCommand() {
         this.products = new ArrayList<>();
@@ -48,15 +48,15 @@ public class OrderCommand {
         this.userid = userid;
     }
 
-    public List<ProductCommand> getProducts() {
+    public List<PlannerCommand> getProducts() {
         return products;
     }
 
-    public void setProducts(List<ProductCommand> products) {
+    public void setProducts(List<PlannerCommand> products) {
         this.products = products;
     }
 
-    public void setOneProduct(ProductCommand product) {
+    public void setOneProduct(PlannerCommand product) {
         this.products.add(product);
     }
 }

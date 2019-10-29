@@ -13,9 +13,9 @@ import javax.validation.constraints.NotNull;
 public class OrderToOrderCommand {
 
     private ProductRepository productRepository;
-    private final ProductToProductCommand productConverter;
+    private final PlannerToPlannerCommand productConverter;
 
-    public OrderToOrderCommand(ProductRepository productRepository, ProductToProductCommand productConverter) {
+    public OrderToOrderCommand(ProductRepository productRepository, PlannerToPlannerCommand productConverter) {
         this.productRepository = productRepository;
         this.productConverter = productConverter;
     }
