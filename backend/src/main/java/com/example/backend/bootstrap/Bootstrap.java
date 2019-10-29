@@ -246,7 +246,6 @@ public class Bootstrap implements CommandLineRunner {
 		logo.setLongDescription(mealPlannerDescription);
 		logo.setName("New Single Logo");
 		logo.setEnabled(true);
-		logo.setDownloadLink("https://valami.teszt.hu");
 		logo.setPrice(5.00);
 		logo.setOneImage(i1);
 		logo.setOneImage(i2);

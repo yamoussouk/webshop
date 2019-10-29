@@ -5,8 +5,6 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
@@ -21,19 +19,6 @@ import javax.persistence.InheritanceType;
 )
 public class Product {
 
-    public enum Size {
-        A4,
-        A5,
-        USLETTER,
-        PERSONAL,
-        HALFSIZE
-    }
-
-    public enum StartingDay {
-        SUNDAY,
-        MONDAY
-    }
-
     @Id
     // @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -43,15 +28,8 @@ public class Product {
     private String longDescription;
     private double price;
     private Integer quantity;
-    private String downloadLink;
     private boolean enabled;
     private String type;
-
-    @Enumerated(EnumType.STRING)
-    private Size size;
-
-    @Enumerated(EnumType.STRING)
-    private StartingDay startingDay; 
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
@@ -170,36 +148,12 @@ public class Product {
         this.orders.add(orders);
     }
 
-    public void setDownloadLink (String link) {
-        this.downloadLink = link;
-    }
-
-    public String getDownloadLink () {
-        return this.downloadLink;
-    }
-
     public boolean getEnabled () {
         return this.enabled;
     }
 
     public void setEnabled (boolean enabled) {
         this.enabled = enabled;
-    }
-
-    public String getSize() {
-        return this.size.name();
-    }
-
-    public void setSize(Size size) {
-        this.size = size;
-    }
-
-    public String getStrartingDay() {
-        return this.startingDay.name();
-    }
-
-    public void setStartingDay(StartingDay day) {
-        this.startingDay = day;
     }
 
     public void setType(String type) {

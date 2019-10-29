@@ -64,10 +64,16 @@ public class DefaultController {
         return returnedValue;
     }
 
-    @GetMapping("/default/product/{id}")
-    public PlannerCommand getProductById(@PathVariable(name = "id") String id) {
+    @GetMapping("/default/planner/{id}")
+    public PlannerCommand getPlannerById(@PathVariable(name = "id") String id) {
         Planner p = plannerService.findById(new Long(id));
         return PlannerToPlannerCommand.convert(p);
+    }
+
+    @GetMapping("/default/logo/{id}")
+    public LogoCommand getLogoById(@PathVariable(name = "id") String id) {
+        Logo p = logoService.findById(new Long(id));
+        return logoToLogoCommand.convert(p);
     }
 
     @GetMapping("/default/product/{id}/images")

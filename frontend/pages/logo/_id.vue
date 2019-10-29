@@ -10,20 +10,7 @@
           <span>$ {{ product.price }}</span>
         </div>
         <div class="product-attributes">
-          <custom-select
-                  ref="ref_size"
-                  refs="size"
-                  :options="sizes"
-                  value-key="id"
-                  label-key="name"
-                  v-model="selected_size"></custom-select>
-          <custom-select
-                  ref="ref_day"
-                  refs="day"
-                  :options="days"
-                  value-key="id"
-                  label-key="name"
-                  v-model="selected_day"></custom-select>
+          <input ref="logotext" type="text" class="logo_text" placeholder="Add logo text" v-model="logoText"/>
         </div>
         <div class="product_cart_buttons">
           <button class="product_add_to_cart_button" @click="add(product)">
@@ -46,7 +33,6 @@
 <script>
 import axios from 'axios'
 import BreadCrumb from '~/components/BreadCrumb.vue'
-import CustomSelect from '~/components/CustomSelect.vue'
 // eslint-disable-next-line
 import ImageCarousel from '~/components/ImageCarousel.vue'
 
@@ -57,35 +43,18 @@ export default {
   components: {
     BreadCrumb,
     // eslint-disable-next-line
-    ImageCarousel,
-    CustomSelect
+    ImageCarousel
   },
   data () {
     return {
       id: parseInt(this.$route.params.id),
       cart: [],
       product: {},
-      size: 'select',
-      sizes: [
-        { name: 'SELECT SIZE', id: 0 },
-        { name: 'A4', id: 1 },
-        { name: 'A5', id: 2 },
-        { name: 'US LETTER', id: 3 },
-        { name: 'HALF SIZE', id: 4 },
-        { name: 'PERSONAL', id: 5 }
-      ],
-      days: [
-        { name: 'FIRST DAY OF THE WEEK', id: 0 },
-        { name: 'SUNDAY', id: 1 },
-        { name: 'MONDAY', id: 2 }
-      ],
-      selected_size: { name: 'SELECT SIZE', id: 0 },
-      selected_day: { name: 'FIRST DAY OF THE WEEK', id: 0 },
-      startingDay: 'select'
+      logoText: ''
     }
   },
   async asyncData ({ params }) {
-    const { data } = await axios.get(`http://localhost:8083/default/product/${params.id}`)
+    const { data } = await axios.get(`http://localhost:8083/default/logo/${params.id}`)
     return { product: data }
   },
   methods: {
@@ -104,15 +73,12 @@ export default {
         'name': product.name,
         'quantity': product.quantity,
         'price': product.price,
-        'size': this.selected_size.name,
-        'startingDay': this.selected_day.name
+        'logoText': this.logoText
       }
     },
     add (product) {
-      if (this.selected_size.id === 0) {
-        console.log('MISSING SIZE')
-      } else if (this.selected_day.id === 0) {
-        console.log('MISSING STARTING DAY')
+      if (this.logoText === '') {
+
       } else {
         const itemInCart = this.$store.state.localStorage.localCart.filter(item => item.id === product.id)
         const isItemInCart = itemInCart.length > 0
@@ -125,13 +91,10 @@ export default {
       }
     },
     buynow (product) {
-      if (this.selected_size.id === 0) {
-        this.$refs.ref_size.$refs.size.style.border = '1px solid #ff0000'
-      } else if (this.selected_day.id === 0) {
-        this.$refs.ref_size.$refs.size.style.border = 'none'
-        this.$refs.ref_day.$refs.day.style.border = '1px solid #ff0000'
+      if (this.logoText === '') {
+        this.$refs.logotext.style.border = '1px solid #ff0000'
       } else {
-        this.$refs.ref_day.$refs.day.style.border = 'none'
+        this.$refs.logotext.style.border = 'none'
         this.add(product)
         this.$router.push('/checkout')
       }
@@ -201,10 +164,20 @@ export default {
     padding-top: 3%;
     padding-bottom: 3%;
 }
-.product-attributes .select:nth-child(1) {
-    margin-bottom: 3%;
-}
 .card-img > img {
     width: 100%;
+}
+.product-attributes .logo_text {
+      color: #000;
+      font-family: Daun;
+      font-size: 90px;
+      width: 100%;
+      background-color: #fff;
+      line-height: 120px;
+      text-align: center;
+      height: 100px;
+      margin-top: 1%;
+      border: none;
+      padding-top: 30px;
 }
 </style>

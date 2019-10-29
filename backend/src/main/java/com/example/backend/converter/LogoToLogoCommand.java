@@ -52,7 +52,6 @@ public class LogoToLogoCommand implements Converter<Logo, LogoCommand> {
         }
         LogoCommand.setImage(images);
         LogoCommand.setEnabled(Logo.getEnabled());
-        LogoCommand.setDownloadLink(Logo.getDownloadLink());
         return LogoCommand;
     }
 }

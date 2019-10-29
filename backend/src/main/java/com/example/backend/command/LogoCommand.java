@@ -17,9 +17,6 @@ public class LogoCommand {
     private Set<ImageCommand> image;
     private int quantity;
     private Boolean enabled;
-    private String downloadLink;
-    private String size;
-    private String startingDay;
 
     public int getQuantity() {
         return quantity;
@@ -102,30 +99,6 @@ public class LogoCommand {
 
     public Boolean getEnabled() {
         return this.enabled;
-    }
-
-    public String getDownloadLink() {
-        return this.downloadLink;
-    }
-
-    public void setDownloadLink(String link) {
-        this.downloadLink = link;
-    }
-
-    public void setSize(String size) {
-        this.size = size;
-    }
-
-    public String getSize() {
-        return this.size;
-    }
-
-    public void setStartingDay(String day) {
-        this.startingDay = day;
-    }
-
-    public String getStartingDay() {
-        return this.startingDay;
     }
 }
 

@@ -10,14 +10,14 @@
           <li v-for="product in filteredList" :key="product.id" class="product">
             <div class="image_frame">
               <div class="image_wrapper">
-                <nuxt-link :to="`product/${product.id}`">
+                <nuxt-link :to="`planner/${product.id}`">
                   <img :src="'/uploaded/' + product.id + '/' + product.image[0].imageUrl" alt="product image">
                 </nuxt-link>
               </div>
             </div>
             <div class="desc">
               <h4>
-                <nuxt-link :to="`product/${product.id}`">
+                <nuxt-link :to="`planner/${product.id}`">
                   <span class="product_title">{{ product.name }}</span>
                 </nuxt-link>
               </h4>
