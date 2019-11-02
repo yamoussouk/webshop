@@ -175,12 +175,17 @@ export default {
         this.errors = []
       }
       if (!this.errors.length) {
+        const planners = this.cart.filter(pr => pr.type === 'Planner')
+        const logos = this.cart.filter(pr => pr.type === 'Logo')
         const formObject = {
           'price': this.total,
           'purchaseTime': new Date().getTime(),
           'user': null,
           'email': this.form.email,
-          'products': this.cart
+          // eslint-disable-next-line
+          'planners': planners,
+          // eslint-disable-next-line
+          'logos': logos
         }
         const headers = {
           'Content-Type': 'application/json'

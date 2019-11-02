@@ -4,8 +4,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.example.backend.model.Logo;
 import com.example.backend.model.Mail;
+import com.example.backend.model.OrderDetails;
 import com.example.backend.model.Orders;
+import com.example.backend.model.Planner;
+import com.example.backend.repository.OrderDetailsRepository;
 import com.example.backend.repository.OrdersRepository;
 import com.example.backend.repository.UserRepository;
 
@@ -16,17 +20,39 @@ public class OrderServiceImpl implements OrderService {
 
     private OrdersRepository ordersRepository;
     private UserRepository userRepository;
+    private OrderDetailsRepository orderDetailsRepository;
     private EmailService mailService;
 
-    public OrderServiceImpl(OrdersRepository ordersRepository, UserRepository userRepository, EmailService mailService) {
+    public OrderServiceImpl(OrdersRepository ordersRepository, 
+    UserRepository userRepository, EmailService mailService, OrderDetailsRepository orderDetailsRepository) {
         this.ordersRepository = ordersRepository;
         this.userRepository = userRepository;
         this.mailService = mailService;
+        this.orderDetailsRepository = orderDetailsRepository;
     }
 
     @Override
     public void addOrder(Orders newOrder) {
         Orders order = this.ordersRepository.save(newOrder);
+        for (Planner p : order.getPlanners()) {
+            OrderDetails o = new OrderDetails();
+            o.setProductID(p.getId());
+            o.setSize(p.getSize());
+            o.setStartingDay(p.getStrartingDay());
+            o.setOrders(order);
+            OrderDetails pl = this.orderDetailsRepository.save(o);
+            order.setOrderDetails(pl);
+        }
+        // order = this.ordersRepository.save(order);
+        for (Logo l : order.getLogos()) {
+            OrderDetails o = new OrderDetails();
+            o.setProductID(l.getId());
+            o.setLogoText(l.getLogoText());
+            o.setOrders(order);
+            OrderDetails lo = this.orderDetailsRepository.save(o);
+            order.setOrderDetails(lo);
+        }
+        order = this.ordersRepository.save(order);
         // no need mail currently!!!
         // if (order != null) {
         //     Mail orderSuccess = new Mail();

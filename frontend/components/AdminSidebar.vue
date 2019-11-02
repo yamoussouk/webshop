@@ -24,15 +24,27 @@
             <b-collapse id="product-collapse">
               <ul class="nav">
                 <li class="nav-item">
-                  <nuxt-link class="nav-link" to="/admin/product/all">
+                  <nuxt-link class="nav-link" to="/admin/product/planners/all">
                     <i class="ni ni-shop text-primary" />
-                    <span class="nav-link">All products</span>
+                    <span class="nav-link">All Planners</span>
                   </nuxt-link>
                 </li>
                 <li class="nav-item">
-                  <nuxt-link class="nav-link" to="/admin/product/new">
+                  <nuxt-link class="nav-link" to="/admin/product/logos/all">
                     <i class="ni ni-shop text-primary" />
-                    <span class="nav-link">New product</span>
+                    <span class="nav-link">All Logos</span>
+                  </nuxt-link>
+                </li>
+                <li class="nav-item">
+                  <nuxt-link class="nav-link" to="/admin/product/new_planner">
+                    <i class="ni ni-shop text-primary" />
+                    <span class="nav-link">New Planner</span>
+                  </nuxt-link>
+                </li>
+                <li class="nav-item">
+                  <nuxt-link class="nav-link" to="/admin/product/new_logo">
+                    <i class="ni ni-shop text-primary" />
+                    <span class="nav-link">New Logo</span>
                   </nuxt-link>
                 </li>
               </ul>

@@ -14,6 +14,7 @@ public class Orders {
     @GeneratedValue
     private Long id;
     private double price;
+ 
     private Date purchaseTime;
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonBackReference
@@ -21,7 +22,16 @@ public class Orders {
     private String email;
     
     @ManyToMany(fetch = FetchType.LAZY)
-    private List<Product> products = new ArrayList<>();
+    //@JsonBackReference
+    private List<Planner> planners = new ArrayList<>();
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    //@JsonBackReference
+    private List<Logo> logos = new ArrayList<>();
+
+    @OneToMany(mappedBy = "order")
+    //@JsonManagedReference
+    private List<OrderDetails> orderDetails = new ArrayList<OrderDetails>();
 
     public Orders() {
     }
@@ -58,16 +68,28 @@ public class Orders {
         this.user = user;
     }
 
-    public List<Product> getProducts() {
-        return products;
+    public List<Planner> getPlanners() {
+        return this.planners;
     }
 
-    public void setProducts(List<Product> products) {
-        this.products = products;
+    public List<Logo> getLogos() {
+        return this.logos;
     }
 
-    public void setOneProduct(Product product) {
-        this.products.add(product);
+    public void setPlanners(List<Planner> planners) {
+        this.planners = planners;
+    }
+
+    public void setLogos(List<Logo> logos) {
+        this.logos = logos;
+    }
+
+    public void setOnePlanner(Planner planner) {
+        this.planners.add(planner);
+    }
+
+    public void setOneLogo(Logo logo) {
+        this.logos.add(logo);
     }
 
     public String getEmail() {
@@ -76,5 +98,11 @@ public class Orders {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+    public void setOrderDetails(OrderDetails details) {
+        this.orderDetails.add(details);
+    }
+    public List<OrderDetails> getOrderDetails() {
+        return this.orderDetails;
     }
 }
