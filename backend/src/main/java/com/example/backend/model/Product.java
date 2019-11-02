@@ -56,14 +56,14 @@ public class Product {
     }
 
     
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "order_products",
-            joinColumns = @JoinColumn(
-                    name = "product_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(
-                    name = "order_id", referencedColumnName = "id"))
-    private Set<Orders> orders = new HashSet<>();
+    // @ManyToMany(fetch = FetchType.LAZY)
+    // @JoinTable(
+    //         name = "order_products",
+    //         joinColumns = @JoinColumn(
+    //                 name = "product_id", referencedColumnName = "id"),
+    //         inverseJoinColumns = @JoinColumn(
+    //                 name = "order_id", referencedColumnName = "id"))
+    // private Set<Orders> orders = new HashSet<>();
 
     public Product() {
     }
@@ -134,18 +134,6 @@ public class Product {
 
     public void setOneImage(Image image) {
         this.images.add(image);
-    }
-
-    public Set<Orders> getOrders() {
-        return orders;
-    }
-
-    public void setOrders(Set<Orders> orders) {
-        this.orders = orders;
-    }
-
-    public void setOneOrder(Orders orders) {
-        this.orders.add(orders);
     }
 
     public boolean getEnabled () {

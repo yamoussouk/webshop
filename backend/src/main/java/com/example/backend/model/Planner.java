@@ -1,8 +1,17 @@
 package com.example.backend.model;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.JoinTable;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Planner extends Product {
@@ -19,14 +28,25 @@ public class Planner extends Product {
         SUNDAY,
         MONDAY
     }
-
+    
+    @JsonIgnore
     @Enumerated(EnumType.STRING)
     private Size size;
 
+    @JsonIgnore
     @Enumerated(EnumType.STRING)
     private StartingDay startingDay; 
 
     private String downloadLink;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "order_planners",
+            joinColumns = @JoinColumn(
+                    name = "planner_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(
+                    name = "order_id", referencedColumnName = "id"))
+    private Set<Orders> orders = new HashSet<>();
 
     public Planner () {
         this.setType("Planner"); 
@@ -36,16 +56,16 @@ public class Planner extends Product {
         return this.size.name();
     }
 
-    public void setSize(Size size) {
-        this.size = size;
+    public void setSize(String size) {
+        this.size = Size.valueOf(size);
     }
 
-    public String getStrartingDay() {
+    public String getStartingDay() {
         return this.startingDay.name();
     }
 
-    public void setStartingDay(StartingDay day) {
-        this.startingDay = day;
+    public void setStartingDay(String day) {
+        this.startingDay = StartingDay.valueOf(day);
     }
 
     public void setDownloadLink (String link) {

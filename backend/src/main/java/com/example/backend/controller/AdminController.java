@@ -8,17 +8,24 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import com.example.backend.command.LogoCommand;
 import com.example.backend.command.PlannerCommand;
+import com.example.backend.converter.LogoToLogoCommand;
 import com.example.backend.converter.PlannerToPlannerCommand;
+import com.example.backend.dto.LogoDto;
+import com.example.backend.dto.PlannerDto;
 import com.example.backend.dto.ProductDto;
 import com.example.backend.exception.NotFoundException;
 import com.example.backend.model.Category;
 import com.example.backend.model.Image;
+import com.example.backend.model.Logo;
+import com.example.backend.model.Planner;
 import com.example.backend.model.Product;
 import com.example.backend.model.SignUpEmail;
 import com.example.backend.repository.CategoryRepository;
 import com.example.backend.repository.SignUpRepository;
 import com.example.backend.service.ImageService;
+import com.example.backend.service.LogoService;
 import com.example.backend.service.PlannerService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -36,82 +43,146 @@ public class AdminController {
 
     private final ImageService imageService;
     private final PlannerService PlannerService;
+    private final LogoService logoService;
     private final SignUpRepository signUpRepository;
     private final CategoryRepository categoryRepository;
     private final PlannerToPlannerCommand PlannerToPlannerCommand = new PlannerToPlannerCommand();
+    private final LogoToLogoCommand logoToLogoCommand = new LogoToLogoCommand();
 
-    public AdminController(ImageService imageService, PlannerService PlannerService, SignUpRepository signUpRepository, CategoryRepository categoryRepository) {
+    public AdminController(ImageService imageService, PlannerService PlannerService, SignUpRepository signUpRepository, CategoryRepository categoryRepository, LogoService logoService) {
         this.imageService = imageService;
         this.PlannerService = PlannerService;
         this.signUpRepository = signUpRepository;
         this.categoryRepository = categoryRepository;
+        this.logoService = logoService;
     }
 
-    @GetMapping("admin/products/all")
-    public List<PlannerCommand> getAllProducts() {
-        List<Product> products =  this.PlannerService.getProducts(false);
+    @GetMapping("admin/planners/all")
+    public List<PlannerCommand> getAllPlanners() {
+        List<Planner> products =  this.PlannerService.getPlanners(false);
         List<PlannerCommand> returnedValue = new ArrayList<PlannerCommand>();
-        for (Product p : products) {
+        for (Planner p : products) {
             returnedValue.add(PlannerToPlannerCommand.convert(p));
         }
         return returnedValue;
     }
 
-    @PostMapping("/admin/add/new/product")
-    public void addNewProduct(@RequestParam("product") String product, @RequestParam("imagefile") MultipartFile[] file) {
-        // Product p = convertdtoToProduct(product);
-        Product p = mapProductDto(product, null);
+    @GetMapping("admin/logos/all")
+    public List<LogoCommand> getAllLogos() {
+        List<Logo> products =  this.logoService.getLogos(false);
+        List<LogoCommand> returnedValue = new ArrayList<LogoCommand>();
+        for (Logo p : products) {
+            returnedValue.add(logoToLogoCommand.convert(p));
+        }
+        return returnedValue;
+    }
+
+    @PostMapping("/admin/add/new/planner")
+    public void addNewPlanner(@RequestParam("product") String product, @RequestParam("imagefile") MultipartFile[] file) {
+        Planner p = mapPlannerDto(product, null);
         Set<Image> fileSet = new HashSet<Image>();
         for (MultipartFile i : file) {
             Image img = imageService.saveImageFile(p.getId(), i);
             fileSet.add(img);
         }
         p.setImages(fileSet);
-        this.PlannerService.saveProduct(p);
+        this.PlannerService.savePlanner(p);
     }
 
-    @GetMapping("/admin/delete/product/{id}")
-    public void deleteProductById(@PathVariable(name = "id") String id) {
+    @PostMapping("/admin/add/new/logo")
+    public void addNewLogo(@RequestParam("product") String product, @RequestParam("imagefile") MultipartFile[] file) {
+        Logo p = mapLogoDto(product, null);
+        Set<Image> fileSet = new HashSet<Image>();
+        for (MultipartFile i : file) {
+            Image img = imageService.saveImageFile(p.getId(), i);
+            fileSet.add(img);
+        }
+        p.setImages(fileSet);
+        this.logoService.saveLogo(p);
+    }
+
+    @GetMapping("/admin/delete/planner/{id}")
+    public void deletePlannerById(@PathVariable(name = "id") String id) {
         this.PlannerService.deleteById(Long.parseLong(id));
     }
 
-    @GetMapping("/admin/enable/product/{id}")
-    public ResponseEntity<?> setProductEnabled(@PathVariable(name = "id") String id) {
-        Product p = this.PlannerService.findById(new Long(id));
+    @GetMapping("/admin/delete/logo/{id}")
+    public void deleteLogoById(@PathVariable(name = "id") String id) {
+        this.logoService.deleteById(Long.parseLong(id));
+    }
+
+    @GetMapping("/admin/enable/planner/{id}")
+    public ResponseEntity<?> setPlannerEnabled(@PathVariable(name = "id") String id) {
+        Planner p = this.PlannerService.findById(new Long(id));
         p.setEnabled(!p.getEnabled());
-        this.PlannerService.saveProduct(p);
+        this.PlannerService.savePlanner(p);
         return ResponseEntity.ok("Enabled changed");
     }
 
-    @PostMapping("/admin/update/product/")
-    public PlannerCommand updateProduct(@RequestParam("product") String product, 
+    @GetMapping("/admin/enable/logo/{id}")
+    public ResponseEntity<?> setLogoEnabled(@PathVariable(name = "id") String id) {
+        Logo p = this.logoService.findById(new Long(id));
+        p.setEnabled(!p.getEnabled());
+        this.logoService.saveLogo(p);
+        return ResponseEntity.ok("Enabled changed");
+    }
+
+    @PostMapping("/admin/update/planner/")
+    public PlannerCommand updatePlanner(@RequestParam("product") String product, 
         @RequestParam("imagefile") MultipartFile[] files, 
         @RequestParam(value="removed", required = false) List<String> removed) {
-        Product p = this.mapProductDto(product, removed);
+        Planner p = this.mapPlannerDto(product, removed);
 
         for (MultipartFile i : files) {
             Image img = imageService.saveImageFile(p.getId(), i);
             p.setOneImage(img);
         }
-        this.PlannerService.saveProduct(p);
+        this.PlannerService.savePlanner(p);
         return this.PlannerToPlannerCommand.convert(p);
     }
 
-    private Product mapProductDto(String product, List<String> removed) {
+    @PostMapping("/admin/update/logo/")
+    public LogoCommand updateLogo(@RequestParam("product") String product, 
+        @RequestParam("imagefile") MultipartFile[] files, 
+        @RequestParam(value="removed", required = false) List<String> removed) {
+        Logo p = this.mapLogoDto(product, removed);
+
+        for (MultipartFile i : files) {
+            Image img = imageService.saveImageFile(p.getId(), i);
+            p.setOneImage(img);
+        }
+        this.logoService.saveLogo(p);
+        return this.logoToLogoCommand.convert(p);
+    }
+
+    private Planner mapPlannerDto(String product, List<String> removed) {
         ObjectMapper mapper = new ObjectMapper();
-        ProductDto p = null;
+        PlannerDto p = null;
         try {
 
-            p = mapper.readValue(product, ProductDto.class);
+            p = mapper.readValue(product, PlannerDto.class);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Product pr = convertdtoToProduct(p, removed);
-        return this.PlannerService.saveProduct(pr);
+        Planner pr = convertdtoToPlanner(p, removed);
+        return this.PlannerService.savePlanner(pr);
     }
 
-    private Product convertdtoToProduct (ProductDto dto, List<String> removed) {
-        Product p = new Product();
+    private Logo mapLogoDto(String product, List<String> removed) {
+        ObjectMapper mapper = new ObjectMapper();
+        LogoDto p = null;
+        try {
+
+            p = mapper.readValue(product, LogoDto.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Logo pr = convertdtoToLogo(p, removed);
+        return this.logoService.saveLogo(pr);
+    }
+
+    private Planner convertdtoToPlanner (PlannerDto dto, List<String> removed) {
+        Planner p = new Planner();
         // TODO: remove it when reset autogeneration
         p.setId(dto.getId());
         p.setName(dto.getName());
@@ -122,15 +193,48 @@ public class AdminController {
         p.setDownloadLink(dto.getDownloadLink());
         p.setEnabled(dto.getEnabled());
         p.setCategory(getCategories(dto.getCategories()));
-        Set<Image> i = imagesLeft(dto.getId(), removed);
+        Set<Image> i = plannerImagesLeft(dto.getId(), removed);
         p.setImages(i);
-        // continue with categories!!!!
         return p;
     }
 
-    private Set<Image> imagesLeft(Long productId, List<String> removed) {
+    private Logo convertdtoToLogo(LogoDto dto, List<String> removed) {
+        Logo p = new Logo();
+        // TODO: remove it when reset autogeneration
+        p.setId(dto.getId());
+        p.setName(dto.getName());
+        p.setShortDescription(dto.getShortDescription());
+        p.setLongDescription(dto.getLongDescription());
+        p.setPrice(dto.getPrice());
+        p.setQuantity(1);
+        p.setLogoText(dto.getLogoText());
+        p.setEnabled(dto.getEnabled());
+        p.setCategory(getCategories(dto.getCategories()));
+        Set<Image> i = logoImagesLeft(dto.getId(), removed);
+        p.setImages(i);
+        return p;
+    }
+
+    private Set<Image> plannerImagesLeft(Long productId, List<String> removed) {
         try {
-            Product p = this.PlannerService.findById(productId);
+            Planner p = this.PlannerService.findById(productId);
+            Set<Image> productImages = p.getImages();
+            if (removed != null) {
+                for (String imageId : removed) {
+                    productImages.removeIf(obj -> obj.getId().equals(new Long(imageId)));
+                    Image img = imageService.findById(new Long(imageId));
+                    imageService.deleteImage(p, img);
+                }
+            }
+            return productImages;
+        } catch (NotFoundException e) {
+            return new HashSet<Image>();
+        }
+    }
+
+    private Set<Image> logoImagesLeft(Long productId, List<String> removed) {
+        try {
+            Logo p = this.logoService.findById(productId);
             Set<Image> productImages = p.getImages();
             if (removed != null) {
                 for (String imageId : removed) {
