@@ -7,7 +7,9 @@ export const state = () => ({
   tempImages: [],
   auth: null,
   orders: [],
-  subscribers: []
+  subscribers: [],
+  planners: [],
+  logos: []
 })
 
 export const getters = {
@@ -43,6 +45,12 @@ export const getters = {
   },
   subscribers: (state) => {
     return state.subscribers
+  },
+  planners: (state) => {
+    return state.planners
+  },
+  logos: (state) => {
+    return state.logos
   }
 }
 
@@ -71,38 +79,72 @@ export const mutations = {
   setAuth (state, auth) {
     state.auth = auth
   },
-  changeProductEnabled (state, id) {
-    const product = state.products.find(pr => parseInt(pr.id) === parseInt(id))
+  changePlannerEnabled (state, id) {
+    const product = state.planners.find(pr => parseInt(pr.id) === parseInt(id))
     product.enabled = !product.enabled
   },
-  removeProduct: (state, id) => {
-    state.products.splice(state.products.findIndex(pr => parseInt(pr.id) === parseInt(id)), 1)
+  changeLogoEnabled (state, id) {
+    const product = state.logos.find(pr => parseInt(pr.id) === parseInt(id))
+    product.enabled = !product.enabled
   },
-  setCategory: (state, id, value) => {
-    const product = state.products.find(pr => parseInt(pr.id) === parseInt(id))
+  removePlanner: (state, id) => {
+    state.planners.splice(state.planners.findIndex(pr => parseInt(pr.id) === parseInt(id)), 1)
+  },
+  removeLogo: (state, id) => {
+    state.logos.splice(state.logos.findIndex(pr => parseInt(pr.id) === parseInt(id)), 1)
+  },
+  setPlannerCategory: (state, id, value) => {
+    const product = state.planners.find(pr => parseInt(pr.id) === parseInt(id))
     console.log(product)
     if (!product.categories.includes(value)) {
-      state.products.find(pr => parseInt(pr.id) === parseInt(id)).categories.push(value)
+      state.planners.find(pr => parseInt(pr.id) === parseInt(id)).categories.push(value)
     } else {
-      const index = state.product.categories.indexOf(value)
+      const index = state.planners.categories.indexOf(value)
       if (index !== -1) {
-        state.products.find(pr => parseInt(pr.id) === parseInt(id)).categories.splice(index, 1)
+        state.planners.find(pr => parseInt(pr.id) === parseInt(id)).categories.splice(index, 1)
       }
     }
   },
-  saveProduct: (state, product) => {
-    const idx = state.products.findIndex(e => e.id === product.id)
-    state.products[idx] = product
+  setLogoCategory: (state, id, value) => {
+    console.log(id)
+    const product = state.logos.find(pr => parseInt(pr.id) === parseInt(id))
+    console.log(value)
+    if (!product.categories.includes(value)) {
+      state.logos.find(pr => parseInt(pr.id) === parseInt(id)).categories.push(value)
+    } else {
+      const index = state.logos.categories.indexOf(value)
+      if (index !== -1) {
+        state.logos.find(pr => parseInt(pr.id) === parseInt(id)).categories.splice(index, 1)
+      }
+    }
   },
-  refreshProduct: (state, product) => {
-    const index = state.products.findIndex(item => item.id === product.id)
-    state.products.splice(index, 1, product)
+  savePlanner: (state, product) => {
+    const idx = state.planners.findIndex(e => e.id === product.id)
+    state.planners[idx] = product
+  },
+  saveLogo: (state, product) => {
+    const idx = state.logos.findIndex(e => e.id === product.id)
+    state.logos[idx] = product
+  },
+  refreshPlanner: (state, product) => {
+    const index = state.planners.findIndex(item => item.id === product.id)
+    state.planners.splice(index, 1, product)
+  },
+  refreshLogo: (state, product) => {
+    const index = state.logos.findIndex(item => item.id === product.id)
+    state.logos.splice(index, 1, product)
   },
   setOrders: (state, orders) => {
     state.orders = orders
   },
   setSubscribers: (state, subscribers) => {
     state.subscribers = subscribers
+  },
+  setPlanners: (state, planners) => {
+    state.planners = planners
+  },
+  setLogos: (state, logos) => {
+    state.logos = logos
   }
 }
 
@@ -142,25 +184,46 @@ export const actions = {
       commit('setAuth', auth)
     }
   },
-  changeProductEnabled: ({ commit }, id) => {
-    commit('changeProductEnabled', id)
+  changePlannerEnabled: ({ commit }, id) => {
+    commit('changePlannerEnabled', id)
   },
-  removeProduct: ({ commit }, id) => {
-    commit('removeProduct', id)
+  changeLogoEnabled: ({ commit }, id) => {
+    commit('changeLogoEnabled', id)
   },
-  setCategory: ({ commit }, id, value) => {
-    commit('setCategory', id, value)
+  removePlanner: ({ commit }, id) => {
+    commit('removePlanner', id)
   },
-  saveProduct: ({ commit }, product) => {
-    commit('saveProduct', product)
+  removeLogo: ({ commit }, id) => {
+    commit('removeLogo', id)
   },
-  refreshPoduct: ({ commit }, product) => {
-    commit('refreshProduct', product)
+  setPlannerCategory: ({ commit }, id, value) => {
+    commit('setPlannerCategory', id, value)
+  },
+  setLogoCategory: ({ commit }, id, value) => {
+    commit('setLogoCategory', id, value)
+  },
+  savePlanner: ({ commit }, product) => {
+    commit('savePlanner', product)
+  },
+  saveLogo: ({ commit }, product) => {
+    commit('saveLogo', product)
+  },
+  refreshPlanner: ({ commit }, product) => {
+    commit('refreshPlanner', product)
+  },
+  refreshLogo: ({ commit }, product) => {
+    commit('refreshLogo', product)
   },
   setOrders: ({ commit }, orders) => {
     commit('setOrders', orders)
   },
   setSubscribers: ({ commit }, subscribers) => {
     commit('setSubscribers', subscribers)
+  },
+  setPlanners: ({ commit }, planners) => {
+    commit('setPlanners', planners)
+  },
+  setLogos: ({ commit }, logos) => {
+    commit('setLogos', logos)
   }
 }
