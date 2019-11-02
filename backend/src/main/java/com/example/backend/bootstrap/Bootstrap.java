@@ -235,7 +235,13 @@ public class Bootstrap implements CommandLineRunner {
 
 	private List<Logo> setLogos() {
 		Category singleLogo = new Category("Single Logo");
+		Category logoAll = new Category("Logo");
+		Category logoSet = new Category("Logo Set");
+		Category customLogo = new Category("Custom Logo");
 		categoryRepository.save(singleLogo);
+		categoryRepository.save(logoAll);
+		categoryRepository.save(logoSet);
+		categoryRepository.save(customLogo);
 		List<Logo> allLogos = new ArrayList<>();
 		Logo logo = new Logo();
 		Set<Category> categoriesdmp = new HashSet<Category>();
@@ -279,8 +285,10 @@ public class Bootstrap implements CommandLineRunner {
 		List<Orders> orders = new ArrayList<>();
 		Orders order = new Orders();
 		Planner prod1 = plannerRepository.findById(1L).get();
+		Logo log1 = logoRepository.findById(1L).get();
 		User user = userRepository.findById(1L).get();
-		order.setOneProduct(prod1);
+		order.setOnePlanner(prod1);
+		order.setOneLogo(log1);
 		order.setPrice(99.0);
 		order.setUser(user);
 		order.setPurchaseTime(new Date());
