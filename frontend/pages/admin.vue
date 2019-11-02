@@ -23,9 +23,15 @@ export default {
       'Authorization': this.auth.accessToken
     }
     // eslint-disable-next-line
-    axios.get('http://localhost:8083/admin/products/all', { headers: headers }
+    axios.get('http://localhost:8083/admin/planners/all', { headers: headers }
     ).then((response) => {
-      this.setProducts(response.data)
+      this.setPlanners(response.data)
+    })
+
+    // eslint-disable-next-line
+    axios.get('http://localhost:8083/admin/logos/all', { headers: headers }
+    ).then((response) => {
+      this.setLogos(response.data)
     })
 
     // eslint-disable-next-line
@@ -35,7 +41,7 @@ export default {
     })
   },
   methods: {
-    ...mapActions(['setProducts', 'setOrders'])
+    ...mapActions(['setProducts', 'setOrders', 'setPlanners', 'setLogos'])
   }
 }
 </script>

@@ -105,7 +105,8 @@ export default {
         'quantity': product.quantity,
         'price': product.price,
         'size': this.selected_size.name,
-        'startingDay': this.selected_day.name
+        'startingDay': this.selected_day.name,
+        'type': 'Planner'
       }
     },
     add (product) {

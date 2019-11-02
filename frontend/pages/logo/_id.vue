@@ -73,13 +73,15 @@ export default {
         'name': product.name,
         'quantity': product.quantity,
         'price': product.price,
-        'logoText': this.logoText
+        'logoText': this.logoText,
+        'type': 'Logo'
       }
     },
     add (product) {
       if (this.logoText === '') {
-
+        this.$refs.logotext.style.border = '1px solid #ff0000'
       } else {
+        this.$refs.logotext.style.border = 'none'
         const itemInCart = this.$store.state.localStorage.localCart.filter(item => item.id === product.id)
         const isItemInCart = itemInCart.length > 0
 
