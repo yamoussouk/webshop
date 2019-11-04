@@ -36,7 +36,7 @@
       </div>
       <div ref="summary" class="summary">
         <div ref="product_details" class="product_details">
-          <p>{{ product.longDescription }}</p>
+          <p v-html="product.longDescription"></p>
         </div>
       </div>
     </div>
@@ -188,18 +188,17 @@ export default {
 .product_add_to_cart_button {
     margin-bottom: 3%;
 }
-.summary .product_details p {
+.summary .product_details p span {
     font-family: Daun;
     font-size: 40px;
     color: #000;
     padding-left: 5%;
     padding-right: 5%;
     line-height: 55px;
-    overflow: auto;
-    word-break: break-word;
+    display: inline-block;
 }
 .product-attributes {
-    padding-top: 3%;
+    padding-top: 2%;
     padding-bottom: 3%;
 }
 .product-attributes .select:nth-child(1) {

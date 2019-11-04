@@ -26,7 +26,6 @@
                     </label>
                     <div class="has-name">
                       <select v-model="form.categories" multiple="multiple" class="form-control">
-                        <option>Logo</option>
                         <option>Single Logo</option>
                         <option>Logo Set</option>
                         <option>Custom Logo</option>
@@ -83,7 +82,7 @@ export default {
         price: 0,
         files: [],
         categories: [],
-        enabled: false,
+        enabled: 0,
         longDescription: ''
       },
       success: false,
@@ -98,9 +97,9 @@ export default {
       this.form.files.push(imageFile)
     },
     addNew () {
+      this.form.categories.push('Logo')
       const formObject = {
-        // TODO: remove it when reset autogeneration
-        'id': 66673,
+        'id': 0,
         'name': this.form.name,
         'price': parseInt(this.form.price),
         'categories': this.form.categories,
@@ -136,8 +135,6 @@ export default {
       this.form.files.length = 0
       this.form.longDescription = ''
       this.form.categories.length = 0
-      console.log(this.$refs)
-      console.log(this.$refs.dropImage.files)
       this.$refs.dropImage.resetImages()
     }
   }

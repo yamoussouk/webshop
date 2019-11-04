@@ -81,11 +81,19 @@ export const mutations = {
   },
   changePlannerEnabled (state, id) {
     const product = state.planners.find(pr => parseInt(pr.id) === parseInt(id))
-    product.enabled = !product.enabled
+    if (product.enabled === 0) {
+      product.enabled = 1
+    } else {
+      product.enabled = 0
+    }
   },
   changeLogoEnabled (state, id) {
     const product = state.logos.find(pr => parseInt(pr.id) === parseInt(id))
-    product.enabled = !product.enabled
+    if (product.enabled === 0) {
+      product.enabled = 1
+    } else {
+      product.enabled = 0
+    }
   },
   removePlanner: (state, id) => {
     state.planners.splice(state.planners.findIndex(pr => parseInt(pr.id) === parseInt(id)), 1)

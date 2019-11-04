@@ -14,7 +14,7 @@
     </b-modal>
     <div class="cart-wrapper">
       <a v-b-modal.cart-modal :class="{ cartWithItem: cartItems.length > 0 }">
-        <img :src="cartSource" alt="cart"><span v-show="cartItems.length > 0"> {{ cartItems.length }}</span>
+        <span v-show="cartItems.length > 0"> {{ cartItems.length }}</span><img :src="cartSource" alt="cart">
       </a>
     </div>
   </div>
@@ -29,12 +29,14 @@ export default {
   },
   computed: {
     cartItems () {
+      console.log('items', this.$store.state.localStorage.localCart)
       return this.$store.state.localStorage.localCart
     },
     cartSource () {
-      return this.$store.state.localStorage.localCartCount > 0 ? '/page_assets/cart_white.png' : '/page_assets/cart_black.png'
+      return this.cartCount > 0 ? '/page_assets/cart_white.png' : '/page_assets/cart_black.png'
     },
     cartCount () {
+      console.log('count', this.cartItems.reduce((ac, next) => ac + next.quantity, 0))
       return this.cartItems.reduce((ac, next) => ac + next.quantity, 0)
     }
   }
@@ -47,7 +49,6 @@ export default {
     vertical-align: middle;
 }
 .cartWithItem {
-    background-color: rgba(226,212,203, 0.89);
-    border-radius: 10px;
+    background-color: #cd9e8f;
 }
 </style>

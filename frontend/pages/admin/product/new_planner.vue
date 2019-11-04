@@ -26,7 +26,6 @@
                     </label>
                     <div class="has-name">
                       <select v-model="form.categories" multiple="multiple" class="form-control">
-                        <option>Printable Planners</option>
                         <option>Inserts</option>
                         <option>Daily Planners</option>
                         <option>Lifestyle Planners</option>
@@ -94,7 +93,7 @@ export default {
         dllink: '',
         files: [],
         categories: [],
-        enabled: false,
+        enabled: 0,
         longDescription: ''
       },
       success: false,
@@ -109,13 +108,12 @@ export default {
       this.form.files.push(imageFile)
     },
     addNew () {
+      this.form.categories('Printable Planners')
       const formObject = {
-        // TODO: remove it when reset autogeneration
-        'id': 66688,
+        'id': 0,
         'name': this.form.name,
         'price': parseInt(this.form.price),
         'downloadLink': this.form.dllink,
-        // 'images': this.form.files,
         'categories': this.form.categories,
         'enabled': this.form.enabled,
         'longDescription': this.form.longDescription

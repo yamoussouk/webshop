@@ -35,7 +35,6 @@
                     </label>
                     <div class="has-name">
                       <select v-model="categories" multiple="multiple" class="form-control" @change="updateCategory($event)">
-                        <option>Printable Planners</option>
                         <option>Inserts</option>
                         <option>Daily Planners</option>
                         <option>Lifestyle Planners</option>

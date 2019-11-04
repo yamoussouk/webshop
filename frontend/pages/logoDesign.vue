@@ -15,16 +15,6 @@
                 </nuxt-link>
               </div>
             </div>
-            <div class="desc">
-              <h4>
-                <nuxt-link :to="`logo/${product.id}`">
-                  <span class="product_title">{{ product.name }}</span>
-                </nuxt-link>
-              </h4>
-              <div class="price">
-                <span>$ {{ product.price }}</span>
-              </div>
-            </div>
           </li>
         </ul>
       </div>
@@ -54,23 +44,32 @@ export default {
   },
   computed: {
     filteredList () {
-      if (this.search !== '' || this.filteredProducts.length === 0) {
+      if (this.search !== '') {
+        // SEARCH
         return this.products.filter((product) => {
           return product.name.toLowerCase().includes(this.search.toLowerCase())
         })
       } else if (this.filteredProducts.length === 0) {
+        // ALL
         return this.products
-      } else {
+      } else if (this.filteredProducts.length > 0 && this.filteredProducts[0] !== null) {
+        // FILTER BY PRODUCT CATEGORY
         return this.filteredProducts
+      } else {
+        // NO FILTER FOUND
+        return []
       }
     }
   },
   created () {
-    this.products = this.$store.getters.getProducts
+    this.products = this.$store.getters.logos
     if (this.products.length === 0) {
       axios.get('http://localhost:8083/default/logos/all'
       ).then((response) => {
         this.products = response.data
+        for (const p of this.products) {
+          p.image.sort((a, b) => (a.imageUrl < b.imageUrl) ? 1 : ((b.imageUrl < a.imageUrl) ? -1 : 0))
+        }
       })
         .catch(function (error) {
           console.log(error)
@@ -90,6 +89,9 @@ export default {
               this.filteredProducts.push(product)
             }
           }
+        }
+        if (this.filteredProducts.length === 0) {
+          this.filteredProducts.push(null)
         }
       }
     }
@@ -115,6 +117,8 @@ export default {
     margin: 0 2% 40px!important;
     float: left;
     list-style: none;
+    height: 340px;
+    overflow-x: hidden;
 }
 .product:hover {
     transition: all 1s;

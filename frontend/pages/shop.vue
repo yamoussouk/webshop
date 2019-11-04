@@ -27,7 +27,7 @@
         </nuxt-link>
       </div>
       <div class="shop_categories templates">
-        <nuxt-link to="/socialmediatemplates">
+        <nuxt-link to="/socialMediaTemplates">
           <div class="category_img">
             <h1>social media templates</h1>
           </div>
@@ -39,7 +39,7 @@
         </nuxt-link>
       </div>
       <div class="shop_categories prints">
-        <nuxt-link to="/artprints">
+        <nuxt-link to="/artPrints">
           <div class="category_img">
             <h1>art prints</h1>
           </div>

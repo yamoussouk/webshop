@@ -41,6 +41,7 @@ export default {
   },
   computed: {
     cartCount () {
+      console.log('cartcount', this.cart.reduce((ac, next) => ac + next.quantity, 0))
       return this.cart.reduce((ac, next) => ac + next.quantity, 0)
     },
     cartSource () {
@@ -107,21 +108,24 @@ export default {
 }
 .header_cart a img {
     position: relative;
-    bottom: 6px;
-    left: 2px;
+    bottom: 0px;
+    left: 30px;
+    width: 90%;
 }
 .header_cart a span {
-    font-size: 40px;
-    font-family: Audrey;
+    font-size: 50px;
+    font-family: Daun;
     display: table-cell;
     position: relative;
-    top: 5px;
-    padding-left: 10%;
+    top: 10px;
     color: #fff;
+    left: 20px;
 }
 .cart-wrapper a {
     float: right;
     position: relative;
-    right: 115px;
+    right: 0px;
+    padding-right: 15%;
+    height: 75px;
 }
 </style>

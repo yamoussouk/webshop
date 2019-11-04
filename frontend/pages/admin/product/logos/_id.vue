@@ -35,7 +35,6 @@
                     </label>
                     <div class="has-name">
                       <select v-model="form.categories" multiple="multiple" class="form-control" @change="updateCategory($event)">
-                        <option>Logo</option>
                         <option>Single Logo</option>
                         <option>Logo Set</option>
                         <option>Custom Logo</option>
