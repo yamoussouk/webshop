@@ -114,7 +114,12 @@ public class AdminController {
     @GetMapping("/admin/enable/planner/{id}")
     public ResponseEntity<?> setPlannerEnabled(@PathVariable(name = "id") String id) {
         Planner p = this.PlannerService.findById(new Long(id));
-        p.setEnabled(!p.getEnabled());
+        int en = p.getEnabled();
+        if (en == 0) {
+            p.setEnabled(1);
+        } else {
+            p.setEnabled(0);
+        }
         this.PlannerService.savePlanner(p);
         return ResponseEntity.ok("Enabled changed");
     }
@@ -122,7 +127,12 @@ public class AdminController {
     @GetMapping("/admin/enable/logo/{id}")
     public ResponseEntity<?> setLogoEnabled(@PathVariable(name = "id") String id) {
         Logo p = this.logoService.findById(new Long(id));
-        p.setEnabled(!p.getEnabled());
+        int en = p.getEnabled();
+        if (en == 0) {
+            p.setEnabled(1);
+        } else {
+            p.setEnabled(0);
+        }
         this.logoService.saveLogo(p);
         return ResponseEntity.ok("Enabled changed");
     }
@@ -183,8 +193,9 @@ public class AdminController {
 
     private Planner convertdtoToPlanner (PlannerDto dto, List<String> removed) {
         Planner p = new Planner();
-        // TODO: remove it when reset autogeneration
-        p.setId(dto.getId());
+        if (dto.getId() != 0) {
+            p.setId(dto.getId());
+        }
         p.setName(dto.getName());
         p.setShortDescription(dto.getShortDescription());
         p.setLongDescription(dto.getLongDescription());
@@ -200,8 +211,9 @@ public class AdminController {
 
     private Logo convertdtoToLogo(LogoDto dto, List<String> removed) {
         Logo p = new Logo();
-        // TODO: remove it when reset autogeneration
-        p.setId(dto.getId());
+        if (dto.getId() != 0) {
+            p.setId(dto.getId());
+        }
         p.setName(dto.getName());
         p.setShortDescription(dto.getShortDescription());
         p.setLongDescription(dto.getLongDescription());

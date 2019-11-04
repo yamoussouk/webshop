@@ -4,7 +4,6 @@ import java.util.List;
 
 public class LogoDto {
 
-    // TODO: remove it when reset autogeneration 
     private Long id;
     private String name;
     private String shortDescription;
@@ -12,7 +11,7 @@ public class LogoDto {
     private int price;
     private int quantity;
     private String logoText;
-    private boolean enabled;
+    private int enabled;
     private List<String> categories;
 
     public String getName() {
@@ -35,7 +34,7 @@ public class LogoDto {
         return this.quantity;
     }
 
-    public boolean getEnabled () {
+    public int getEnabled () {
         return this.enabled;
     }
 
@@ -46,10 +45,11 @@ public class LogoDto {
     public List<String> getCategories () {
         return this.categories;
     }
-
-    // TODO: remove it when reset autogeneration 
     public Long getId() {
         return this.id;
+    }
+    public void setId(Long id) {
+        this.id = id;
     }
 }
 

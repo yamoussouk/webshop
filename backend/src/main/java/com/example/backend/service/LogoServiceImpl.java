@@ -29,7 +29,7 @@ public class LogoServiceImpl implements LogoService {
         List<Logo> allLogos = new ArrayList<>();
         this.LogoRepository.findAll().iterator().forEachRemaining(allLogos::add);
         if(enabled) {
-            return allLogos.stream().filter(product -> product.getEnabled() == true).collect(Collectors.toList());
+            return allLogos.stream().filter(product -> product.getEnabled() == 1).collect(Collectors.toList());
         } else {
             return allLogos;
         }

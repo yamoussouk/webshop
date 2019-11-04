@@ -67,6 +67,12 @@ public class ImageServiceImpl implements ImageService {
             long time = new Date().getTime();
             System.out.println(new Date(time));
             String name = time + "_" + r + "." + temp[temp.length - 1];
+            System.out.println(name);
+            if (file.getOriginalFilename().toLowerCase().contains("cover")) {
+                String[] namePart = name.split("\\.");
+                System.out.println(namePart);
+                name = namePart[0] + "_cover." + namePart[1];   
+            }
             Path path = Paths.get(UPLOADED + productId + "//" + name);
             Image uploadedImage = new Image();
             uploadedImage.setImageUrl(name);

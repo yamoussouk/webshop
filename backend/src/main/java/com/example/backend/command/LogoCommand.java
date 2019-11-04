@@ -16,7 +16,7 @@ public class LogoCommand {
     private Set<String> categories;
     private Set<ImageCommand> image;
     private int quantity;
-    private Boolean enabled;
+    private int enabled;
 
     public int getQuantity() {
         return quantity;
@@ -93,11 +93,11 @@ public class LogoCommand {
         this.image = image;
     }
 
-    public void setEnabled(Boolean enabled) {
+    public void setEnabled(int enabled) {
         this.enabled = enabled;
     }
 
-    public Boolean getEnabled() {
+    public int getEnabled() {
         return this.enabled;
     }
 }

@@ -1,7 +1,7 @@
 jwt:
   header: Authorization
   secret: mySecret
-  expiration: 3600
+  expiration: 36000
   route:
     authentication:
       path: auth

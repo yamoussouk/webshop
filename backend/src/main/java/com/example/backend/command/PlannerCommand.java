@@ -16,7 +16,7 @@ public class PlannerCommand {
     private Set<String> categories;
     private Set<ImageCommand> image;
     private int quantity;
-    private Boolean enabled;
+    private int enabled;
     private String downloadLink;
     private String size;
     private String startingDay;
@@ -96,11 +96,11 @@ public class PlannerCommand {
         this.image = image;
     }
 
-    public void setEnabled(Boolean enabled) {
+    public void setEnabled(int enabled) {
         this.enabled = enabled;
     }
 
-    public Boolean getEnabled() {
+    public int getEnabled() {
         return this.enabled;
     }
 

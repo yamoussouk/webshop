@@ -29,7 +29,7 @@ public class PlannerServiceImpl implements PlannerService {
         List<Planner> allPlanners = new ArrayList<>();
         this.plannerRepository.findAll().iterator().forEachRemaining(allPlanners::add);
         if(enabled) {
-            return allPlanners.stream().filter(product -> product.getEnabled() == true).collect(Collectors.toList());
+            return allPlanners.stream().filter(product -> product.getEnabled() == 1).collect(Collectors.toList());
         } else {
             return allPlanners;
         }

@@ -4,7 +4,6 @@ import java.util.List;
 
 public class PlannerDto {
 
-    // TODO: remove it when reset autogeneration 
     private Long id;
     private String name;
     private String shortDescription;
@@ -12,7 +11,7 @@ public class PlannerDto {
     private int price;
     private int quantity;
     private String downloadLink;
-    private boolean enabled;
+    private int enabled;
     private List<String> categories;
     private String size;
     private String startingDay;
@@ -37,7 +36,7 @@ public class PlannerDto {
         return this.quantity;
     }
 
-    public boolean getEnabled () {
+    public int getEnabled () {
         return this.enabled;
     }
 
@@ -57,9 +56,12 @@ public class PlannerDto {
         return this.startingDay;
     }
 
-    // TODO: remove it when reset autogeneration 
     public Long getId() {
         return this.id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }
 

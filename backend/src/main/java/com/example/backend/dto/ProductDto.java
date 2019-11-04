@@ -4,8 +4,6 @@ import java.util.List;
 
 public class ProductDto {
 
-    // TODO: remove it when reset autogeneration 
-    private Long id;
     private String name;
     private String shortDescription;
     private String longDescription;
@@ -45,11 +43,6 @@ public class ProductDto {
 
     public List<String> getCategories () {
         return this.categories;
-    }
-
-    // TODO: remove it when reset autogeneration 
-    public Long getId() {
-        return this.id;
     }
 }
 

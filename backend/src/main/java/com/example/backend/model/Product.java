@@ -6,6 +6,8 @@ import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.JoinColumn;
@@ -20,15 +22,15 @@ import javax.persistence.InheritanceType;
 public class Product {
 
     @Id
-    // @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String shortDescription;
-    @Column(length = 3000)
+    @Column(length = 5000)
     private String longDescription;
     private double price;
     private Integer quantity;
-    private boolean enabled;
+    private int enabled;
     private String type;
 
     @ManyToMany(fetch = FetchType.LAZY)
@@ -136,11 +138,11 @@ public class Product {
         this.images.add(image);
     }
 
-    public boolean getEnabled () {
+    public int getEnabled () {
         return this.enabled;
     }
 
-    public void setEnabled (boolean enabled) {
+    public void setEnabled (int enabled) {
         this.enabled = enabled;
     }
 
