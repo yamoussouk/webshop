@@ -8,10 +8,12 @@ import java.util.Set;
 
 import com.example.backend.command.PlannerCommand;
 import com.example.backend.command.LogoCommand;
+import com.example.backend.model.Coupon;
 import com.example.backend.model.Image;
 import com.example.backend.model.Mail;
 import com.example.backend.model.Planner;
 import com.example.backend.model.Logo;
+import com.example.backend.service.CouponService;
 import com.example.backend.service.EmailService;
 import com.example.backend.service.PlannerService;
 import com.example.backend.service.LogoService;
@@ -35,13 +37,15 @@ public class DefaultController {
     private final PlannerToPlannerCommand PlannerToPlannerCommand = new PlannerToPlannerCommand();
     private final LogoToLogoCommand logoToLogoCommand = new LogoToLogoCommand();
     private final EmailService emailService = new EmailService();
+    private final CouponService couponService;
 
     @Value("${owner.email}")
     private String ownerEmail;
 
-    public DefaultController (PlannerService plannerService, LogoService logoService) {
+    public DefaultController (PlannerService plannerService, LogoService logoService, CouponService couponService) {
         this.plannerService = plannerService;
         this.logoService = logoService;
+        this.couponService = couponService;
     }
 
     @GetMapping("/default/planners/all")
@@ -85,6 +89,16 @@ public class DefaultController {
     public ResponseEntity<?> contact(@RequestParam("from") String from, @RequestParam("text") String email) {
         this.emailService.sendEmail(mailAssembler(from, email), "contact");
         return new ResponseEntity<>("OK", HttpStatus.OK);
+    }
+
+    @GetMapping("/default/coupon/{coupon}")
+    public  ResponseEntity<?> validateCoupon(@PathVariable(name = "coupon") String coupon) {
+        Coupon c = this.couponService.getCouponByName(coupon);
+        if (c != null) {
+            return ResponseEntity.ok(c.getPercent());
+        } else {
+            return ResponseEntity.ok("No coupon found!");
+        }
     }
 
     private Mail mailAssembler(String from, String email) {
