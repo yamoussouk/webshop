@@ -1,11 +1,13 @@
 <template>
   <div class="contact_wrapper">
     <span id="email_label">YOUR EMAIL</span>
-    <input type="email" class="email_input" v-model="email" />
+    <input v-model="email" type="email" class="email_input">
     <span id="message_label">MESSAGE</span>
-    <textarea class="message_input" v-model="text" />
-    <div v-show="error" id="error">Something went wrong. Try it again!</div>
-    <span @click="sendEmail" id="send">send</span>
+    <textarea v-model="text" class="message_input" />
+    <div v-show="error" id="error">
+      Something went wrong. Try it again!
+    </div>
+    <span id="send" @click="sendEmail">send</span>
   </div>
 </template>
 
