@@ -1,29 +1,27 @@
 <template>
-    <div :class="{ __disabled: disabled }" class="select" :ref="refs">
-      <div @click="toggle" class="select_label">
-        <span>{{ getLabel(value) }}</span>
-        <img :src="'/page_assets/arrow-02.png'" alt="select arrow" :class="{opened : opened}"/>
-      </div>
-      <div v-if="opened" class="select_options">
-        <div
-            v-for="o in options"
-            :key="o.id"
-            :value="getVal(value)"
-            @click="change(o)"
-            :class="{__active: getVal(o) == getVal(value)}"
-        class="select_option">{{ getLabel(o) }}</div>
-      </div>
-      <div v-if="opened" @click="toggle" class="select_overlay"></div>
+  <div :ref="refs" :class="{ __disabled: disabled }" class="select">
+    <div class="select_label" @click="toggle">
+      <span>{{ getLabel(value) }}</span>
+      <img :src="'/page_assets/arrow-02.png'" alt="select arrow" :class="{opened : opened}">
     </div>
+    <div v-if="opened" class="select_options">
+      <div
+        v-for="o in options"
+        :key="o.id"
+        :value="getVal(value)"
+        :class="{__active: getVal(o) == getVal(value)}"
+        class="select_option"
+        @click="change(o)"
+      >
+        {{ getLabel(o) }}
+      </div>
+    </div>
+    <div v-if="opened" class="select_overlay" @click="toggle" />
+  </div>
 </template>
 
 <script>
 export default {
-  data () {
-    return {
-      opened: false
-    }
-  },
   props: {
     value: {
       required: true
@@ -50,6 +48,11 @@ export default {
     refs: {
       type: String,
       required: false
+    }
+  },
+  data () {
+    return {
+      opened: false
     }
   },
   methods: {

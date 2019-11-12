@@ -41,7 +41,6 @@ export default {
   },
   computed: {
     cartCount () {
-      console.log('cartcount', this.cart.reduce((ac, next) => ac + next.quantity, 0))
       return this.cart.reduce((ac, next) => ac + next.quantity, 0)
     },
     cartSource () {
@@ -127,5 +126,8 @@ export default {
     right: 0px;
     padding-right: 15%;
     height: 75px;
+}
+.cart-wrapper a:hover {
+  text-decoration: none;
 }
 </style>

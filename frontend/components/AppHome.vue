@@ -11,9 +11,9 @@
                 </nuxt-link>
               </div>
             </div>
-            <img class="shop-image left-image" alt="shop-image" src="/page_assets/shop_photos-01.png"/>
-            <img class="shop-image left-image" alt="shop-image" src="/page_assets/shop_photos-02.png"/>
-            <img class="shop-image left-image" alt="shop-image" src="/page_assets/shop_photos-03.png"/>
+            <img class="shop-image left-image" alt="shop-image" src="/page_assets/shop_photos-01.png">
+            <img class="shop-image left-image" alt="shop-image" src="/page_assets/shop_photos-02.png">
+            <img class="shop-image left-image" alt="shop-image" src="/page_assets/shop_photos-03.png">
           </div>
         </div>
       </div>
@@ -23,9 +23,9 @@
       <div class="wrap-inner">
         <div class="full-width">
           <div class="column">
-            <img class="shop-image right-image" alt="freebies-image" src="/page_assets/freebies_photos-01.png"/>
-            <img class="shop-image right-image" alt="freebies-image" src="/page_assets/freebies_photos-02.png"/>
-            <img class="shop-image right-image" alt="freebies-image" src="/page_assets/freebies_photos-03.png"/>
+            <img class="shop-image right-image" alt="freebies-image" src="/page_assets/freebies_photos-01.png">
+            <img class="shop-image right-image" alt="freebies-image" src="/page_assets/freebies_photos-02.png">
+            <img class="shop-image right-image" alt="freebies-image" src="/page_assets/freebies_photos-03.png">
             <div class="anchor_box right_box">
               <div class="text_wrapper right_align" style="background-color: #cd9e8f;">
                 <nuxt-link to="/freebies">
@@ -49,9 +49,9 @@
                 </nuxt-link>
               </div>
             </div>
-            <img class="shop-image left-image" alt="shop-image" src="/page_assets/aboutme_photos-01.png"/>
-            <img class="shop-image left-image" alt="shop-image" src="/page_assets/aboutme_photos-02.png"/>
-            <img class="shop-image left-image" alt="shop-image" src="/page_assets/aboutme_photos-03.png"/>
+            <img class="shop-image left-image" alt="shop-image" src="/page_assets/aboutme_photos-01.png">
+            <img class="shop-image left-image" alt="shop-image" src="/page_assets/aboutme_photos-02.png">
+            <img class="shop-image left-image" alt="shop-image" src="/page_assets/aboutme_photos-03.png">
           </div>
         </div>
       </div>
@@ -61,9 +61,9 @@
       <div class="wrap-inner">
         <div class="full-width">
           <div class="column">
-            <img class="shop-image right-image" alt="freebies-image" src="/page_assets/contact_photos-01.png"/>
-            <img class="shop-image right-image" alt="freebies-image" src="/page_assets/contact_photos-02.png"/>
-            <img class="shop-image right-image" alt="freebies-image" src="/page_assets/contact_photos-03.png"/>
+            <img class="shop-image right-image" alt="freebies-image" src="/page_assets/contact_photos-01.png">
+            <img class="shop-image right-image" alt="freebies-image" src="/page_assets/contact_photos-02.png">
+            <img class="shop-image right-image" alt="freebies-image" src="/page_assets/contact_photos-03.png">
             <div class="anchor_box right_box">
               <div class="text_wrapper right_align" style="background-color: #1f5961;">
                 <nuxt-link to="/contact">

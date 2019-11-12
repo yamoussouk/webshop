@@ -1,9 +1,9 @@
 <template>
   <div>
-    <app-top v-show="isDefault()"/>
-    <app-nav v-show="isDefault()"/>
+    <app-top v-show="isDefault()" />
+    <app-nav v-show="isDefault()" />
     <nuxt />
-    <app-footer v-show="isDefault()"/>
+    <app-footer v-show="isDefault()" />
   </div>
 </template>
 

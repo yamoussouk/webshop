@@ -58,13 +58,13 @@ export default {
       }
     }
   },
-  mounted () {
-    this.$refs.cats[0].classList.add('active')
-  },
   computed: {
     cats () {
       return this.$props.categories
     }
+  },
+  mounted () {
+    this.$refs.cats[0].classList.add('active')
   },
   methods: {
     onChange (event) {

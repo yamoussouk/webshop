@@ -1,6 +1,6 @@
 <template>
   <div id="Footer">
-    <app-feed v-show="isHome"/>
+    <app-feed v-show="isHome" />
     <app-sign-up />
     <app-icons />
     <app-logo />

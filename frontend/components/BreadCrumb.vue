@@ -1,6 +1,6 @@
 <template>
   <div class="custom_breadcrumb">
-    <div class="back_button">
+    <div v-if="back" class="back_button">
       <a @click="$router.go(-1)">
         <div class="wrapper">
           <img :src="'/page_assets/arrow.png'" alt="back arrow">
@@ -22,6 +22,10 @@ export default {
     title: {
       type: String,
       default: ''
+    },
+    back: {
+      type: Boolean,
+      default: true
     }
   }
 }

@@ -4,10 +4,10 @@
       <img :src="currentImage" alt="">
       <div class="actions">
         <span class="prev" @click="prevImage">
-          <img id="prev-arrow" :src="'/page_assets/arrow-02.png'" alt="left-arrow"/>
+          <img id="prev-arrow" :src="'/page_assets/arrow-02.png'" alt="left-arrow">
         </span>
         <span class="next" @click="nextImage">
-          <img id="next-arrow" :src="'/page_assets/arrow-02.png'" alt="right-arrow"/>
+          <img id="next-arrow" :src="'/page_assets/arrow-02.png'" alt="right-arrow">
         </span>
       </div>
     </div>
