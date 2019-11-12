@@ -22,15 +22,16 @@ public class Orders {
     private String email;
     
     @ManyToMany(fetch = FetchType.LAZY)
-    //@JsonBackReference
+    @JsonBackReference
     private List<Planner> planners = new ArrayList<>();
 
     @ManyToMany(fetch = FetchType.LAZY)
-    //@JsonBackReference
+    @JsonBackReference
     private List<Logo> logos = new ArrayList<>();
 
     @OneToMany(mappedBy = "order")
-    //@JsonManagedReference
+    @JsonManagedReference
+    //@JsonIgnore
     private List<OrderDetails> orderDetails = new ArrayList<OrderDetails>();
 
     public Orders() {
