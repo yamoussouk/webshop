@@ -38,7 +38,7 @@ public class OrderServiceImpl implements OrderService {
             OrderDetails o = new OrderDetails();
             o.setProductID(p.getId());
             o.setSize(p.getSize());
-            o.setStartingDay(p.getStrartingDay());
+            o.setStartingDay(p.getStartingDay());
             o.setOrders(order);
             OrderDetails pl = this.orderDetailsRepository.save(o);
             order.setOrderDetails(pl);
