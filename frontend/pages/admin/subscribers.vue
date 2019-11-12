@@ -5,16 +5,16 @@
         <div class="col-xl-12">
           <table>
             <thead>
-            <tr>
+              <tr>
                 <th>Subscribers</th>
                 <th>Enabled</th>
-            </tr>
+              </tr>
             </thead>
             <tbody>
-            <tr v-for="subscriber in subscribers" :key="subscriber.id">
+              <tr v-for="subscriber in subscribers" :key="subscriber.id">
                 <td>{{ subscriber.email }}</td>
                 <td>{{ subscriber.isEnabled }}</td>
-            </tr>
+              </tr>
             </tbody>
           </table>
         </div>

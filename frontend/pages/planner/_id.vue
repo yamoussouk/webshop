@@ -4,26 +4,28 @@
     <div class="product_wrapper">
       <div ref="product_image_wrapper" class="product_image_wrapper">
         <div class="product_images">
-          <image-carousel :images="product.image" :id="product.id" />
+          <image-carousel :id="product.id" :images="product.image" />
         </div>
         <div class="product_price">
           <span>$ {{ product.price }}</span>
         </div>
         <div class="product-attributes">
           <custom-select
-                  ref="ref_size"
-                  refs="size"
-                  :options="sizes"
-                  value-key="id"
-                  label-key="name"
-                  v-model="selected_size"></custom-select>
+            ref="ref_size"
+            v-model="selected_size"
+            refs="size"
+            :options="sizes"
+            value-key="id"
+            label-key="name"
+          />
           <custom-select
-                  ref="ref_day"
-                  refs="day"
-                  :options="days"
-                  value-key="id"
-                  label-key="name"
-                  v-model="selected_day"></custom-select>
+            ref="ref_day"
+            v-model="selected_day"
+            refs="day"
+            :options="days"
+            value-key="id"
+            label-key="name"
+          />
         </div>
         <div class="product_cart_buttons">
           <button class="product_add_to_cart_button" @click="add(product)">
@@ -36,7 +38,7 @@
       </div>
       <div ref="summary" class="summary">
         <div ref="product_details" class="product_details">
-          <p v-html="product.longDescription"></p>
+          <p v-html="product.longDescription" />
         </div>
       </div>
     </div>

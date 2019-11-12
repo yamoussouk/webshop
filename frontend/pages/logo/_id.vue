@@ -4,13 +4,13 @@
     <div class="product_wrapper">
       <div ref="product_image_wrapper" class="product_image_wrapper">
         <div class="product_images">
-          <image-carousel :images="product.image" :id="product.id" />
+          <image-carousel :id="product.id" :images="product.image" />
         </div>
         <div class="product_price">
           <span>$ {{ product.price }}</span>
         </div>
         <div class="product-attributes">
-          <input ref="logotext" type="text" class="logo_text" placeholder="Add logo text" v-model="logoText"/>
+          <input ref="logotext" v-model="logoText" type="text" class="logo_text" placeholder="Add logo text">
         </div>
         <div class="product_cart_buttons">
           <button class="product_add_to_cart_button" @click="add(product)">
@@ -23,7 +23,7 @@
       </div>
       <div ref="summary" class="summary">
         <div ref="product_details" class="product_details">
-          <p v-html="product.longDescription"></p>
+          <p v-html="product.longDescription" />
         </div>
       </div>
     </div>
@@ -74,6 +74,7 @@ export default {
         'quantity': product.quantity,
         'price': product.price,
         'logoText': this.logoText,
+        'image': product.image.find(i => i.imageUrl.includes('cover')),
         'type': 'Logo'
       }
     },

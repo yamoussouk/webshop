@@ -7,9 +7,9 @@
             <h1>printable planners</h1>
           </div>
           <div class="category_text">
-            <p><b>DAILY, WEEKLY,<br/>MONTHLY INSERTS</b></p>
-            <p>COMPLETE<br/>FUNCTIONAL PLANNERS</p>
-            <p><b>BULLET JOURNAL<br/>PAGES</b></p>
+            <p><b>DAILY, WEEKLY,<br>MONTHLY INSERTS</b></p>
+            <p>COMPLETE<br>FUNCTIONAL PLANNERS</p>
+            <p><b>BULLET JOURNAL<br>PAGES</b></p>
           </div>
         </nuxt-link>
       </div>
@@ -21,7 +21,7 @@
           <div class="category_text">
             <p><b>SINGLE LOGOS</b></p>
             <p>LOGO SETS</p>
-            <p><b>PRE-DESIGNED AND<br/>CUSTOM WORK</b></p>
+            <p><b>PRE-DESIGNED AND<br>CUSTOM WORK</b></p>
             <p>BRANDING</p>
           </div>
         </nuxt-link>
@@ -32,9 +32,9 @@
             <h1>social media templates</h1>
           </div>
           <div class="category_text">
-            <p><b>INSTAGRAM POSTS,<br/>ICONS</b></p>
-            <p>FACEBOOK AND ETSY<br/>BANNER SETS</p>
-            <p><b>PERSONAL AND<br/>COMMERCIAL USE<br/>GRAPHICS</b></p>
+            <p><b>INSTAGRAM POSTS,<br>ICONS</b></p>
+            <p>FACEBOOK AND ETSY<br>BANNER SETS</p>
+            <p><b>PERSONAL AND<br>COMMERCIAL USE<br>GRAPHICS</b></p>
           </div>
         </nuxt-link>
       </div>

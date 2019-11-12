@@ -101,7 +101,7 @@ export default {
       const formObject = {
         'id': 0,
         'name': this.form.name,
-        'price': parseInt(this.form.price),
+        'price': parseFloat(this.form.price),
         'categories': this.form.categories,
         'enabled': this.form.enabled,
         'longDescription': this.form.longDescription
