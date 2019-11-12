@@ -17,6 +17,22 @@ export const getters = {
       return 0
     }
     return state.localCart.reduce((ac, next) => ac + next.quantity, 0)
+  },
+  payPalCompatibleCart: (state) => {
+    const cart = []
+    for (const e in state.localCart) {
+      const temp = this.cart[e]
+      const desc = 'logoText' in temp ? 'logoText: ' + temp.logoText : 'size: ' + temp.size + ', starting day: ' + temp.startingDay
+      const el = {
+        'name': temp.name,
+        'description': desc,
+        'quantity': temp.quantity,
+        'price': temp.price,
+        'currency': 'USD'
+      }
+      cart.push(el)
+    }
+    return cart
   }
 }
 
