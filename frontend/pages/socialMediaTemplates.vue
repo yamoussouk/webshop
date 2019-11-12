@@ -3,7 +3,7 @@
     <bread-crumb :title="title" :to="shop" />
     <div class="shop_wrapper">
       <div class="shop_aside">
-        <side-bar :search.sync="search" @filter="showByFilter" :categories="categories" />
+        <side-bar :search.sync="search" :categories="categories" @filter="showByFilter" />
       </div>
       <div class="shop_inner">
         <ul class="products_wrapper">
