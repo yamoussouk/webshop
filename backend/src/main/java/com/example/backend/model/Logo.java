@@ -9,6 +9,9 @@ import javax.persistence.JoinTable;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 public class Logo extends Product {
 
@@ -19,6 +22,7 @@ public class Logo extends Product {
                     name = "logo_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(
                     name = "order_id", referencedColumnName = "id"))
+    @JsonBackReference(value="logos")
     private Set<Orders> orders = new HashSet<>();
 
     private String logoText;

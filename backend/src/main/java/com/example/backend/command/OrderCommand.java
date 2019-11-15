@@ -10,10 +10,11 @@ public class OrderCommand {
     private double price;
     private Date purchaseTime;
     private Long userid;
-    private List<PlannerCommand> products;
+    private String email;
+    private List<OrderDetailsCommand> orderDetails;
+    private String coupon;
 
     public OrderCommand() {
-        this.products = new ArrayList<>();
     }
 
     public Long getId() {
@@ -48,16 +49,23 @@ public class OrderCommand {
         this.userid = userid;
     }
 
-    public List<PlannerCommand> getProducts() {
-        return products;
+    public void setEmail(String email) {
+        this.email = email;
     }
-
-    public void setProducts(List<PlannerCommand> products) {
-        this.products = products;
+    public void setOrderDetails(List<OrderDetailsCommand> details) {
+        this.orderDetails = details;
     }
-
-    public void setOneProduct(PlannerCommand product) {
-        this.products.add(product);
+    public String getEmail() {
+        return this.email;
+    }
+    public List<OrderDetailsCommand> getOrderDetails() {
+        return this.orderDetails;
+    }
+    public void setCoupon(String coupon) {
+        this.coupon = coupon;
+    }
+    public String getCoupon() {
+        return this.coupon;
     }
 }
 

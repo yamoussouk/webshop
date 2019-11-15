@@ -1,5 +1,6 @@
 package com.example.backend.controller;
 
+import com.example.backend.command.OrderCommand;
 import com.example.backend.model.Orders;
 import com.example.backend.service.OrderService;
 import org.springframework.web.bind.annotation.*;
@@ -59,7 +60,8 @@ public class OrderController {
     //TODO: add int pagination pathvariable
     //TODO: only for admin
     @GetMapping("/all")
-    public List<Orders> listAllOrder() {
-        return orderService.findAllOrder();
+    public List<OrderCommand> listAllOrder() {
+        List<OrderCommand> temp = orderService.findAllOrder();
+        return temp;
     }
 }

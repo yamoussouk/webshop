@@ -23,7 +23,7 @@ public class User {
     private String passwd;
     private Date lastPasswordResetDate;
     @ManyToOne
-    @JsonBackReference
+    @JsonBackReference(value="user")
     private Authority authority;
     private boolean enabled;
 
@@ -39,7 +39,7 @@ public class User {
                     name = "role_id", referencedColumnName = "id"))
     private Collection<Role> roles;
 
-    @JsonManagedReference
+    @JsonManagedReference(value="user")
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Orders> orders = new ArrayList<>();
 

@@ -1,7 +1,6 @@
 package com.example.backend.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
@@ -14,23 +13,24 @@ public class Orders {
     @GeneratedValue
     private Long id;
     private double price;
+    private String couponName;
  
     private Date purchaseTime;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonBackReference
+    @JsonBackReference(value="user")
     private User user;
     private String email;
     
     @ManyToMany(fetch = FetchType.LAZY)
-    @JsonBackReference
+    @JsonBackReference(value="planners")
     private List<Planner> planners = new ArrayList<>();
 
     @ManyToMany(fetch = FetchType.LAZY)
-    @JsonBackReference
+    @JsonBackReference(value="logos")
     private List<Logo> logos = new ArrayList<>();
 
     @OneToMany(mappedBy = "order")
-    @JsonManagedReference
+    @JsonManagedReference(value="order")
     //@JsonIgnore
     private List<OrderDetails> orderDetails = new ArrayList<OrderDetails>();
 
@@ -105,5 +105,11 @@ public class Orders {
     }
     public List<OrderDetails> getOrderDetails() {
         return this.orderDetails;
+    }
+    public void setCoupon(String coupon) {
+        this.couponName = coupon;
+    }
+    public String getCoupon() {
+        return this.couponName;
     }
 }

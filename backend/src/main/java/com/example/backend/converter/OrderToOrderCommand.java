@@ -1,11 +1,16 @@
 package com.example.backend.converter;
 
 import com.example.backend.command.OrderCommand;
+import com.example.backend.command.OrderDetailsCommand;
+import com.example.backend.model.OrderDetails;
 import com.example.backend.model.Orders;
 import com.example.backend.model.Product;
 import com.example.backend.repository.ProductRepository;
 import lombok.Synchronized;
 import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.validation.constraints.NotNull;
 
@@ -14,10 +19,13 @@ public class OrderToOrderCommand {
 
     private ProductRepository productRepository;
     private final PlannerToPlannerCommand productConverter;
+    private final OrderDetailsToOrderDetailsCommand orderDetailsConverter;
 
-    public OrderToOrderCommand(ProductRepository productRepository, PlannerToPlannerCommand productConverter) {
+    public OrderToOrderCommand(ProductRepository productRepository, PlannerToPlannerCommand productConverter,
+    OrderDetailsToOrderDetailsCommand orderDetailsConverter) {
         this.productRepository = productRepository;
         this.productConverter = productConverter;
+        this.orderDetailsConverter = orderDetailsConverter;
     }
 
     @Synchronized
@@ -31,10 +39,14 @@ public class OrderToOrderCommand {
         orderCommand.setId(order.getId());
         orderCommand.setPrice(order.getPrice());
         orderCommand.setPurchaseTime(order.getPurchaseTime());
-        orderCommand.setUserid(order.getUser().getId());
-        for (Product product : order.getProducts()) {
-            orderCommand.setOneProduct(productConverter.convert(product));
+        // orderCommand.setUserid(order.getUser().getId());
+        orderCommand.setEmail(order.getEmail());
+        List<OrderDetailsCommand> details = new ArrayList<>();
+        for (OrderDetails detail : order.getOrderDetails()) {
+            details.add(this.orderDetailsConverter.convert(detail));
         }
+        orderCommand.setOrderDetails(details);
+        orderCommand.setCoupon(order.getCoupon());
         return orderCommand;
     }
 }

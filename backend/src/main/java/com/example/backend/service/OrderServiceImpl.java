@@ -1,9 +1,12 @@
 package com.example.backend.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.example.backend.command.OrderCommand;
+import com.example.backend.converter.OrderToOrderCommand;
 import com.example.backend.model.Logo;
 import com.example.backend.model.Mail;
 import com.example.backend.model.OrderDetails;
@@ -22,13 +25,16 @@ public class OrderServiceImpl implements OrderService {
     private UserRepository userRepository;
     private OrderDetailsRepository orderDetailsRepository;
     private EmailService mailService;
+    private OrderToOrderCommand ordersConverter;
 
     public OrderServiceImpl(OrdersRepository ordersRepository, 
-    UserRepository userRepository, EmailService mailService, OrderDetailsRepository orderDetailsRepository) {
+    UserRepository userRepository, EmailService mailService, OrderDetailsRepository orderDetailsRepository,
+    OrderToOrderCommand ordersConverter) {
         this.ordersRepository = ordersRepository;
         this.userRepository = userRepository;
         this.mailService = mailService;
         this.orderDetailsRepository = orderDetailsRepository;
+        this.ordersConverter = ordersConverter;
     }
 
     @Override
@@ -81,9 +87,14 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<Orders> findAllOrder() {
-        if (this.ordersRepository.findAll() != null) {
-            return this.ordersRepository.findAll();
+    public List<OrderCommand> findAllOrder() {
+        List<Orders> all = this.ordersRepository.findAll();
+        if (all != null) {
+            List<OrderCommand> allConvertedOrders = new ArrayList<>();
+            for (Orders order : all) {
+                allConvertedOrders.add(this.ordersConverter.convert(order));
+            }
+            return allConvertedOrders;
         } else {
             return null;
         }

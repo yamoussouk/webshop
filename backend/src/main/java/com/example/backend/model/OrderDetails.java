@@ -20,7 +20,7 @@ public class OrderDetails {
     private String size;
 
     @ManyToOne
-    @JsonBackReference
+    @JsonBackReference(value="order")
     private Orders order;
 
     public OrderDetails () {

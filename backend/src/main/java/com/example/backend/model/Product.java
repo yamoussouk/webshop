@@ -13,6 +13,9 @@ import javax.persistence.Inheritance;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.InheritanceType;
 
 @Entity
@@ -51,6 +54,7 @@ public class Product {
                     name = "image_id", referencedColumnName = "id"))
     //@OneToMany(mappedBy = "product", orphanRemoval = true, cascade = CascadeType.PERSIST)
     //@JsonManagedReference
+    @JsonBackReference
     private Set<Image> images = new HashSet<>();
 
     public void setImage(Image image) {
