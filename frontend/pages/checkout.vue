@@ -72,7 +72,7 @@ export default {
       shop: 'shop',
       back: false,
       email: '',
-      coupon: '',
+      coupon: null,
       discount: 0,
       success: false,
       message: '',
@@ -141,7 +141,8 @@ export default {
           // eslint-disable-next-line
           'planners': planners,
           // eslint-disable-next-line
-          'logos': logos
+          'logos': logos,
+          'coupon': this.coupon
         }
         const headers = {
           'Content-Type': 'application/json'
