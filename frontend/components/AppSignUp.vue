@@ -69,57 +69,183 @@ export default {
 }
 </script>
 <style>
-.sign_up_form {
-    max-width: 1140px;
-    text-align: center;
-    margin: 0 auto;
+@media only screen and (max-width: 1920px){
+  .sign_up_form {
+      max-width: 1140px;
+      text-align: center;
+      margin: 0 auto;
+      padding-top: 3%;
+  }
+  .sign_up_form h1 {
+      font-family: Daun;
+      font-size: 60px;
+      color: #000;
+      margin-bottom: 5%;
+      letter-spacing: 6px;
+  }
+  form input {
+      width: 65%;
+      float: left;
+      height: 80px;
+      font-family: Daun;
+      font-size: 60px;
+      color: #bcbec0;
+      font-style: italic;
+      border-radius: 10px;
+      border-color: #000;
+      letter-spacing: 3px;
+      padding: 25px 0 0 20px;
+  }
+  form input::placeholder {
+    color: #F0F0F0;
+  }
+  .emaillist form button {
+      background-color: rgba(31,89,97, 0.77);
+      color: #fff;
+      width: 264px;
+      font-size: 60px;
+      font-family: Daun;
+      height: 80px;
+      opacity: 0.77;
+      line-height: 95px;
+      border-radius: 10px;
+      letter-spacing: 3px;
+      width: 30%;
+      border: none;
+  }
+  .emaillist_error, .emaillist_answer {
+      text-align: left;
+      font-size: 20px;
+      margin-top: 1%;
+  }
+  .emaillist_error b, .emaillist_answer b {
+      float: left;
+  }
+  .emaillist_error ul, .emaillist_answer ul {
+      list-style: none;
+      padding: 0;
+      margin-left: 2%;
+      float: left;
+  }
+}
+@media only screen and (max-width: 1440px){
+  .sign_up_form {
+    max-width: 1000px;
+    padding-top: 5%;
+  }
+  .sign_up_form h1 {
+    margin-bottom: 2%;
+  }
+}
+@media only screen and (max-width: 1366px){
+}
+@media only screen and (max-width: 1112px){
+  .emaillist form button {
+    font-size: 50px;
+    height: 60px;
+    line-height: 70px;
+    width: 32%;
+  }
+  form input {
+    width: 55%;
+    height: 60px;
+    font-size: 50px;
+  }
+  .sign_up_form {
+    max-width: 850px;
+  }
+}
+@media only screen and (max-width: 1024px){
+  .sign_up_form {
+    max-width: 700px;
+  }
+  .emaillist form button {
+    font-size: 40px;
+    height: 50px;
+    line-height: 60px;
+    width: 31%;
+  }
+  form input {
+    width: 60%;
+    height: 50px;
+    font-size: 40px;
+    padding: 15px 0 0 20px;
+  }
+}
+@media only screen and (max-width: 834px){
+  .sign_up_form {
     padding-top: 3%;
+    max-width: 600px;
+  }
+  .emaillist form button {
+    font-size: 30px;
+    height: 40px;
+    line-height: 50px;
+    width: 25.5%;
+  }
+  form input {
+    height: 40px;
+    font-size: 30px;
+  }
 }
-.sign_up_form h1 {
-    font-family: Daun;
-    font-size: 60px;
-    color: #000;
-    margin-bottom: 5%;
-    letter-spacing: 6px;
-}
-form input {
-    width: 65%;
+@media only screen and (max-width: 812px){
+  .sign_up_form h1 {
+    width: 100%;
+    text-align: center;
     float: left;
-    height: 80px;
-    font-family: Daun;
-    font-size: 60px;
-    color: #bcbec0;
-    font-style: italic;
-    border-radius: 10px;
-    border-color: #000;
-    letter-spacing: 3px;
-    padding: 25px 0 0 20px;
-}
-.emaillist form button {
-    background-color: rgba(31,89,97, 0.77);
-    color: #fff;
-    width: 264px;
-    font-size: 60px;
-    font-family: Daun;
-    height: 80px;
-    opacity: 0.77;
-    line-height: 95px;
-    border-radius: 10px;
-    letter-spacing: 3px;
-    width: 30%;
-}
-.emaillist_error, .emaillist_answer {
-    text-align: left;
-    font-size: 20px;
-    margin-top: 1%;
-}
-.emaillist_error b, .emaillist_answer b {
+  }
+  .sign_up_form .emaillist {
     float: left;
+    width: 100%;
+  }
 }
-.emaillist_error ul, .emaillist_answer ul {
-    list-style: none;
-    padding: 0;
-    margin-left: 2%;
-    float: left;
+@media only screen and (max-width: 768px){
+}
+@media only screen and (max-width: 767px){
+  .emaillist form button {
+    margin-top: 2%;
+  }
+  .sign_up_form {
+    max-width: 90%;
+  }
+  form input, .emaillist form button {
+    float: initial;
+    width: 100%;
+  }
+  .icon:nth-child(1) img {
+    width: 2%;
+  }
+  .icon:nth-child(2) img {
+    width: 2.3%;
+  }
+  .icon img {
+    width: 2.5%;
+  }
+  form input {
+    margin-bottom: -10px;
+    text-align: center;
+  }
+}
+@media only screen and (max-width: 736px){
+}
+@media only screen and (max-width: 667px){
+}
+@media only screen and (max-width: 568px){
+}
+@media only screen and (max-width: 414px){
+  form input {
+    margin-bottom: 0px;
+  }
+}
+@media only screen and (max-width: 375px){
+  .emaillist form button {
+    font-size: 25px;
+  }
+  form input {
+    font-size: 25px;
+    padding: 10px 0 0 10px;
+  }
+}
+@media only screen and (max-width: 320px){
 }
 </style>

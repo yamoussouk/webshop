@@ -52,102 +52,248 @@ export default {
 }
 </script>
 <style>
-.fancy-list {
-    list-style: none;
-    float: left;
-    width: 24.8%;
-    margin-left: 0.2%;
-    margin-bottom: 0.2%;
+@media only screen and (max-width: 1920px){
+  .fancy-list {
+      list-style: none;
+      float: left;
+      width: 24.8%;
+      margin-left: 0.2%;
+      margin-bottom: 0.2%;
+  }
+  .fancy-list a {
+      width: 468px;
+      height: 468px;
+  }
+  .fancy-list a img {
+      width: 100%;
+  }
+  .fix {
+      clear: both;
+  }
+  .columns {
+      width: 100%;
+      height: 493px;
+      padding: 0 5%;
+  }
+  .instagram_feed {
+      padding-top: 4%;
+      padding-bottom: 4%;
+      text-align: center;
+  }
+  .instagram_feed h1 {
+      font-family: Daun;
+      font-size: 60px;
+      color: #000;
+      margin-bottom: 2%;
+      letter-spacing: 6px;
+  }
+  .follow_button {
+      background-color: rgba(31,89,97, 0.77);
+      color: #fff;
+      width: 100%;
+      font-size: 60px;
+      font-family: Daun;
+      height: 80px;
+      opacity: 0.77;
+      line-height: 50px;
+      border-radius: 10px;
+      cursor: pointer;
+      float: right;
+      display: table;
+      letter-spacing: 3px;
+  }
+  .follow_button span {
+      display: table-cell;
+      vertical-align: bottom;
+  }
+  .welcome-enter {
+    opacity: 0;
+  }
+  .welcome-enter-active {
+    transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);
+  }
+  .welcome-leave-active,
+  .welcome-leave-to {
+    opacity: 0;
+  }
+  .show_more {
+      background-color: #fff;
+      color: #1f5961;
+      width: 100%;
+      font-size: 60px;
+      font-family: Daun;
+      height: 80px;
+      opacity: 0.77;
+      line-height: 50px;
+      border-radius: 10px;
+      cursor: pointer;
+      border: 1px solid #1f5961;
+      float: left;
+      display: table;
+  }
+  .show_more span {
+      display: table-cell;
+      vertical-align: bottom;
+  }
+  .left_wrapper {
+      margin-right: 0.5%;
+      margin-left: 19.75%;
+  }
+  .right_wrapper {
+      margin-left: 0.5%;
+  }
+  .left_wrapper, .right_wrapper {
+      float: left;
+      width: 30%;
+  }
+  .feed_buttons {
+      max-width: 1140px;
+      text-align: center;
+      margin: 0 auto;
+  }
 }
-.fancy-list a {
-    width: 468px;
-    height: 468px;
+@media only screen and (max-width: 1680px){
+  .columns {
+    height: 400px;
+  }
+  .instagram_feed {
+    padding-top: 3%;
+  }
+  .instagram_feed h1 {
+      margin-bottom: 1%;
+  }
 }
-.fancy-list a img {
+@media only screen and (max-width: 1440px){
+  .instagram_feed h1, .sign_up_form h1 {
+    font-size: 55px;
+  }
+  .columns {
+    height: 340px;
+  }
+}
+@media only screen and (max-width: 1366px){
+}
+@media only screen and (max-width: 1112px){
+  .instagram_feed h1, .sign_up_form h1 {
+    font-size: 45px;
+  }
+  .columns {
+    height: 270px;
+  }
+  .follow_button, .show_more {
+    width: 80%;
+    font-size: 50px;
+    height: 60px;
+    line-height: 40px;
+  }
+}
+@media only screen and (max-width: 1024px){
+  .instagram_feed h1, .sign_up_form h1 {
+    font-size: 35px;
+  }
+  .follow_button, .show_more {
+    width: 70%;
+    font-size: 40px;
+    height: 50px;
+    line-height: 30px;
+  }
+  .columns {
+    height: 240px;
+  }
+}
+@media only screen and (max-width: 834px){
+  .follow_button, .show_more {
+    width: 60%;
+    font-size: 30px;
+    height: 40px;
+  }
+  .columns {
+    height: 200px;
+  }
+}
+@media only screen and (max-width: 812px){
+}
+@media only screen and (max-width: 768px){
+  .columns {
+    height: 180px;
+  }
+}
+@media only screen and (max-width: 767px){
+  .instagram_feed h1, .sign_up_form h1 {
+    font-size: 30px;
+  }
+  .follow_button, .show_more {
     width: 100%;
-}
-.fix {
-    clear: both;
-}
-.columns {
+    font-size: 30px;
+    height: 40px;
+  }
+  .left_wrapper, .right_wrapper, form input {
+    float: initial;
     width: 100%;
-    height: 493px;
-    padding: 0 5%;
+  }
+  .left_wrapper, .right_wrapper {
+    margin-right: 0;
+    margin-left: 0;
+  }
+  .feed_buttons {
+    max-width: 90%;
+  }
+  .left_wrapper {
+    padding-bottom: 50px;
+  }
+  .instagram_feed {
+    padding-bottom: 5%;
+  }
 }
-.instagram_feed {
-    padding-top: 4%;
-    padding-bottom: 4%;
-    text-align: center;
+@media only screen and (max-width: 736px){
 }
-.instagram_feed h1 {
-    font-family: Daun;
-    font-size: 60px;
-    color: #000;
-    margin-bottom: 2%;
-    letter-spacing: 6px;
+@media only screen and (max-width: 667px){
+  .instagram_feed h1, .sign_up_form h1 {
+    font-size: 25px;
+  }
+  .instagram_feed {
+    padding-bottom: 6%;
+  }
 }
-.follow_button {
-    background-color: rgba(31,89,97, 0.77);
-    color: #fff;
+@media only screen and (max-width: 568px){
+  .fancy-list {
+    width: 49.6%;
+  }
+  .columns {
+    height: 520px;
+  }
+}
+@media only screen and (max-width: 414px){
+  .fancy-list {
     width: 100%;
-    font-size: 60px;
-    font-family: Daun;
-    height: 80px;
-    opacity: 0.77;
-    line-height: 50px;
-    border-radius: 10px;
-    cursor: pointer;
-    float: right;
-    display: table;
-    letter-spacing: 3px;
+    margin-left: 0;
+    margin-bottom: 0;
+  }
+  .feed_buttons {
+    margin-top: 10px;
+  }
+  .instagram_feed {
+    padding-bottom: 10%;
+  }
 }
-.follow_button span {
-    display: table-cell;
-    vertical-align: bottom;
+@media only screen and (max-width: 375px){
+  .instagram_feed h1, .sign_up_form h1 {
+    font-size: 23px;
+  }
+  .follow_button, .show_more {
+    font-size: 25px;
+  }
 }
-.welcome-enter {
-  opacity: 0;
+@media only screen and (max-width: 360px){
+  .instagram_feed h1, .sign_up_form h1 {
+    font-size: 21px;
+  }
 }
-.welcome-enter-active {
-  transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);
-}
-.welcome-leave-active,
-.welcome-leave-to {
-  opacity: 0;
-}
-.show_more {
-    background-color: #fff;
-    color: #1f5961;
-    width: 100%;
-    font-size: 60px;
-    font-family: Daun;
-    height: 80px;
-    opacity: 0.77;
-    line-height: 50px;
-    border-radius: 10px;
-    cursor: pointer;
-    border: 1px solid #1f5961;
-    float: left;
-    display: table;
-}
-.show_more span {
-    display: table-cell;
-    vertical-align: bottom;
-}
-.left_wrapper {
-    margin-right: 0.5%;
-    margin-left: 19.75%;
-}
-.right_wrapper {
-    margin-left: 0.5%;
-}
-.left_wrapper, .right_wrapper {
-    float: left;
-    width: 30%;
-}
-.feed_buttons {
-    max-width: 1140px;
-    text-align: center;
-    margin: 0 auto;
+@media only screen and (max-width: 320px){
+  .instagram_feed h1, .sign_up_form h1 {
+    font-size: 20px;
+    letter-spacing: 2px;
+    margin-top: 10px;
+  }
 }
 </style>

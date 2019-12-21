@@ -3,7 +3,36 @@
     <bread-crumb :title="title" :to="shop" :back="back" />
     <div id="checkout_wrapper">
       <div v-if="cart.length !== 0">
+        <!-- checkout table -->
         <checkout-table :cart="cart" />
+        <!-- end of checkout table -->
+        <!-- mobile checkout -->
+        <div class="checkout_table_mobile">
+          <div v-for="item in cart" :key="item.id" class="checkout_mobile_item_wrapper">
+            <div class="checkout_mobile_image_wrapper">
+              <img class="image" alt="product-image" :src="'/uploaded/' + item.id + '/' + item.image.imageUrl">
+            </div>
+            <div class="checkout_mobile_description_wrapper">
+              <div class="checkout_mobile_description">
+                <span class="name">{{ item.name }}</span>
+                <span v-if="item.size" class="size">{{ item.size }}</span>
+                <span v-if="item.startingDay" class="starting_day">{{ item.startingDay }}</span>
+                <span v-if="item.logoText" class="logo_text" :title="item.logoText">{{ item.logoText }}</span>
+              </div>
+              <div class="price_mobile_wrapper">
+                <div class="price">
+                  <span>$ {{ ('' + item.price).replace('.', ',') }}</span>
+                </div>
+              </div>
+              <div class="close_mobile_wrapper">
+                <div>
+                  <span @click="removeFromCart(index)">Remove</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- end of mobile checkout -->
         <div class="checkout_subtotal_row">
           <div class="coupon_row">
             <span>COUPON:</span>
@@ -125,6 +154,9 @@ export default {
     },
     proceedCheckout () {
       this.proceed = !this.proceed
+    },
+    removeFromCart (index) {
+      this.$store.commit('localStorage/removeFromLocalCartByIndex', index)
     }
   },
   watch: {
@@ -168,120 +200,429 @@ export default {
 </script>
 
 <style scoped>
-.checkout-page-wrapper {
-    margin-bottom: 3%;
-}
-.empty-cart div.order-result p {
+@media only screen and (max-width: 1920px){
+  .checkout-page-wrapper {
+      margin-bottom: 3%;
+  }
+  .empty-cart div.order-result p {
+      text-align: center;
+      font-size: 40px;
+      font-family: Audrey;
+  }
+  .empty-cart div.order-result {
+      margin-bottom: 5%;
+  }
+  #checkout_wrapper {
+    width: 1440px;
+    margin: 0 auto 20px auto;
+  }
+  .checkout_row, .checkout_subtotal_row {
+    background: #fff;
+  }
+  .checkout_subtotal_row {
+    width: 100%;
+    height: 100px;
+  }
+  .checkout_row:nth-last-child(2) {
+    box-shadow: none;
+    padding-bottom: 20px;
+  }
+  .subtotal_text, .coupon_row {
+    width: 70%;
+    float: left;
+  }
+  .subtotal_text span, .coupon_row span {
+    font-size: 55px;
+    margin-left: 35%;
+    position: relative;
+    top: 20px;
+  }
+  .subtotal_price, .coupon_input {
+    float: left;
+    width: 30%;
+  }
+  .checkout_subtotal_row {
+    margin: 2% 0;
+  }
+  .button_wrapper {
+    width: 1440px;
+    height: 200px;
+    margin: 0 auto;
+  }
+  #browse button, #checkout button {
+    width: 100%;
+    font-size: 60px;
+    color: #fff;
     text-align: center;
+    height: 70px;
+    margin-bottom: 20px;
+    cursor: pointer;
+    border: none;
+    font-family: Daun;
+  }
+  #browse button {
+    background: #cd9e8f;
+  }
+  #browse button a {
+    color: #fff;
+  }
+  #browse button a:hover {
+    color: #fff;
+    text-decoration: none;
+  }
+  #checkout button {
+    background: #c8b65e;
+  }
+  #checkout_wrapper span {
+    font-family: Daun;
+  }
+  .tab-content > .active {
+    margin-top: 30px;
+  }
+  .coupon_input input {
+    height: 60px;
+    width: 67%;
+    margin-top: 5%;
+    font-family: Daun;
     font-size: 40px;
-    font-family: Audrey;
+    text-align: center;
+    padding-top: 15px;
+  }
+  .coupon_input button {
+    background: #cd9e8f;
+    color: #fff;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 22px;
+    letter-spacing: normal;
+    text-transform: capitalize;
+    width: 28%;
+    height: 60px;
+    float: right;
+    margin-top: 5%;
+    margin-right: 3%;
+    border: 0;
+  }
+  .fade-enter-active, .fade-leave-active {
+    transition: opacity 1s;
+  }
+  .fade-enter, .fade-leave-to {
+    opacity: 0;
+  }
+  .subtotal_price span {
+    font-size: 50px;
+    position: relative;
+    top: 20px;
+  }
+  .subtotal_price {
+    width: 20%;
+    text-align: center;
+  }
+  .checkout_table_mobile {
+    display: none;
+  }
 }
-.empty-cart div.order-result {
-    margin-bottom: 5%;
+@media only screen and (max-width: 1680px){
+  .coupon_input input {
+    margin-left: 1px;
+  }
 }
-#checkout_wrapper {
-  width: 1440px;
-  margin: 0 auto 20px auto;
+@media only screen and (max-width: 1440px){
 }
-.checkout_row, .checkout_subtotal_row {
-  background: #fff;
+@media only screen and (max-width: 1366px){
+  #checkout_wrapper {
+    width: 80%;
+  }
+  .button_wrapper {
+    width: 100%;
+  }
+  .coupon_input input, .coupon_input button {
+    margin-top: 5.6%;
+  }
 }
-.checkout_subtotal_row {
-  width: 100%;
-  height: 100px;
+@media only screen and (max-width: 1112px){
+  #checkout_wrapper {
+    width: 90%;
+  }
+  .subtotal_price span {
+    font-size: 40px;
+    top: 30px;
+  }
+  .coupon_input input, .coupon_input button {
+    margin-top: 5%;
+  }
+  .coupon_input input {
+    margin-left: 3px;
+  }
+  .subtotal_text span, .coupon_row span {
+    font-size: 45px;
+    margin-left: 38%;
+    top: 25px;
+  }
 }
-.checkout_row:nth-last-child(2) {
-  box-shadow: none;
-  padding-bottom: 20px;
+@media only screen and (max-width: 1024px){
+  .coupon_input input, .coupon_input button {
+    margin-top: 7.8%;
+  }
 }
-.subtotal_text, .coupon_row {
-  width: 70%;
-  float: left;
+@media only screen and (max-width: 834px){
+  .checkout_table_mobile {
+    display: block;
+  }
+  #checkout_wrapper {
+    width: 100%;
+    margin: 0;
+  }
+  .checkout_mobile_item_wrapper {
+    width: 90%;
+    margin: auto;
+    height: 220px;
+    background: #fff;
+    margin-bottom: 15px;
+  }
+  .checkout_mobile_image_wrapper {
+    float: left;
+    width: 200px;
+    margin-right: 5%;
+    padding-top: 10px;
+    padding-left: 10px;
+  }
+  .checkout_mobile_image_wrapper img {
+    width: 200px;
+    border: 1px solid #eee;
+  }
+  .checkout_mobile_description_wrapper {
+    float: left;
+    width: 50%;
+  }
+  .checkout_mobile_description_wrapper {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: 65%;
+  }
+  .checkout_mobile_description span {
+    width: 100%;
+    float: left;
+  }
+  .checkout_mobile_description .name {
+    font-size: 40px;
+  }
+  .checkout_mobile_description .logo_text {
+    font-size: 35px;
+    color: #bbb;
+  }
+  .price_mobile_wrapper .price span {
+    font-size: 40px;
+  }
+  .price_mobile_wrapper, .close_mobile_wrapper {
+    float: left;
+    width: 50%;
+  }
+  .checkout_mobile_description {
+    padding-top: 10px;
+    height: 170px;
+  }
+  .close_mobile_wrapper span {
+    font-size: 40px;
+    float: right;
+  }
+  .subtotal_text span, .coupon_row span {
+    font-size: 40px;
+    margin-left: 10px;
+    top: 30px;
+  }
+  .checkout_subtotal_row {
+    width: 90%;
+    margin: 2% auto;
+  }
+  .coupon_row, .coupon_input {
+    width: 50%;
+  }
+  .coupon_input input, .coupon_input button {
+    margin-top: 20px;
+  }
+  .subtotal_text {
+    width: 80%;
+  }
+  .subtotal_price {
+    text-align: right;
+    padding-right: 20px;
+  }
+  .button_wrapper {
+    width: 90%;
+  }
 }
-.subtotal_text span, .coupon_row span {
-  font-size: 55px;
-  margin-left: 35%;
-  position: relative;
-  top: 20px;
+@media only screen and (max-width: 812px){
+  #checkout_wrapper {
+    margin-top: 20px;
+  }
 }
-.subtotal_price, .coupon_input {
-  float: left;
-  width: 30%;
+@media only screen and (max-width: 768px){
+  .price_mobile_wrapper, .close_mobile_wrapper {
+    padding-right: 10px;
+  }
+  .coupon_input {
+    width: 49%;
+    margin-left: 1%;
+  }
 }
-.checkout_subtotal_row {
-  margin: 2% 0;
+@media only screen and (max-width: 767px){
 }
-.button_wrapper {
-  width: 1440px;
-  height: 200px;
-  margin: 0 auto;
+@media only screen and (max-width: 736px){
+  .checkout_mobile_description_wrapper {
+    width: 64%;
+  }
 }
-#browse button, #checkout button {
-  width: 100%;
-  font-size: 30px;
-  color: #fff;
-  text-align: center;
-  height: 70px;
-  margin-bottom: 20px;
-  cursor: pointer;
-  border: none;
+@media only screen and (max-width: 667px){
+  .checkout_mobile_description_wrapper {
+    width: 61%;
+  }
+  #browse button, #checkout button {
+    font-size: 50px;
+    padding-top: 5px;
+  }
+  .checkout_subtotal_row {
+    height: 70px;
+  }
+  .subtotal_text span, .coupon_row span {
+    font-size: 30px;
+    top: 20px;
+  }
+  .coupon_input input, .coupon_input button {
+    height: 50px;
+  }
+  .coupon_input input, .coupon_input button {
+    margin-top: 10px;
+  }
+  .subtotal_price span {
+    font-size: 35px;
+    top: 15px;
+  }
 }
-#browse button {
-  background: #cd9e8f;
+@media only screen and (max-width: 568px){
+  .checkout_mobile_image_wrapper img {
+    width: 150px;
+  }
+  .checkout_mobile_item_wrapper {
+    height: 170px;
+  }
+  .checkout_mobile_image_wrapper {
+    width: 150px;
+  }
+  .checkout_mobile_description {
+    height: 130px;
+  }
+  .checkout_mobile_description_wrapper {
+    width: 65%;
+  }
+  .checkout_mobile_description .name, .price_mobile_wrapper .price span, .close_mobile_wrapper span {
+    font-size: 30px;
+  }
+  .checkout_mobile_description .logo_text {
+    font-size: 25px;
+  }
 }
-#browse button a {
-  color: #fff;
+@media only screen and (max-width: 414px){
+  .checkout_mobile_image_wrapper img, .checkout_mobile_image_wrapper {
+    width: 100px;
+  }
+  .checkout_mobile_image_wrapper {
+    padding-top: 10px;
+  }
+  .checkout_mobile_description .name, .price_mobile_wrapper .price span, .close_mobile_wrapper span {
+    font-size: 20px;
+  }
+  .checkout_mobile_item_wrapper {
+    height: 120px;
+  }
+  .checkout_mobile_description {
+    height: 90px;
+  }
+  .checkout_mobile_description .logo_text {
+    font-size: 20px;
+  }
+  .checkout_subtotal_row {
+    height: 50px;
+  }
+  .subtotal_text span, .coupon_row span {
+    font-size: 20px;
+    top: 15px;
+  }
+  .coupon_input input, .coupon_input button {
+    margin-top: 0;
+  }
+  .coupon_row, .coupon_input {
+    width: 45%;
+  }
+  .coupon_input {
+    width: 54%;
+    margin-left: 1px;
+    margin-top: 5px;
+  }
+  .coupon_input button {
+    font-size: 17px;
+    line-height: 25px;
+  }
+  .coupon_input input, .coupon_input button {
+    height: 40px;
+  }
+  .coupon_input input {
+    font-size: 30px;
+  }
+  .subtotal_price span {
+    font-size: 25px;
+    top: 10px;
+  }
+  #browse button, #checkout button {
+    font-size: 30px;
+    padding-top: 10px;
+    height: 50px;
+    margin-bottom: 10px;
+  }
+  .button_wrapper {
+    height: 110px;
 }
-#browse button a:hover {
-  color: #fff;
-  text-decoration: none;
+  }
+@media only screen and (max-width: 375px){
+  .coupon_input button {
+    font-size: 14px;
+  }
+  .subtotal_price span {
+    font-size: 22px;
+    top: 14px;
+  }
 }
-#checkout button {
-  background: #c8b65e;
+@media only screen and (max-width: 360px){
+  .checkout_mobile_description_wrapper {
+    width: 64%;
+  }
+  .subtotal_price span {
+    font-size: 20px;
+  }
 }
-#checkout_wrapper span {
-  font-family: Daun;
-}
-.tab-content > .active {
-  margin-top: 30px;
-}
-.coupon_input input {
-  height: 60px;
-  width: 67%;
-  margin-top: 5%;
-  font-family: Daun;
-  font-size: 40px;
-  text-align: center;
-  padding-top: 15px;
-}
-.coupon_input button {
-  background: #cd9e8f;
-  color: #fff;
-  font-size: 20px;
-  font-weight: 400;
-  line-height: 22px;
-  letter-spacing: normal;
-  text-transform: capitalize;
-  width: 28%;
-  height: 60px;
-  float: right;
-  margin-top: 5%;
-  margin-right: 3%;
-  border: 0;
-}
-.fade-enter-active, .fade-leave-active {
-  transition: opacity 1s;
-}
-.fade-enter, .fade-leave-to {
-  opacity: 0;
-}
-.subtotal_price span {
-  font-size: 50px;
-  position: relative;
-  top: 20px;
-}
-.subtotal_price {
-  width: 20%;
-  text-align: center;
+@media only screen and (max-width: 320px){
+  .checkout_mobile_description_wrapper {
+    width: 60%;
+  }
+  .checkout_mobile_description .name, .price_mobile_wrapper .price span, .close_mobile_wrapper span {
+    font-size: 16px;
+  }
+  .checkout_mobile_description .logo_text {
+    font-size: 14px;
+  }
+  .coupon_input button {
+    font-size: 12px;
+  }
+  .subtotal_price span {
+    font-size: 17px;
+  }
+  button, #checkout button, #browse button {
+    font-size: 25px;
+    padding-top: 6px;
+    height: 40px;
+  }
+  .button_wrapper {
+    height: 90px;
+  }
 }
 </style>

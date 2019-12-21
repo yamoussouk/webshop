@@ -72,70 +72,143 @@ export default {
 </script>
 
 <style scoped>
-.card-carousel {
-    user-select: none;
-    position: relative;
+@media only screen and (max-width: 1920px){
+  .card-carousel {
+      user-select: none;
+      position: relative;
+  }
+  .thumbnails {
+      display: flex;
+      justify-content: space-evenly;
+      flex-direction: row;
+  }
+  .thumbnail-image {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      padding: 2px;
+      height: 150px;
+      overflow: hidden;
+      margin-top: 10px;
+  }
+  .thumbnail-image > img {
+      width: 100%;
+      height: auto;
+      transition: all 250ms;
+  }
+  .thumbnail-image:hover > img,
+  .thumbnail-image.active > img {
+      opacity: 0.5;
+      box-shadow: 2px 2px 6px 1px rgba(0,0,0, 0.5);
+  }
+  .card-img {
+      position: relative;
+      margin-bottom: 15px;
+  }
+  .card-img > img {
+      display: block;
+      margin: 0 auto;
+  }
+  .actions {
+      font-size: 1.5em;
+      height: 40px;
+      position: absolute;
+      top: 50%;
+      margin-top: -20px;
+      width: 112%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: #585858;
+      left: -6%;
+  }
+  .actions > span {
+      cursor: pointer;
+      transition: all 250ms;
+      font-size: 45px;
+  }
+  .actions > span.prev {
+      margin-left: 5px;
+  }
+  .actions > span.next {
+      margin-right: 5px;
+  }
+  .actions > span:hover {
+      color: #eee;
+  }
+  #prev-arrow {
+      transform: rotate(90deg);
+  }
+  #next-arrow {
+      transform: rotate(270deg);
+  }
 }
-.thumbnails {
-    display: flex;
-    justify-content: space-evenly;
-    flex-direction: row;
+@media only screen and (max-width: 1112px){
+  .actions > span.next {
+    margin-right: -5px;
+  }
+  .actions > span.prev {
+    margin-left: -5px;
+  }
 }
-.thumbnail-image {
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    padding: 2px;
+@media only screen and (max-width: 834px){
+  .card-img > img {
+      width: 90%;
+  }
+  .thumbnail-image {
+    height: 100px;
+    margin-top: 5px;
+  }
 }
-.thumbnail-image > img {
-    width: 100%;
-    height: auto;
-    transition: all 250ms;
+@media only screen and (max-width: 812px){
+  .actions > span.prev {
+    margin-left: 0;
+  }
+  .actions > span.next {
+    margin-right: 0;
+  }
+  .thumbnail-image {
+    height: 50px;
+  }
 }
-.thumbnail-image:hover > img,
-.thumbnail-image.active > img {
-    opacity: 0.6;
-    box-shadow: 2px 2px 6px 1px rgba(0,0,0, 0.5);
+@media only screen and (max-width: 767px){
+  #next-arrow, #prev-arrow {
+    width: 70%;
+  }
+  .actions > span.prev {
+    margin-left: 10px;
+  }
 }
-.card-img {
-    position: relative;
-    margin-bottom: 15px;
+@media only screen and (max-width: 667px){
+  .thumbnail-image {
+    height: 45px;
+  }
 }
-.card-img > img {
-    display: block;
-    margin: 0 auto;
-}
-.actions {
-    font-size: 1.5em;
-    height: 40px;
-    position: absolute;
-    top: 50%;
-    margin-top: -20px;
-    width: 112%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    color: #585858;
-    left: -6%;
-}
-.actions > span {
-    cursor: pointer;
-    transition: all 250ms;
-    font-size: 45px;
-}
-.actions > span.prev {
-    margin-left: 5px;
-}
-.actions > span.next {
+@media only screen and (max-width: 568px){
+  .card-img > img {
+    width: 80%;
+  }
+  #next-arrow, #prev-arrow {
+    width: 70%;
+  }
+  .actions > span.prev {
+    margin-left: 10px;
+  }
+  .actions > span.next {
     margin-right: 5px;
+  }
 }
-.actions > span:hover {
-    color: #eee;
+@media only screen and (max-width: 414px){
+  .actions > span.next {
+    margin-right: 0px;
+  }
 }
-#prev-arrow {
-    transform: rotate(90deg);
-}
-#next-arrow {
-    transform: rotate(270deg);
+@media only screen and (max-width: 320px){
+  .actions > span.next {
+    margin-right: -5px;
+  }
+  .actions > span.prev {
+    margin-left: 5px;
+  }
 }
 </style>

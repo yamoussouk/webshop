@@ -25,12 +25,53 @@ export default {
 }
 </script>
 
-<style scoped>
-.cart_wrapper {
-    display: table-cell;
-    vertical-align: middle;
+<style>
+@media only screen and (max-width: 1920px){
+  .cart_wrapper {
+      display: table-cell;
+      vertical-align: middle;
+  }
+  .cartWithItem {
+      background-color: #cd9e8f;
+  }
 }
-.cartWithItem {
-    background-color: #cd9e8f;
+@media only screen and (max-width: 1440px){
+  .cartWithItem {
+    right: 0 !important;
+  }
+}
+@media only screen and (max-width: 1366px){
+}
+@media only screen and (max-width: 1112px){
+}
+@media only screen and (max-width: 1024px){
+  .cartWithItem {
+    width: 100%;
+  }
+}
+@media only screen and (max-width: 834px){
+}
+@media only screen and (max-width: 812px){
+}
+@media only screen and (max-width: 768px){
+  .header_cart_nav img {
+    padding-top: 3px;
+  }
+}
+@media only screen and (max-width: 767px){
+}
+@media only screen and (max-width: 737px){
+}
+@media only screen and (max-width: 667px){
+}
+@media only screen and (max-width: 568px){
+}
+@media only screen and (max-width: 414px){
+}
+@media only screen and (max-width: 375px){
+}
+@media only screen and (max-width: 360px){
+}
+@media only screen and (max-width: 320px){
 }
 </style>

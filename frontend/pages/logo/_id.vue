@@ -25,6 +25,7 @@
         <div ref="product_details" class="product_details">
           <p v-html="product.longDescription" />
         </div>
+        <button class="show_more_button" @click="toggle($event)">Show {{button_text}}</button>
       </div>
     </div>
   </div>
@@ -50,7 +51,8 @@ export default {
       id: parseInt(this.$route.params.id),
       cart: [],
       product: {},
-      logoText: ''
+      logoText: '',
+      button_text: 'more'
     }
   },
   async asyncData ({ params }) {
@@ -101,75 +103,50 @@ export default {
         this.add(product)
         this.$router.push('/checkout')
       }
+    },
+    toggle (e) {
+      if (this.button_text === 'more') {
+        this.$refs.product_details.style.height = 'auto'
+        this.$refs.product_details.style.overflow = 'auto'
+        this.button_text = this.button_text === 'more' ? 'less' : 'more'
+      } else {
+        this.$refs.product_details.style.height = '400px'
+        this.$refs.product_details.style.overflow = 'hidden'
+        this.button_text = this.button_text === 'more' ? 'less' : 'more'
+      }
     }
   }
 }
 </script>
 
 <style>
-.product_wrapper {
-    margin-bottom: 2%;
-}
-.product_image_wrapper {
-    width: 50%;
-    float: left;
-}
-.summary {
-    width: 44%;
-    margin-right: 1%;
-    margin-left: 2%;
-    float: right;
-    clear: none;
-}
-.product_details {
-    background-color: #fff;
-}
-.product_images {
-    width: 93%;
-    height: auto;
-    margin-left: 7%;
-}
-.product_price {
-    color: #000;
-    font-family: Daun;
-    font-size: 90px;
-    width: 100%;
-    background-color: #fff;
-    line-height: 120px;
-    text-align: center;
-    height: 100px;
-    margin-top: 5%;
-}
-.product_add_to_cart_button, .product_quick_buy_button {
-    width: 100%;
-    height: 100px;
-    background-color: rgb(205, 158, 143);
-    color: #fff;
-    font-family: Daun;
-    font-size: 90px;
-    margin-bottom: 0px;
-    border: none;
-}
-.product_add_to_cart_button {
-    margin-bottom: 3%;
-}
-.summary .product_details p span {
-    font-family: Daun;
-    font-size: 40px;
-    color: #000;
-    padding-left: 5%;
-    padding-right: 5%;
-    line-height: 55px;
-    display: inline-block;
-}
-.product-attributes {
-    padding-top: 2%;
-    padding-bottom: 3%;
-}
-.card-img > img {
-    width: 100%;
-}
-.product-attributes .logo_text {
+@media only screen and (max-width: 1920px){
+  .product_wrapper {
+      margin-bottom: 2%;
+  }
+  .product_image_wrapper {
+      width: 50%;
+      float: left;
+  }
+  .summary {
+      width: 44%;
+      margin-right: 1%;
+      margin-left: 2%;
+      float: right;
+      clear: none;
+  }
+  .product_details {
+      background-color: #fff;
+  }
+  .summary .product_details > p > p:nth-child(1) {
+    padding-top: 25px;
+  }
+  .product_images {
+      width: 93%;
+      height: auto;
+      margin-left: 7%;
+  }
+  .product_price {
       color: #000;
       font-family: Daun;
       font-size: 90px;
@@ -178,8 +155,252 @@ export default {
       line-height: 120px;
       text-align: center;
       height: 100px;
-      margin-top: 1%;
+      margin-top: 5%;
+  }
+  .product_add_to_cart_button, .product_quick_buy_button {
+      width: 100%;
+      height: 100px;
+      background-color: rgb(205, 158, 143);
+      color: #fff;
+      font-family: Daun;
+      font-size: 90px;
+      margin-bottom: 0px;
       border: none;
-      padding-top: 30px;
+  }
+  .product_add_to_cart_button {
+      margin-bottom: 3%;
+  }
+  .summary .product_details p span {
+      font-family: Daun;
+      font-size: 40px;
+      color: #000;
+      padding-left: 5%;
+      padding-right: 5%;
+      line-height: 55px;
+      display: inline-block;
+  }
+  .product-attributes {
+      padding-top: 2%;
+      padding-bottom: 3%;
+  }
+  .card-img > img {
+      width: 100%;
+  }
+  .product-attributes .logo_text {
+        color: #000;
+        font-family: Daun;
+        font-size: 90px;
+        width: 100%;
+        background-color: #fff;
+        line-height: 120px;
+        text-align: center;
+        height: 100px;
+        margin-top: 1%;
+        border: none;
+        padding-top: 30px;
+  }
+  .show_more_button {
+    display: none;
+  }
+}
+@media only screen and (max-width: 1680px){
+}
+@media only screen and (max-width: 1600px){
+  .product_price {
+    font-size: 80px;
+    line-height: 130px;
+  }
+  .product-attributes .logo_text {
+    font-size: 80px;
+  }
+  .product_add_to_cart_button, .product_quick_buy_button {
+    font-size: 80px;
+  }
+}
+@media only screen and (max-width: 1440px){
+}
+@media only screen and (max-width: 1366px){
+  .product_price {
+    font-size: 70px;
+    line-height: 120px;
+    height: 90px;
+  }
+  .product-attributes .logo_text {
+    font-size: 70px;
+    height: 90px;
+  }
+  .product_add_to_cart_button, .product_quick_buy_button {
+    font-size: 70px;
+    height: 90px;
+    line-height: 120px;
+  }
+  .summary .product_details p span {
+    font-size: 35px;
+    line-height: 50px;
+  }
+}
+@media only screen and (max-width: 1112px){
+  .summary .product_details p span {
+    padding-right: 3%;
+  }
+  .product_add_to_cart_button, .product_quick_buy_button {
+    font-size: 65px;
+    height: 85px;
+    line-height: 115px;
+  }
+  .product_price {
+    font-size: 65px;
+    line-height: 115px;
+    height: 85px;
+  }
+  .product-attributes .logo_text {
+    font-size: 65px;
+    height: 85px;
+  }
+}
+@media only screen and (max-width: 1024px){
+  .product_price {
+    font-size: 60px;
+    line-height: 100px;
+    height: 75px;
+  }
+  .product-attributes .logo_text {
+    font-size: 60px;
+    height: 75px;
+  }
+  .product_add_to_cart_button, .product_quick_buy_button {
+    font-size: 60px;
+    height: 75px;
+    line-height: 100px;
+  }
+  .summary .product_details p span {
+    line-height: 40px;
+  }
+}
+@media only screen and (max-width: 834px){
+}
+@media only screen and (max-width: 812px){
+  .product_wrapper {
+    margin-top: 2%;
+  }
+  .summary .product_details p span {
+    font-size: 30px;
+  }
+  .product_price {
+    font-size: 50px;
+    line-height: 90px;
+    height: 65px;
+  }
+  .product-attributes .logo_text {
+    font-size: 50px;
+    height: 65px;
+    padding-top: 20px;
+  }
+  .product_add_to_cart_button, .product_quick_buy_button {
+    font-size: 50px;
+    height: 65px;
+    line-height: 85px;
+  }
+}
+@media only screen and (max-width: 768px){
+  .product_image_wrapper {
+    width: 60%;
+  }
+  .summary {
+    width: 34%;
+  }
+  .show_more_button {
+    display: block;
+    font-size: 30px;
+    height: 35px;
+    line-height: 38px;
+    background-color: rgb(205, 158, 143);
+    color: #fff;
+    font-family: Daun;
+    width: 100%;
+    border: 0;
+  }
+  .product_details {
+    height: 400px;
+    overflow: hidden;
+  }
+  .summary {
+    margin-bottom: 20px;
+  }
+}
+@media only screen and (max-width: 767px){
+  .summary .product_details p span {
+    line-height: 30px;
+    font-size: 25px;
+  }
+  .show_more_button {
+    line-height: 45px;
+  }
+}
+@media only screen and (max-width: 737px){
+}
+@media only screen and (max-width: 667px){
+  .product_price {
+    font-size: 40px;
+    line-height: 75px;
+    height: 55px;
+  }
+  .product-attributes .logo_text {
+    font-size: 40px;
+    height: 55px;
+  }
+  .product_add_to_cart_button, .product_quick_buy_button {
+    font-size: 40px;
+    height: 55px;
+    line-height: 70px;
+  }
+}
+@media only screen and (max-width: 568px){
+  .product_price {
+    font-size: 30px;
+    line-height: 60px;
+    height: 45px;
+  }
+  .product-attributes .logo_text {
+    font-size: 30px;
+    height: 45px;
+    padding-top: 15px;
+  }
+  .product_add_to_cart_button, .product_quick_buy_button {
+    font-size: 30px;
+    height: 45px;
+    line-height: 55px;
+  }
+  .summary .product_details p span {
+    line-height: 25px;
+    font-size: 22px;
+  }
+}
+@media only screen and (max-width: 414px){
+  .show_more_button {
+    font-size: 25px;
+    line-height: 42px;
+  }
+}
+@media only screen and (max-width: 375px){
+  .product_price {
+    font-size: 25px;
+    line-height: 45px;
+    height: 35px;
+  }
+  .product-attributes .logo_text {
+    font-size: 25px;
+    height: 35px;
+    padding-top: 10px;
+  }
+  .product_add_to_cart_button, .product_quick_buy_button {
+    font-size: 25px;
+    height: 35px;
+    line-height: 42px;
+  }
+}
+@media only screen and (max-width: 360px){
+}
+@media only screen and (max-width: 320px){
 }
 </style>

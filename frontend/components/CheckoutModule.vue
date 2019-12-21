@@ -26,6 +26,7 @@
               :result.sync="result"/>
             </b-tab>
             <b-tab title="Card">
+              <!-- TODO: finish card payment -->
               <card />
             </b-tab>
           </b-tabs>
@@ -69,8 +70,8 @@ export default {
         color: 'gold'
       },
       credentials: {
-        sandbox: '<insert your credentials>',
-        production: '<insert your credentials>'
+        sandbox: 'AdDukx8SFl44xfK8-kMT56vYjV_7eVWpUz7oiICL-fvixm5b1yk_7LNTjCJ-R8IjibZsjefjjKY4lBhy',
+        production: 'AdDukx8SFl44xfK8-kMT56vYjV_7eVWpUz7oiICL-fvixm5b1yk_7LNTjCJ-R8IjibZsjefjjKY4lBhy'
       },
       validatedEmail: false,
       result: ''
