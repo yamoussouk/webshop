@@ -102,77 +102,79 @@ export default {
 </script>
 
 <style scoped>
-.shop_aside {
-    width: 31.333%;
-    float: left;
-}
-.shop_inner {
-    width: 64.666%;
-    float: left;
-}
-.product {
-    width: 28%;
-    background-color: #fff;
-    -webkit-box-shadow: 0px 0px 7px 0px rgba(0,0,0,0.75);
-    -moz-box-shadow: 0px 0px 7px 0px rgba(0,0,0,0.75);
-    box-shadow: 0px 0px 7px 0px rgba(0,0,0,0.75);
-    margin: 0 2% 40px!important;
-    float: left;
-    list-style: none;
-    height: 340px;
-    overflow-x: hidden;
-}
-.product:hover {
-    transition: all 1s;
-    transform: scale(1.02);
-}
-.image_frame {
-    border-color: #fff;
-    position: relative;
-    display: block;
-    margin: 0;
-    border-width: 8px;
-    border-style: solid;
-    max-width: 100%;
-    line-height: 0;
-}
-.image_wrapper {
-    width: 95%;
-    margin: 2.5%;
-    border-color: #e2e2e2;
-}
-.image_wrapper a {
-    font-family: Meownella;
-    font-size: 28px;
-    font-weight: bold;
-    text-decoration: none;
-    display: block;
-}
-.image_wrapper img {
-    width: 100%;
-}
-.desc {
-    padding: 5px 5px 0px 5px;
-    background: #fff;
-}
-.desc h4 {
-    text-align: center;
-    margin-bottom: 0px;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
-}
-.desc h4 a {
-    font-family: Daun;
-    font-size: 38px;
-    color: #000;
-}
-.desc .price {
-    text-align: center;
-    color: #8f9194;
-    font-family: Daun;
-    font-size: 40px;
-    margin-bottom: 1%;
-    margin-top: -4%;
+@media only screen and (max-width: 2560px){
+  .shop_aside {
+      width: 31.333%;
+      float: left;
+  }
+  .shop_inner {
+      width: 64.666%;
+      float: left;
+  }
+  .product {
+      width: 28%;
+      background-color: #fff;
+      -webkit-box-shadow: 0px 0px 7px 0px rgba(0,0,0,0.75);
+      -moz-box-shadow: 0px 0px 7px 0px rgba(0,0,0,0.75);
+      box-shadow: 0px 0px 7px 0px rgba(0,0,0,0.75);
+      margin: 0 2% 40px!important;
+      float: left;
+      list-style: none;
+      height: 340px;
+      overflow-x: hidden;
+  }
+  .product:hover {
+      transition: all 1s;
+      transform: scale(1.02);
+  }
+  .image_frame {
+      border-color: #fff;
+      position: relative;
+      display: block;
+      margin: 0;
+      border-width: 8px;
+      border-style: solid;
+      max-width: 100%;
+      line-height: 0;
+  }
+  .image_wrapper {
+      width: 95%;
+      margin: 2.5%;
+      border-color: #e2e2e2;
+  }
+  .image_wrapper a {
+      font-family: Meownella;
+      font-size: 28px;
+      font-weight: bold;
+      text-decoration: none;
+      display: block;
+  }
+  .image_wrapper img {
+      width: 100%;
+  }
+  .desc {
+      padding: 5px 5px 0px 5px;
+      background: #fff;
+  }
+  .desc h4 {
+      text-align: center;
+      margin-bottom: 0px;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+  }
+  .desc h4 a {
+      font-family: Daun;
+      font-size: 38px;
+      color: #000;
+  }
+  .desc .price {
+      text-align: center;
+      color: #8f9194;
+      font-family: Daun;
+      font-size: 40px;
+      margin-bottom: 1%;
+      margin-top: -4%;
+  }
 }
 </style>

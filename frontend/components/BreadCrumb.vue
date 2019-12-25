@@ -32,6 +32,77 @@ export default {
 </script>
 
 <style>
+@media only screen and (max-width: 2560px){
+  .custom_breadcrumb {
+      background-color: #fff;
+      height: 120px;
+      margin-bottom: 2%;
+  }
+  .custom_breadcrumb .back_button {
+      width: 25%;
+      position: absolute;
+      background-color: #fff;
+      height: 120px;
+      z-index: 998;
+      color: #000;
+  }
+  .custom_breadcrumb .button_wrapper {
+      float: left;
+      display: table;
+      height: 120px;
+      width: 50%;
+  }
+  .custom_breadcrumb .back_button a {
+      height: 120px;
+      width: 100%;
+      color: #000;
+      display: block;
+  }
+  .custom_breadcrumb .back_button a:hover {
+      cursor: pointer;
+  }
+  .custom_breadcrumb .back_button a .wrapper {
+      float: left;
+      width: 19%;
+      padding-left: 30%;
+      margin: auto;
+      display: table;
+      height: 120px;
+  }
+  .custom_breadcrumb .back_button img {
+      display: table-cell;
+      vertical-align: middle;
+      margin: auto;
+      padding-top: 40%;
+  }
+  .custom_breadcrumb .back_button span {
+      font-family: Daun;
+      font-size: 60px;
+      display: table-cell;
+      vertical-align: middle;
+      position: relative;
+      padding-left: 10%;
+      padding-top: 25px;
+  }
+  .bc_text {
+      width: 100%;
+      background-color: #fff;
+      float: left;
+      display: table;
+      height: 120px;
+      text-align: center;
+  }
+  .bc_text h1 {
+      font-family: Daun;
+      font-size: 60px;
+      text-transform: uppercase;
+      letter-spacing: 6px;
+      position: relative;
+      display: table-cell;
+      vertical-align: middle;
+      padding-top: 25px;
+  }
+}
 @media only screen and (max-width: 1920px){
   .custom_breadcrumb {
       background-color: #fff;
@@ -173,14 +244,17 @@ export default {
   .custom_breadcrumb .back_button a {
     height: 0;
   }
-}
-@media only screen and (max-width: 834px){
+  .custom_breadcrumb .button_wrapper {
+    display: none;
+  }
   .custom_breadcrumb .back_button {
-    width: 22%;
+    width: 5%;
   }
   .custom_breadcrumb .back_button a .wrapper {
-    padding-left: 25%;
+    padding-left: 30px;
   }
+}
+@media only screen and (max-width: 834px){
   .custom_breadcrumb .back_button img {
     padding-top: 35%;
   }
@@ -245,13 +319,16 @@ export default {
   }
   .custom_breadcrumb .back_button img {
     width: 30px;
-    padding-top: 70%;
+    padding-top: 73%;
   }
   .custom_breadcrumb .back_button span {
     padding-top: 10px;
   }
   .bc_text h1 {
     padding-top: 10px;
+  }
+  .custom_breadcrumb .back_button {
+    width: 10%;
   }
 }
 @media only screen and (max-width: 414px){
@@ -263,6 +340,14 @@ export default {
   }
   .custom_breadcrumb .back_button {
     width: 10%;
+  }
+  .bc_text h1, .custom_breadcrumb .back_button span {
+    font-size: 17px;
+  }
+}
+@media only screen and (max-width: 384px){
+  .bc_text h1 {
+    letter-spacing: 4px;
   }
 }
 @media only screen and (max-width: 375px){

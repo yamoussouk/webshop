@@ -69,6 +69,65 @@ export default {
 }
 </script>
 <style>
+@media only screen and (max-width: 2560px){
+  .sign_up_form {
+      max-width: 1140px;
+      text-align: center;
+      margin: 0 auto;
+      padding-top: 3%;
+  }
+  .sign_up_form h1 {
+      font-family: Daun;
+      font-size: 60px;
+      color: #000;
+      margin-bottom: 5%;
+      letter-spacing: 6px;
+  }
+  form input {
+      width: 65%;
+      float: left;
+      height: 80px;
+      font-family: Daun;
+      font-size: 60px;
+      color: #bcbec0;
+      font-style: italic;
+      border-radius: 10px;
+      border-color: #000;
+      letter-spacing: 3px;
+      padding: 25px 0 0 20px;
+  }
+  form input::placeholder {
+    color: #F0F0F0;
+  }
+  .emaillist form button {
+      background-color: rgba(31,89,97, 0.77);
+      color: #fff;
+      width: 264px;
+      font-size: 60px;
+      font-family: Daun;
+      height: 80px;
+      opacity: 0.77;
+      line-height: 95px;
+      border-radius: 10px;
+      letter-spacing: 3px;
+      width: 30%;
+      border: none;
+  }
+  .emaillist_error, .emaillist_answer {
+      text-align: left;
+      font-size: 20px;
+      margin-top: 1%;
+  }
+  .emaillist_error b, .emaillist_answer b {
+      float: left;
+  }
+  .emaillist_error ul, .emaillist_answer ul {
+      list-style: none;
+      padding: 0;
+      margin-left: 2%;
+      float: left;
+  }
+}
 @media only screen and (max-width: 1920px){
   .sign_up_form {
       max-width: 1140px;

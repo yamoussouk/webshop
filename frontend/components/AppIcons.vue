@@ -21,6 +21,15 @@
 </template>
 
 <style scoped>
+@media only screen and (max-width: 2560px){
+  .app-icons {
+      text-align: center;
+      margin-top: 3%;
+  }
+  .app-icons .icon {
+      margin-right: 2%;
+  }
+}
 @media only screen and (max-width: 1920px){
   .app-icons {
       text-align: center;
@@ -39,6 +48,17 @@
   }
   .icon:nth-child(2) img {
     width: 3.5vh;
+  }
+}
+@media (max-height: 2688px) and (max-width: 1242px) {
+  .icon:nth-child(1) img {
+    width: 3.5%;
+  }
+  .icon:nth-child(2) img {
+    width: 4.3%;
+  }
+  .icon img {
+    width: 5%;
   }
 }
 @media only screen and (max-width: 812px){

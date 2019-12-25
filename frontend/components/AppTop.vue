@@ -67,6 +67,91 @@ export default {
 }
 </script>
 <style>
+@media only screen and (max-width: 2560px){
+  .header_banner {
+      height: 240px;
+      margin-top: 70px;
+      background-color: #fff;
+  }
+  .header_banner_icons, .header_banner_icons_mobile {
+      float: left;
+      width: 20%;
+      height: 240px;
+      padding-top: 2%;
+  }
+  .header_banner_icon {
+      text-decoration: none;
+      margin: 0 2%;
+      cursor: pointer;
+  }
+  .header_banner_icon:nth-child(1) {
+      margin-left: 10%;
+  }
+  .header_banner_text {
+      float: left;
+      width: 60%;
+      height: 240px;
+  }
+  .header_banner_text_top {
+      font-size: 100px;
+      text-align: center;
+      font-family: Monoline;
+      width: 100%;
+      float: left;
+      margin-bottom: -15px;
+      margin-top: 20px;
+      color: #393839;
+  }
+  .header_banner_text_bottom {
+      font-size: 53px;
+      font-family: Daun;
+      text-align: center;
+      float: left;
+      color: #7d7e81;
+      width: 100%;
+  }
+  .header_cart {
+      float: left;
+      width: 20%;
+      height: 240px;
+      padding-top: 2%;
+  }
+  .header_cart > div {
+      height: 240px;
+      width: 100%;
+  }
+  .header_cart a {
+      display: table;
+  }
+  .header_cart a img {
+      position: relative;
+      bottom: 0px;
+      left: 30px;
+      width: 90%;
+  }
+  .header_cart a span {
+      font-size: 50px;
+      font-family: Daun;
+      display: table-cell;
+      position: relative;
+      top: 10px;
+      color: #fff;
+      left: 20px;
+  }
+  .cart-wrapper a {
+      float: right;
+      position: relative;
+      right: 0px;
+      padding-right: 15%;
+      height: 75px;
+  }
+  .cart-wrapper a:hover {
+    text-decoration: none;
+  }
+  .header_banner_icons_mobile {
+    display: none;
+  }
+}
 @media only screen and (max-width: 1920px){
   .header_banner {
       height: 240px;
@@ -157,9 +242,19 @@ export default {
     font-size: 51px;
   }
 }
+@media (max-height: 2224px) and (max-width: 1668px) {
+  .header_banner_text_bottom {
+    font-size: 50px;
+  }
+}
 @media only screen and (max-width: 1600px){
   .header_banner_text_bottom {
     font-size: 48px;
+  }
+}
+@media only screen and (max-width: 1536px){
+  .header_banner_text_bottom {
+    font-size: 46px;
   }
 }
 @media only screen and (max-width: 1440px){
@@ -193,6 +288,25 @@ export default {
   }
   .header_banner_icon:nth-child(2) img {
     width: 3.5vh;
+  }
+}
+@media (max-height: 2688px) and (max-width: 1242px) {
+  .header_banner_icon:nth-child(1) img {
+    width: 12%;
+  }
+  .header_banner_icon:nth-child(2) img {
+    width: 13.5%;
+  }
+  .header_banner_icon img {
+    width: 14.9%;
+  }
+  .header_banner_text_bottom {
+    font-size: 37px;
+  }
+}
+@media (max-height: 2436px) and (max-width: 1125px) {
+  .header_banner_text_bottom {
+    font-size: 34px;
   }
 }
 @media only screen and (max-width: 1112px){
@@ -238,6 +352,15 @@ export default {
   }
   .header_banner {
     margin-top: 20px;
+  }
+  .header_banner_icon:nth-child(1) img {
+    width: 2.5%;
+  }
+  .header_banner_icon:nth-child(2) img {
+    width: 3%;
+  }
+  .header_banner_icon img {
+    width: 3.5%;
   }
 }
 @media only screen and (max-width: 812px){
@@ -310,6 +433,11 @@ export default {
   }
   .header_banner_icon img {
     width: 4%;
+  }
+}
+@media only screen and (max-width: 384px){
+  .header_banner_text_bottom {
+    font-size: 17px;
   }
 }
 @media only screen and (max-width: 375px){

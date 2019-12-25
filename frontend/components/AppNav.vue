@@ -103,7 +103,57 @@ export default {
 </script>
 
 <style>
-@media only screen and (max-width: 19200px){
+@media only screen and (max-width: 2560px){
+  .menu_wrapper {
+      width: 100%;
+      text-align: center;
+      clear: both;
+      line-height: 0;
+      height: 70px;
+      margin-top: 50px;
+      background-color: rgba(228,214,206,0.88);
+  }
+  .menu_wrapper div.inner {
+      width: 70%;
+      margin-left: 15%;
+  }
+  .menu_wrapper ul {
+      list-style: none outside;
+      height: 70px;
+      margin-bottom: 0;
+  }
+  .menu_wrapper ul li {
+      float: left;
+      position: relative;
+      display: block;
+      height: 70px;
+      display: table;
+  }
+  .menu_wrapper ul li a {
+      color: #000;
+      padding: 0 100px;
+      font-family: Daun;
+      height: 70px;
+      display: table-cell;
+      vertical-align: middle;
+  }
+  .menu_wrapper ul li a span {
+      position: relative;
+      top: 8px;
+      font-size: 40px;
+      letter-spacing: 6px;
+  }
+  .menu_wrapper ul li a:hover {
+      text-decoration: none;
+  }
+  li a.nuxt-link-active {
+      background-color: rgba(255,255,255,0.4);
+  }
+  .inner_mobile {
+    display: none;
+  }
+}
+@media only screen and (max-width: 1920px){
   .menu_wrapper {
       width: 100%;
       text-align: center;
@@ -158,9 +208,19 @@ export default {
     padding: 0 38px;
   }
 }
+@media (max-height: 2224px) and (max-width: 1668px) {
+  .menu_wrapper ul li a {
+    padding: 0 37px;
+  }
+}
 @media only screen and (max-width: 1600px){
   .menu_wrapper ul li a span {
     font-size: 35px;
+  }
+}
+@media only screen and (max-width: 1536px){
+  .menu_wrapper ul li a {
+    padding: 0 35px;
   }
 }
 @media only screen and (max-width: 1440px){
@@ -177,6 +237,21 @@ export default {
 @media only screen and (max-width: 1366px){
   .menu_wrapper ul li a span {
     font-size: 33px;
+  }
+}
+@media (max-height: 1024px) and (max-width: 1280px) {
+  .menu_wrapper ul li a {
+    padding: 0 20px;
+  }
+}
+@media (max-height: 2688px) and (max-width: 1242px) {
+  .menu_wrapper ul li a {
+    padding: 0 17px;
+  }
+}
+@media (max-height: 2436px) and (max-width: 1125px) {
+  .menu_wrapper ul li a {
+    padding: 0 9px;
   }
 }
 @media only screen and (max-width: 1112px){
@@ -338,6 +413,15 @@ export default {
   }
   .cart-wrapper a.cartWithItem span {
     top: 25px;
+  }
+  .app_logo img {
+    width: 80%;
+  }
+  .menu_wrapper ul li a, .menu_wrapper ul li {
+    height: 35px;
+  }
+  .menu_wrapper ul li a span {
+    font-size: 25px;
   }
 }
 @media only screen and (max-width: 768px){

@@ -106,6 +106,101 @@ export default {
 </script>
 
 <style scoped>
+@media only screen and (max-width: 2560px){
+  .sidebar_top {
+      margin-bottom: 10%;
+      padding-bottom: 5%;
+      background-color: #fff;
+  }
+  .sidebar_search {
+      margin-left: 4%;
+      padding-top: 9%;
+  }
+  .search_with_icon span {
+      float: left;
+      margin-right: 3%;
+  }
+  .search_with_icon span img {
+      padding-top: 5px;
+  }
+  #product_search_field {
+      width: 78% !important;
+      height: 60px;
+      border-radius: 10px;
+      font-family: Daun !important;
+      font-size: 45px;
+      padding: 20px 0 0 10px;
+      border: 1px solid #000;
+  }
+  .sidebar_categories {
+      margin-bottom: 10%;
+  }
+  .sidebar_categories ul {
+      padding-top: 5%;
+      list-style: none;
+      padding-left: 0;
+  }
+  .sidebar_categories ul li {
+      color: #000;
+      font-family: Daun;
+      font-size: 50px;
+      letter-spacing: 3px;
+      padding-left: 15%;
+      padding-top: 3%;
+  }
+  .contact_me_wrapper {
+      border: 1px solid #000;
+      border-radius: 10px;
+      width: 70%;
+      margin-left: 15%;
+      display: table;
+  }
+  .contact_me_wrapper img {
+      float: left;
+      position: relative;
+      left: 80px;
+      top: 20px;
+  }
+  .contact_me_wrapper span {
+      color: #000;
+      font-family: Daun;
+      font-size: 50px;
+      letter-spacing: 3px;
+      display: table-cell;
+      vertical-align: middle;
+      text-align: center;
+      position: relative;
+      top: 5px;
+  }
+  .sidebar_bottom {
+      background-color: #fff;
+      padding-bottom: 10px;
+  }
+  .ratings {
+      padding-top: 10%;
+      text-align: center;
+  }
+  .ratings img {
+      margin-right: 2%;
+  }
+  .comments {
+      margin: 5% 10% 0 15%;
+  }
+  .comments p {
+      font-family: Daun;
+      font-size: 40px;
+      line-height: 40px;
+      text-align: justify;
+      margin-bottom: 8%;
+  }
+  .sidebar_categories ul li.active {
+    background-color: #cd9e8f;
+    color: #fff;
+  }
+  .sidebar_mobile {
+    display: none;
+  }
+}
 @media only screen and (max-width: 1920px){
   .sidebar_top {
       margin-bottom: 10%;
@@ -213,7 +308,7 @@ export default {
 }
 @media only screen and (max-width: 1440px){
   .sidebar_categories ul li {
-    font-size: 45px;
+    font-size: 40px;
   }
   .sidebar_categories ul li {
     padding-left: 17%;
@@ -259,7 +354,7 @@ export default {
 }
 @media only screen and (max-width: 1112px){
   .sidebar_categories ul li, .comments p {
-    font-size: 30px;
+    font-size: 28px;
   }
   .sidebar_categories ul li {
     padding-left: 21%;

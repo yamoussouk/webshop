@@ -200,6 +200,128 @@ export default {
 </script>
 
 <style scoped>
+@media only screen and (max-width: 2560px){
+  .checkout-page-wrapper {
+      margin-bottom: 3%;
+  }
+  .empty-cart div.order-result p {
+      text-align: center;
+      font-size: 40px;
+      font-family: Audrey;
+  }
+  .empty-cart div.order-result {
+      margin-bottom: 5%;
+  }
+  #checkout_wrapper {
+    width: 1440px;
+    margin: 0 auto 20px auto;
+  }
+  .checkout_row, .checkout_subtotal_row {
+    background: #fff;
+  }
+  .checkout_subtotal_row {
+    width: 100%;
+    height: 100px;
+  }
+  .checkout_row:nth-last-child(2) {
+    box-shadow: none;
+    padding-bottom: 20px;
+  }
+  .subtotal_text, .coupon_row {
+    width: 70%;
+    float: left;
+  }
+  .subtotal_text span, .coupon_row span {
+    font-size: 55px;
+    margin-left: 35%;
+    position: relative;
+    top: 20px;
+  }
+  .subtotal_price, .coupon_input {
+    float: left;
+    width: 30%;
+  }
+  .checkout_subtotal_row {
+    margin: 2% 0;
+  }
+  .button_wrapper {
+    width: 1440px;
+    height: 200px;
+    margin: 0 auto;
+  }
+  #browse button, #checkout button {
+    width: 100%;
+    font-size: 60px;
+    color: #fff;
+    text-align: center;
+    height: 70px;
+    margin-bottom: 20px;
+    cursor: pointer;
+    border: none;
+    font-family: Daun;
+  }
+  #browse button {
+    background: #cd9e8f;
+  }
+  #browse button a {
+    color: #fff;
+  }
+  #browse button a:hover {
+    color: #fff;
+    text-decoration: none;
+  }
+  #checkout button {
+    background: #c8b65e;
+  }
+  #checkout_wrapper span {
+    font-family: Daun;
+  }
+  .tab-content > .active {
+    margin-top: 30px;
+  }
+  .coupon_input input {
+    height: 60px;
+    width: 67%;
+    margin-top: 5%;
+    font-family: Daun;
+    font-size: 40px;
+    text-align: center;
+    padding-top: 15px;
+  }
+  .coupon_input button {
+    background: #cd9e8f;
+    color: #fff;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 22px;
+    letter-spacing: normal;
+    text-transform: capitalize;
+    width: 28%;
+    height: 60px;
+    float: right;
+    margin-top: 5%;
+    margin-right: 3%;
+    border: 0;
+  }
+  .fade-enter-active, .fade-leave-active {
+    transition: opacity 1s;
+  }
+  .fade-enter, .fade-leave-to {
+    opacity: 0;
+  }
+  .subtotal_price span {
+    font-size: 50px;
+    position: relative;
+    top: 20px;
+  }
+  .subtotal_price {
+    width: 20%;
+    text-align: center;
+  }
+  .checkout_table_mobile {
+    display: none;
+  }
+}
 @media only screen and (max-width: 1920px){
   .checkout-page-wrapper {
       margin-bottom: 3%;

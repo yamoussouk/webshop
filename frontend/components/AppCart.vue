@@ -26,6 +26,15 @@ export default {
 </script>
 
 <style>
+@media only screen and (max-width: 2560px){
+  .cart_wrapper {
+      display: table-cell;
+      vertical-align: middle;
+  }
+  .cartWithItem {
+      background-color: #cd9e8f;
+  }
+}
 @media only screen and (max-width: 1920px){
   .cart_wrapper {
       display: table-cell;

@@ -79,6 +79,86 @@
 </template>
 
 <style>
+@media only screen and (max-width: 2560px){
+  .main_section {
+      max-width: 100%;
+      margin: 0 auto;
+      margin-top: 2%;
+      height: 1328px;
+  }
+  .wrap {
+      padding: 0 5%;
+      width: 100%;
+      float: left;
+  }
+  .one-sixth {
+      width: 14.666%;
+      float: left;
+      margin: 0 1% 40px;
+  }
+  .full-width {
+      width: 100%;
+      margin: 0 1% 40px;
+  }
+  .column {
+      transition: all .4s ease-in-out;
+      text-align: left;
+  }
+  .anchor_box {
+      height: 375px;
+      width: 23%;
+  }
+  .left_align {
+      float: left;
+  }
+  .right_align {
+      float: right;
+  }
+  .text_wrapper {
+      text-align: center;
+      position: relative;
+      height: 375px;
+      display: table;
+      width: 90%;
+  }
+  .text_wrapper a {
+      font-size: 129px;
+      font-family: Monoline;
+      text-align: center;
+      color: #ffffff;
+      display: table-cell;
+      vertical-align: middle;
+  }
+  .text_wrapper a:hover {
+      text-decoration: none;
+  }
+  .text_wrapper:hover {
+      opacity: 0.5;
+  }
+  .left_box {
+      margin-right: 2%;
+      float: left;
+  }
+  .left-image {
+      margin-right: 2%;
+  }
+  .right_box {
+    margin-right: 1.4%;
+    float: right;
+  }
+  .right-image {
+      margin-right: 2%;
+  }
+  .shop-image {
+      width: 23%;
+  }
+  .left-image.shop-image:nth-child(4) {
+      margin-right: 0;
+  }
+  .right-image.shop-image:nth-child(3) {
+      margin-right: 0;
+  }
+}
 @media only screen and (max-width: 1920px){
   .main_section {
       max-width: 100%;
@@ -105,7 +185,7 @@
       text-align: left;
   }
   .anchor_box {
-      height: 290px;
+      height: 282px;
       width: 23%;
   }
   .left_align {
@@ -117,7 +197,7 @@
   .text_wrapper {
       text-align: center;
       position: relative;
-      height: 290px;
+      height: 282px;
       display: table;
       width: 90%;
   }

@@ -108,7 +108,7 @@ export default {
       this.form.files.push(imageFile)
     },
     addNew () {
-      this.form.categories('Printable Planners')
+      this.form.categories.push('Printable Planners')
       const formObject = {
         'id': 0,
         'name': this.form.name,

@@ -107,62 +107,64 @@ export default {
 </script>
 
 <style>
-#email_continue {
-  background: #222;
-  display: block;
-  color: #fff;
-  font-size: 30px;
-  font-weight: 400;
-  line-height: 22px;
-  letter-spacing: normal;
-  text-transform: capitalize;
-  width: 100%;
-  height: 60px;
-}
-.checkout_info {
-  width: 1440px;
-  margin: 0 auto;
-}
-.checkout_info .left, .checkout_info .right {
-  width: 50%;
-  float: left;
-}
-.checkout_info .left span {
-  font-size: 35px;
-}
-.checkout_info .left .checkout_info_message {
-  float: left;
-  width: 100%;
-  padding: 20px 0 40px 0;
-}
-.checkout_info .left .checkout_info_header {
-  font-weight: bold;
-  width: 50%;
-}
-.checkout_info .left .edit_button {
-  width: 50%;
-  float: right;
-  text-align: right;
-  cursor: pointer;
-}
-.checkout_info .left .email input {
-  height: 80px;
-  width: 100%;
-  font-size: 60px;
-  border: 1px solid #000;
-  font-family: Daun;
-  padding: 25px 0 0 20px;
-}
-.checkout_info .left .email, .checkout_info .left .payment {
-  padding: 20px;
-  margin-bottom: 30px;
-  background: #fff;
-}
-.nav-tabs .nav-link {
-  font-size: 40px;
-  font-family: Daun;
-}
-.tab-content {
-  margin-top: 40px;
+@media only screen and (max-width: 2560px){
+  #email_continue {
+    background: #222;
+    display: block;
+    color: #fff;
+    font-size: 30px;
+    font-weight: 400;
+    line-height: 22px;
+    letter-spacing: normal;
+    text-transform: capitalize;
+    width: 100%;
+    height: 60px;
+  }
+  .checkout_info {
+    width: 1440px;
+    margin: 0 auto;
+  }
+  .checkout_info .left, .checkout_info .right {
+    width: 50%;
+    float: left;
+  }
+  .checkout_info .left span {
+    font-size: 35px;
+  }
+  .checkout_info .left .checkout_info_message {
+    float: left;
+    width: 100%;
+    padding: 20px 0 40px 0;
+  }
+  .checkout_info .left .checkout_info_header {
+    font-weight: bold;
+    width: 50%;
+  }
+  .checkout_info .left .edit_button {
+    width: 50%;
+    float: right;
+    text-align: right;
+    cursor: pointer;
+  }
+  .checkout_info .left .email input {
+    height: 80px;
+    width: 100%;
+    font-size: 60px;
+    border: 1px solid #000;
+    font-family: Daun;
+    padding: 25px 0 0 20px;
+  }
+  .checkout_info .left .email, .checkout_info .left .payment {
+    padding: 20px;
+    margin-bottom: 30px;
+    background: #fff;
+  }
+  .nav-tabs .nav-link {
+    font-size: 40px;
+    font-family: Daun;
+  }
+  .tab-content {
+    margin-top: 40px;
+  }
 }
 </style>

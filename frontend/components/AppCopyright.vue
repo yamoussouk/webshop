@@ -7,6 +7,19 @@
 </template>
 
 <style>
+@media only screen and (max-width: 2560px){
+  .app_copyright {
+      margin: 0 auto;
+      text-align: center;
+  }
+  .copyright {
+      color: #696a6d;
+      text-align: center;
+      float: none;
+      font-size: 50px;
+      font-family: Daun;
+  }
+}
 @media only screen and (max-width: 1920px){
   .app_copyright {
       margin: 0 auto;
