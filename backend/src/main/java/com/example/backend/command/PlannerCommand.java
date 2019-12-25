@@ -4,6 +4,7 @@ import com.example.backend.model.Category;
 import com.example.backend.command.ImageCommand;
 
 import java.util.Set;
+import java.util.List;
 
 public class PlannerCommand {
 
@@ -14,7 +15,7 @@ public class PlannerCommand {
     private double price;
     private Set<Category> category;
     private Set<String> categories;
-    private Set<ImageCommand> image;
+    private List<ImageCommand> image;
     private int quantity;
     private int enabled;
     private String downloadLink;
@@ -88,11 +89,11 @@ public class PlannerCommand {
         return this.categories;
     }
 
-    public Set<ImageCommand> getImage() {
+    public List<ImageCommand> getImage() {
         return image;
     }
 
-    public void setImage(Set<ImageCommand> image) {
+    public void setImage(List<ImageCommand> image) {
         this.image = image;
     }
 

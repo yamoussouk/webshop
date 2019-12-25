@@ -1,7 +1,9 @@
 package com.example.backend.model;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -55,7 +57,7 @@ public class Product {
     //@OneToMany(mappedBy = "product", orphanRemoval = true, cascade = CascadeType.PERSIST)
     //@JsonManagedReference
     @JsonBackReference
-    private Set<Image> images = new HashSet<>();
+    private List<Image> images = new ArrayList<>();
 
     public void setImage(Image image) {
         this.images.add(image);
@@ -130,11 +132,11 @@ public class Product {
         this.category = category;
     }
 
-    public Set<Image> getImages() {
+    public List<Image> getImages() {
         return images;
     }
 
-    public void setImages(Set<Image> images) {
+    public void setImages(List<Image> images) {
         this.images = images;
     }
 

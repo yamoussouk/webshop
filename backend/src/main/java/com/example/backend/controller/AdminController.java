@@ -80,7 +80,7 @@ public class AdminController {
     @PostMapping("/admin/add/new/planner")
     public void addNewPlanner(@RequestParam("product") String product, @RequestParam("imagefile") MultipartFile[] file) {
         Planner p = mapPlannerDto(product, null);
-        Set<Image> fileSet = new HashSet<Image>();
+        List<Image> fileSet = new ArrayList<Image>();
         for (MultipartFile i : file) {
             Image img = imageService.saveImageFile(p.getId(), i);
             fileSet.add(img);
@@ -92,7 +92,7 @@ public class AdminController {
     @PostMapping("/admin/add/new/logo")
     public void addNewLogo(@RequestParam("product") String product, @RequestParam("imagefile") MultipartFile[] file) {
         Logo p = mapLogoDto(product, null);
-        Set<Image> fileSet = new HashSet<Image>();
+        List<Image> fileSet = new ArrayList<Image>();
         for (MultipartFile i : file) {
             Image img = imageService.saveImageFile(p.getId(), i);
             fileSet.add(img);
@@ -204,7 +204,7 @@ public class AdminController {
         p.setDownloadLink(dto.getDownloadLink());
         p.setEnabled(dto.getEnabled());
         p.setCategory(getCategories(dto.getCategories()));
-        Set<Image> i = plannerImagesLeft(dto.getId(), removed);
+        List<Image> i = plannerImagesLeft(dto.getId(), removed);
         p.setImages(i);
         return p;
     }
@@ -222,15 +222,15 @@ public class AdminController {
         p.setLogoText(dto.getLogoText());
         p.setEnabled(dto.getEnabled());
         p.setCategory(getCategories(dto.getCategories()));
-        Set<Image> i = logoImagesLeft(dto.getId(), removed);
+        List<Image> i = logoImagesLeft(dto.getId(), removed);
         p.setImages(i);
         return p;
     }
 
-    private Set<Image> plannerImagesLeft(Long productId, List<String> removed) {
+    private List<Image> plannerImagesLeft(Long productId, List<String> removed) {
         try {
             Planner p = this.PlannerService.findById(productId);
-            Set<Image> productImages = p.getImages();
+            List<Image> productImages = p.getImages();
             if (removed != null) {
                 for (String imageId : removed) {
                     productImages.removeIf(obj -> obj.getId().equals(new Long(imageId)));
@@ -240,14 +240,14 @@ public class AdminController {
             }
             return productImages;
         } catch (NotFoundException e) {
-            return new HashSet<Image>();
+            return new ArrayList<Image>();
         }
     }
 
-    private Set<Image> logoImagesLeft(Long productId, List<String> removed) {
+    private List<Image> logoImagesLeft(Long productId, List<String> removed) {
         try {
             Logo p = this.logoService.findById(productId);
-            Set<Image> productImages = p.getImages();
+            List<Image> productImages = p.getImages();
             if (removed != null) {
                 for (String imageId : removed) {
                     productImages.removeIf(obj -> obj.getId().equals(new Long(imageId)));
@@ -257,7 +257,7 @@ public class AdminController {
             }
             return productImages;
         } catch (NotFoundException e) {
-            return new HashSet<Image>();
+            return new ArrayList<Image>();
         }
     }
 

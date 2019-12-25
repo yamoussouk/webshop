@@ -8,7 +8,7 @@ public class PlannerDto {
     private String name;
     private String shortDescription;
     private String longDescription;
-    private int price;
+    private double price;
     private int quantity;
     private String downloadLink;
     private int enabled;
@@ -28,7 +28,7 @@ public class PlannerDto {
         return this.longDescription;
     }
 
-    public int getPrice () {
+    public double getPrice () {
         return this.price;
     }
 
@@ -64,4 +64,3 @@ public class PlannerDto {
         this.id = id;
     }
 }
-

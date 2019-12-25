@@ -8,7 +8,7 @@ public class LogoDto {
     private String name;
     private String shortDescription;
     private String longDescription;
-    private int price;
+    private double price;
     private int quantity;
     private String logoText;
     private int enabled;
@@ -26,7 +26,7 @@ public class LogoDto {
         return this.longDescription;
     }
 
-    public int getPrice () {
+    public double getPrice () {
         return this.price;
     }
 
@@ -52,4 +52,3 @@ public class LogoDto {
         this.id = id;
     }
 }
-
