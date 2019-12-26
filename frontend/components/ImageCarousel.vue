@@ -56,6 +56,10 @@ export default {
         active = 0
       }
       this.activateImage(active)
+      // execute set height when the image is rendered
+      this.$nextTick(() => {
+        this.$emit('setHeight')
+      })
     },
     prevImage () {
       let active = this.activeImage - 1
@@ -63,6 +67,9 @@ export default {
         active = this.images.length - 1
       }
       this.activateImage(active)
+      this.$nextTick(() => {
+        this.$emit('setHeight')
+      })
     },
     activateImage (imageIndex) {
       this.activeImage = imageIndex
@@ -106,6 +113,7 @@ export default {
       margin-bottom: 15px;
   }
   .card-img > img {
+      width: 100%;
       display: block;
       margin: 0 auto;
   }

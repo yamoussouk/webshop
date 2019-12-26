@@ -85,9 +85,7 @@ export default {
       selected_size: { name: 'SELECT SIZE', id: 0 },
       selected_day: { name: 'FIRST DAY OF THE WEEK', id: 0 },
       startingDay: 'select',
-      button_text: 'more',
-      windowWidth: 0,
-      windowHeight: 0
+      button_text: 'more'
     }
   },
   async asyncData ({ params }) {

@@ -4,7 +4,7 @@
     <div class="product_wrapper">
       <div ref="product_image_wrapper" class="product_image_wrapper">
         <div class="product_images">
-          <image-carousel :id="product.id" :images="product.image" />
+          <image-carousel :id="product.id" :images="product.image" @setHeight="setHeight" />
         </div>
         <div class="product_price">
           <span>$ {{ product.price }}</span>
@@ -22,7 +22,7 @@
         </div>
       </div>
       <div ref="summary" class="summary">
-        <div ref="product_details" class="product_details">
+        <div ref="product_details" :style="styleObject" class="product_details">
           <p v-html="product.longDescription" />
         </div>
         <button class="show_more_button" @click="toggle($event)">Show {{button_text}}</button>
@@ -52,8 +52,12 @@ export default {
       cart: [],
       product: {},
       logoText: '',
-      button_text: 'more'
+      button_text: 'more',
+      styleObject: {}
     }
+  },
+  mounted () {
+    this.setHeight()
   },
   async asyncData ({ params }) {
     const { data } = await axios.get(`http://localhost:8083/default/logo/${params.id}`)
@@ -106,7 +110,6 @@ export default {
     },
     toggle (e) {
       const h = this.$refs.product_image_wrapper.clientHeight
-      print(h - 35)
       if (this.button_text === 'more') {
         this.$refs.product_details.style.height = 'auto'
         this.$refs.product_details.style.overflow = 'auto'
@@ -115,6 +118,18 @@ export default {
         this.$refs.product_details.style.height = h - 35 + 'px'
         this.$refs.product_details.style.overflow = 'hidden'
         this.button_text = this.button_text === 'more' ? 'less' : 'more'
+      }
+    },
+    setHeight () {
+      const h = this.$refs.product_image_wrapper.clientHeight
+      if (window.innerWidth <= 768) {
+        this.styleObject = {
+          'height': h - 35 + 'px'
+        }
+      } else {
+        this.styleObject = {
+          'height': 'auto'
+        }
       }
     }
   }
@@ -413,7 +428,7 @@ export default {
     border: 0;
   }
   .product_details {
-    height: 848px;
+    height: 812px;
     overflow: hidden;
   }
   .summary {
