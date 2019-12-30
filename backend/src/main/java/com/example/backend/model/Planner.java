@@ -31,11 +31,11 @@ public class Planner extends Product {
         MONDAY
     }
     
-    @JsonIgnore
+    //@JsonIgnore
     @Enumerated(EnumType.STRING)
     private Size size;
 
-    @JsonIgnore
+    //@JsonIgnore
     @Enumerated(EnumType.STRING)
     private StartingDay startingDay; 
 

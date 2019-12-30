@@ -80,7 +80,7 @@ export default {
         'quantity': product.quantity,
         'price': product.price,
         'logoText': this.logoText,
-        'image': product.image.find(i => i.imageUrl.includes('cover')),
+        'image': product.image[0],
         'type': 'Logo'
       }
     },

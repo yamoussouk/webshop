@@ -103,13 +103,15 @@ export default {
       this.$store.commit('localStorage/increaseQuantityInLocalCart', id)
     },
     simplifyProduct (product) {
+      const s = this.selected_size.name
       return {
         'id': product.id,
         'name': product.name,
         'quantity': product.quantity,
         'price': product.price,
-        'size': this.selected_size.name,
+        'size': s.replace(/\s/g, ''),
         'startingDay': this.selected_day.name,
+        'image': product.image[0],
         'type': 'Planner'
       }
     },
