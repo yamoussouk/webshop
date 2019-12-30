@@ -26,8 +26,10 @@
               :result.sync="result"/>
             </b-tab>
             <b-tab title="Card">
-              <!-- TODO: finish card payment -->
-              <card />
+              <card
+              :total="total"
+              :description="form.email"
+              :result.sync="result"/>
             </b-tab>
           </b-tabs>
         </div>
@@ -70,8 +72,8 @@ export default {
         color: 'gold'
       },
       credentials: {
-        sandbox: 'AdDukx8SFl44xfK8-kMT56vYjV_7eVWpUz7oiICL-fvixm5b1yk_7LNTjCJ-R8IjibZsjefjjKY4lBhy',
-        production: 'AdDukx8SFl44xfK8-kMT56vYjV_7eVWpUz7oiICL-fvixm5b1yk_7LNTjCJ-R8IjibZsjefjjKY4lBhy'
+        sandbox: '<YOUR CODE>',
+        production: '<YOUR CODE>'
       },
       validatedEmail: false,
       result: ''
@@ -109,6 +111,18 @@ export default {
 <style>
 @media only screen and (max-width: 2560px){
   #email_continue {
+    background: #222;
+    display: block;
+    color: #fff;
+    font-size: 30px;
+    font-weight: 400;
+    line-height: 22px;
+    letter-spacing: normal;
+    text-transform: capitalize;
+    width: 100%;
+    height: 60px;
+  }
+  #purchase_button {
     background: #222;
     display: block;
     color: #fff;

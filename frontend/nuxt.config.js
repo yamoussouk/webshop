@@ -48,6 +48,10 @@ export default {
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
+    ['nuxt-stripe-module', {
+      publishableKey: '<YOUR PUBLISH KEY>',
+      version: 'v3', // Default
+    }],
     ['nuxt-vuex-localstorage', {
       mode: 'debug',
       localStorage: ['localStorage']

@@ -6,7 +6,7 @@
       </div>
       <div class="description_wrapper">
         <div class="image_wrapper">
-          <img class="image" alt="product-image" :src="'/uploaded/' + item.id + '/' + item.image.imageUrl">
+          <img v-if="item.image" class="image" alt="product-image" :src="'/uploaded/' + item.id + '/' + item.image.imageUrl">
         </div>
         <div class="description">
           <span class="name">{{ item.name }}</span>

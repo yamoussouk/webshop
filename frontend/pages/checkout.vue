@@ -10,7 +10,7 @@
         <div class="checkout_table_mobile">
           <div v-for="item in cart" :key="item.id" class="checkout_mobile_item_wrapper">
             <div class="checkout_mobile_image_wrapper">
-              <img class="image" alt="product-image" :src="'/uploaded/' + item.id + '/' + item.image.imageUrl">
+              <img v-if="item.image" class="image" alt="product-image" :src="'/uploaded/' + item.id + '/' + item.image.imageUrl">
             </div>
             <div class="checkout_mobile_description_wrapper">
               <div class="checkout_mobile_description">
