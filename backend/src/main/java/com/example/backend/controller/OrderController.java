@@ -12,8 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/order")
-@PreAuthorize("isAuthenticated()") 
+@RequestMapping("/order") 
 public class OrderController {
 
     private final OrderService orderService;
@@ -41,6 +40,7 @@ public class OrderController {
      * @return order
      */
     //TODO: checks user token
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/{id}")
     public Orders findByOrderId(@PathVariable(name = "id") Long orderId) {
         return orderService.findByOrderId(orderId);
@@ -52,6 +52,7 @@ public class OrderController {
      * @return list of orders
      */
     //TODO: checks user token
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/user/{id}")
     public List<Orders> findByUserId(@PathVariable(name = "id") Long userId) {
         return orderService.findByUserId(userId);
@@ -62,6 +63,7 @@ public class OrderController {
      * @return list of orders
      */
     //TODO: add int pagination pathvariable
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/all")
     public List<OrderCommand> listAllOrder() {
         List<OrderCommand> temp = orderService.findAllOrder();
@@ -73,6 +75,7 @@ public class OrderController {
      * @return list of VAT
      */
     //TODO: add int pagination pathvariable
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/allvat")
     public Map<String, Double> listAllVAT() {
         Map<String, Double> result = new HashMap<>();
