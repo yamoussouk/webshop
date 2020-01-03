@@ -21,7 +21,7 @@
               </div>
               <div class="price_mobile_wrapper">
                 <div class="price">
-                  <span>$ {{ ('' + item.price).replace('.', ',') }}</span>
+                  <span>$ {{ ('' + (item.price + item.vat).toFixed(2)).replace('.', ',') }}</span>
                 </div>
               </div>
               <div class="close_mobile_wrapper">
@@ -112,9 +112,9 @@ export default {
   computed: {
     total () {
       if (this.discount !== 0) {
-        return ('' + (this.$store.state.localStorage.localCart.reduce((ac, next) => ac + next.quantity * next.price, 0) * (1 - this.discount)).toFixed(2)).replace('.', ',')
+        return ('' + (this.$store.state.localStorage.localCart.reduce((ac, next) => ac + next.quantity * (next.price + next.vat), 0) * (1 - this.discount)).toFixed(2)).replace('.', ',')
       } else {
-        return ('' + this.$store.state.localStorage.localCart.reduce((ac, next) => ac + next.quantity * next.price, 0).toFixed(2)).replace('.', ',')
+        return ('' + this.$store.state.localStorage.localCart.reduce((ac, next) => ac + next.quantity * (next.price + next.vat), 0).toFixed(2)).replace('.', ',')
       }
     },
     cart () {
@@ -165,8 +165,13 @@ export default {
       if (val === 'COMPLETED') {
         const planners = this.cart.filter(pr => pr.type === 'Planner')
         const logos = this.cart.filter(pr => pr.type === 'Logo')
+        let priceTemp = planners.reduce((ac, next) => ac + next.quantity * next.price, 0)
+        priceTemp = priceTemp + logos.reduce((ac, next) => ac + next.quantity * next.price, 0)
+        let vatTemp = planners.reduce((ac, next) => ac + next.quantity * next.vat, 0)
+        vatTemp = vatTemp + logos.reduce((ac, next) => ac + next.quantity * next.vat, 0)
         const formObject = {
-          'price': parseFloat(this.total.replace(',', '.')),
+          'price': priceTemp.toFixed(2),
+          'vat': vatTemp.toFixed(2),
           'purchaseTime': new Date().getTime(),
           'user': null,
           'email': this.email,

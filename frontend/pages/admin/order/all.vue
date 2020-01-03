@@ -16,6 +16,7 @@
                         <span class="pull-right pagado"></span>
                       </h4>
                       <p class="summary">$ {{ order.price }}</p>
+                      <p class="summary">$ {{ order.vat }}</p>
                     </div>
                     <div class="button_wrapper">
                       <nuxt-link :to="`${order.id}`">
@@ -45,7 +46,7 @@ export default {
   },
   methods: {
     getOrderName (order) {
-      if (order.orderDetails.logoProduct !== null) {
+      if (order.orderDetails[0].logoProduct !== null) {
         return order.orderDetails[0].logoProduct.name
       } else {
         return order.orderDetails[0].plannerProduct.name
@@ -74,7 +75,7 @@ export default {
     },
     getImageSource (order) {
       let id = null
-      if (order.orderDetails.logoProduct !== null) {
+      if (order.orderDetails[0].logoProduct !== null) {
         id = order.orderDetails[0].logoProduct.id
       } else {
         id = order.orderDetails[0].plannerProduct.id

@@ -17,7 +17,7 @@
       </div>
       <div class="price_wrapper">
         <div class="price">
-          <span>$ {{ ('' + item.price).replace('.', ',') }}</span>
+          <span>$ {{ ('' + (item.price + item.vat).toFixed(2)).replace('.', ',') }}</span>
         </div>
       </div>
       <div class="close_wrapper">

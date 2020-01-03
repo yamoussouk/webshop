@@ -7,7 +7,7 @@
           <image-carousel :id="product.id" :images="product.image" />
         </div>
         <div class="product_price">
-          <span>$ {{ product.price }}</span>
+          <span>$ {{ (product.price + product.vat).toFixed(2) }}</span>
         </div>
         <div class="product-attributes">
           <custom-select
@@ -57,6 +57,7 @@ export default {
   validate ({ params }) {
     return /^\d+$/.test(params.id)
   },
+  // middleware: 'location',
   components: {
     BreadCrumb,
     // eslint-disable-next-line
@@ -88,8 +89,16 @@ export default {
       button_text: 'more'
     }
   },
-  async asyncData ({ params }) {
-    const { data } = await axios.get(`http://localhost:8083/default/planner/${params.id}`)
+  async asyncData ({ req, params, store }) {
+    // EU IP
+    const ip = '109.74.53.10'
+    // US IP
+    // const ip = '72.229.28.185'
+    const res = await axios.get(`http://www.geoplugin.net/json.gp?ip=${ip}`)
+    // eslint-disable-next-line
+    store.dispatch('setIP', { ip: ip, countryCode: res.data.geoplugin_countryCode,
+      continentCode: res.data.geoplugin_continentCode })
+    const { data } = await axios.get(`http://localhost:8083/default/planner/${params.id}/${res.data.geoplugin_countryCode}`)
     return { product: data }
   },
   methods: {
@@ -109,6 +118,7 @@ export default {
         'name': product.name,
         'quantity': product.quantity,
         'price': product.price,
+        'vat': product.vat,
         'size': s.replace(/\s/g, ''),
         'startingDay': this.selected_day.name,
         'image': product.image[0],

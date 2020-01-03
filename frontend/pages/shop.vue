@@ -55,6 +55,12 @@
   </div>
 </template>
 
+<script>
+export default {
+  middleware: 'location'
+}
+</script>
+
 <style scoped>
 @media only screen and (max-width: 2560px){
   .wrapper {

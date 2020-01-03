@@ -48,6 +48,15 @@ export default {
       categories: ['all', 'single logo', 'logo set', 'custom logo']
     }
   },
+  async asyncData ({ req, params, store }) {
+    // EU IP
+    const ip = '109.74.53.10'
+    // US IP
+    // const ip = '72.229.28.185'
+    const res = await axios.get(`http://www.geoplugin.net/json.gp?ip=${ip}`)
+    // eslint-disable-next-line
+    store.dispatch('setIP', { ip: ip, countryCode: res.data.geoplugin_countryCode, continentCode: res.data.geoplugin_countryCode })
+  },
   computed: {
     filteredList () {
       if (this.search !== '') {
@@ -69,8 +78,9 @@ export default {
   },
   created () {
     this.products = this.$store.getters.logos
+    const continent = this.$store.getters.ip[2]
     if (this.products.length === 0) {
-      axios.get('http://localhost:8083/default/logos/all'
+      axios.get(`http://localhost:8083/default/logos/all/${continent}`
       ).then((response) => {
         this.products = response.data
         for (const p of this.products) {

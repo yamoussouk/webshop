@@ -29,6 +29,10 @@
         <td><span>Price:</span></td>
         <td><span>$ {{ order.price }}</span></td>
       </tr>
+      <tr class="order_details">
+        <td><span>VAT:</span></td>
+        <td><span>$ {{ order.vat }}</span></td>
+      </tr>
       <tr v-show="order.coupon" class="order_details">
         <td><span>Used coupon:</span></td>
         <td><span>{{ order.coupon }}</span></td>

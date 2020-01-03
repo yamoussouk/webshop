@@ -7,7 +7,7 @@
           <image-carousel :id="product.id" :images="product.image" @setHeight="setHeight" />
         </div>
         <div class="product_price">
-          <span>$ {{ product.price }}</span>
+          <span>$ {{ (product.price + product.vat).toFixed(2) }}</span>
         </div>
         <div class="product-attributes">
           <input ref="logotext" v-model="logoText" type="text" class="logo_text" placeholder="Add logo text">
@@ -59,8 +59,16 @@ export default {
   mounted () {
     this.setHeight()
   },
-  async asyncData ({ params }) {
-    const { data } = await axios.get(`http://localhost:8083/default/logo/${params.id}`)
+  async asyncData ({ params, store }) {
+    // EU IP
+    const ip = '109.74.53.10'
+    // US IP
+    // const ip = '72.229.28.185'
+    const res = await axios.get(`http://www.geoplugin.net/json.gp?ip=${ip}`)
+    // eslint-disable-next-line
+    store.dispatch('setIP', { ip: ip, countryCode: res.data.geoplugin_countryCode,
+      continentCode: res.data.geoplugin_continentCode })
+    const { data } = await axios.get(`http://localhost:8083/default/logo/${params.id}/${res.data.geoplugin_countryCode}`)
     return { product: data }
   },
   methods: {
@@ -79,6 +87,7 @@ export default {
         'name': product.name,
         'quantity': product.quantity,
         'price': product.price,
+        'vat': product.vat,
         'logoText': this.logoText,
         'image': product.image[0],
         'type': 'Logo'

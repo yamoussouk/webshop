@@ -64,6 +64,12 @@
                     <span class="nav-link-text">All orders</span>
                   </nuxt-link>
                 </li>
+                <li class="nav-item">
+                  <nuxt-link class="nav-link" to="/admin/order/vat">
+                    <i class="ni ni-shop text-primary" />
+                    <span class="nav-link-text">VAT Statistic</span>
+                  </nuxt-link>
+                </li>
               </ul>
             </b-collapse>
           </li>

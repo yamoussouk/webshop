@@ -9,7 +9,8 @@ export const state = () => ({
   orders: [],
   subscribers: [],
   planners: [],
-  logos: []
+  logos: [],
+  ip: []
 })
 
 export const getters = {
@@ -51,6 +52,9 @@ export const getters = {
   },
   logos: (state) => {
     return state.logos
+  },
+  ip: (state) => {
+    return state.ip
   }
 }
 
@@ -153,6 +157,9 @@ export const mutations = {
   },
   setLogos: (state, logos) => {
     state.logos = logos
+  },
+  setIP: (state, address) => {
+    state.ip = [address.ip, address.countryCode, address.continentCode]
   }
 }
 
@@ -233,5 +240,8 @@ export const actions = {
   },
   setLogos: ({ commit }, logos) => {
     commit('setLogos', logos)
+  },
+  setIP: ({ commit }, ip) => {
+    commit('setIP', ip)
   }
 }
