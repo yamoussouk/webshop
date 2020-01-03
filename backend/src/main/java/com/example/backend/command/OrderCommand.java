@@ -1,6 +1,5 @@
 package com.example.backend.command;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -8,6 +7,7 @@ public class OrderCommand {
 
     private Long id;
     private double price;
+    private double vat;
     private Date purchaseTime;
     private Long userid;
     private String email;
@@ -66,6 +66,12 @@ public class OrderCommand {
     }
     public String getCoupon() {
         return this.coupon;
+    }
+    public void setVat(double vat) {
+        this.vat = vat;
+    }
+    public double getVat() {
+        return this.vat;
     }
 }
 

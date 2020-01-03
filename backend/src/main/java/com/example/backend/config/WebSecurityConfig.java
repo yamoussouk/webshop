@@ -85,7 +85,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers(
                         "/registration**",
-                        "/forgot-password**",
                         "/reset-password**",
                         "/subscribe**",
                         "/admin/**").permitAll()
@@ -95,7 +94,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/img/**",
                         "/refresh",
                         "/register",
-                        "/forgot_password",
                         "/activate-registration",
                         "/webjars/**").permitAll()
                 .antMatchers("/auth/**").permitAll()

@@ -10,9 +10,12 @@ public class OrderDetailsCommand {
     private String logoText;
     private String size;
     private String startingDay;
-    private Planner plannerProduct;
-    private Logo logoProduct;
-    private Image image;
+    // private Planner plannerProduct;
+    // private Logo logoProduct;
+    private PlannerCommand plannerProduct;
+    private LogoCommand logoProduct;
+    // private Image image;
+    private ImageCommand image;
 
     public OrderDetailsCommand() {
     }
@@ -29,13 +32,22 @@ public class OrderDetailsCommand {
     public void setStartingDay(String text) {
         this.startingDay = text;
     }
-    public void setPlannerProduct(Planner product) {
+    // public void setPlannerProduct(Planner product) {
+    //     this.plannerProduct = product;
+    // }
+    // public void setLogoProduct(Logo product) {
+    //     this.logoProduct = product;
+    // }
+    public void setPlannerProduct(PlannerCommand product) {
         this.plannerProduct = product;
     }
-    public void setLogoProduct(Logo product) {
+    public void setLogoProduct(LogoCommand product) {
         this.logoProduct = product;
     }
-    public void setImage(Image i) {
+    // public void setImage(Image i) {
+    //     this.image = i;
+    // }
+    public void setImage(ImageCommand i) {
         this.image = i;
     }
     public Long getId() {
@@ -50,13 +62,22 @@ public class OrderDetailsCommand {
     public String getStartingDay() {
         return this.startingDay;
     }
-    public Planner getPlannerProduct() {
+    // public Planner getPlannerProduct() {
+    //     return this.plannerProduct;
+    // }
+    // public Logo getLogoProduct() {
+    //     return this.logoProduct;
+    // }
+    public PlannerCommand getPlannerProduct() {
         return this.plannerProduct;
     }
-    public Logo getLogoProduct() {
+    public LogoCommand getLogoProduct() {
         return this.logoProduct;
     }
-    public Image getImage() {
+    // public Image getImage() {
+    //     return this.image;
+    // }
+    public ImageCommand getImage() {
         return this.image;
     }
 }

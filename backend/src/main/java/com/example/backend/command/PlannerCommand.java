@@ -21,6 +21,7 @@ public class PlannerCommand {
     private String downloadLink;
     private String size;
     private String startingDay;
+    private double vat;
 
     public int getQuantity() {
         return quantity;
@@ -127,6 +128,14 @@ public class PlannerCommand {
 
     public String getStartingDay() {
         return this.startingDay;
+    }
+
+    public void setVat(double vat) {
+        this.vat = vat;
+    }
+
+    public double getVat() {
+        return this.vat;
     }
 }
 

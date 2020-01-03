@@ -13,6 +13,7 @@ public class Orders {
     @GeneratedValue
     private Long id;
     private double price;
+    private double vat;
     private String couponName;
  
     private Date purchaseTime;
@@ -111,5 +112,11 @@ public class Orders {
     }
     public String getCoupon() {
         return this.couponName;
+    }
+    public void setVat(double vat) {
+        this.vat = vat;
+    }
+    public double getVat() {
+        return this.vat;
     }
 }

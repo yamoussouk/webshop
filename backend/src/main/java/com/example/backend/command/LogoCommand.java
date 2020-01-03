@@ -17,6 +17,7 @@ public class LogoCommand {
     private Set<ImageCommand> image;
     private int quantity;
     private int enabled;
+    private double vat;
 
     public int getQuantity() {
         return quantity;
@@ -99,6 +100,14 @@ public class LogoCommand {
 
     public int getEnabled() {
         return this.enabled;
+    }
+
+    public void setVat(double vat) {
+        this.vat = vat;
+    }
+
+    public double getVat() {
+        return this.vat;
     }
 }
 

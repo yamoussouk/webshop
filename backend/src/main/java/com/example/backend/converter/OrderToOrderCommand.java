@@ -38,6 +38,7 @@ public class OrderToOrderCommand {
         OrderCommand orderCommand = new OrderCommand();
         orderCommand.setId(order.getId());
         orderCommand.setPrice(order.getPrice());
+        orderCommand.setVat(order.getVat());
         orderCommand.setPurchaseTime(order.getPurchaseTime());
         // orderCommand.setUserid(order.getUser().getId());
         orderCommand.setEmail(order.getEmail());

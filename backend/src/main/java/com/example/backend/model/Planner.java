@@ -11,10 +11,6 @@ import javax.persistence.JoinTable;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 @Entity
 public class Planner extends Product {
 
@@ -31,11 +27,9 @@ public class Planner extends Product {
         MONDAY
     }
     
-    //@JsonIgnore
     @Enumerated(EnumType.STRING)
     private Size size;
 
-    //@JsonIgnore
     @Enumerated(EnumType.STRING)
     private StartingDay startingDay; 
 
@@ -48,7 +42,6 @@ public class Planner extends Product {
                     name = "planner_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(
                     name = "order_id", referencedColumnName = "id"))
-    //@JsonManagedReference(value="planners")
     private Set<Orders> orders = new HashSet<>();
 
     public Planner () {

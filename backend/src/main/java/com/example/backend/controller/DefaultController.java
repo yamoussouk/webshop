@@ -1,15 +1,14 @@
 package com.example.backend.controller;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import com.example.backend.command.PlannerCommand;
 import com.example.backend.command.LogoCommand;
 import com.example.backend.model.Coupon;
-import com.example.backend.model.Image;
 import com.example.backend.model.Mail;
 import com.example.backend.model.Planner;
 import com.example.backend.model.Logo;
@@ -39,6 +38,9 @@ public class DefaultController {
     private final EmailService emailService = new EmailService();
     private final CouponService couponService;
 
+    private final String[] europeanUnion = {"BE", "BG", "CZ", "DE", "DK", "EE", "IE", "EL", "ES", "FR", 
+    "HR", "IT", "CY", "LV", "LT", "LU", "HU", "MT", "NL", "AT", "PL", "PT", "RO", "SI", "SK", "FI", "SE", "UK"};
+
     @Value("${owner.email}")
     private String ownerEmail;
 
@@ -48,41 +50,38 @@ public class DefaultController {
         this.couponService = couponService;
     }
 
-    @GetMapping("/default/planners/all")
-    public List<PlannerCommand> getAllPlanners() {
+    @GetMapping("/default/planners/all/{country}")
+    public List<PlannerCommand> getAllPlanners(@PathVariable(name = "country") String country) {
         List<Planner> products =  this.plannerService.getPlanners(true);
         List<PlannerCommand> returnedValue = new ArrayList<PlannerCommand>();
         for (Planner p : products) {
-            returnedValue.add(PlannerToPlannerCommand.convert(p));
+            returnedValue.add(setPlannerVAT(PlannerToPlannerCommand.convert(p), country));
         }
         return returnedValue;
     }
 
-    @GetMapping("/default/logos/all")
-    public List<LogoCommand> getAllLogos() {
+    @GetMapping("/default/logos/all/{country}")
+    public List<LogoCommand> getAllLogos(@PathVariable(name = "country") String country) {
         List<Logo> products =  this.logoService.getLogos(true);
         List<LogoCommand> returnedValue = new ArrayList<LogoCommand>();
         for (Logo p : products) {
-            returnedValue.add(logoToLogoCommand.convert(p));
+            returnedValue.add(setLogoVAT(logoToLogoCommand.convert(p), country));
         }
         return returnedValue;
     }
 
-    @GetMapping("/default/planner/{id}")
-    public PlannerCommand getPlannerById(@PathVariable(name = "id") String id) {
+    @GetMapping("/default/planner/{id}/{country}")
+    public PlannerCommand getPlannerById(@PathVariable(name = "id") String id,
+     @PathVariable(name = "country") String country) {
         Planner p = plannerService.findById(new Long(id));
-        return PlannerToPlannerCommand.convert(p);
+        return setPlannerVAT(PlannerToPlannerCommand.convert(p), country);
     }
 
-    @GetMapping("/default/logo/{id}")
-    public LogoCommand getLogoById(@PathVariable(name = "id") String id) {
+    @GetMapping("/default/logo/{id}/{country}")
+    public LogoCommand getLogoById(@PathVariable(name = "id") String id,
+     @PathVariable(name = "country") String country) {
         Logo p = logoService.findById(new Long(id));
-        return logoToLogoCommand.convert(p);
-    }
-
-    @GetMapping("/default/product/{id}/images")
-    public Set<Image> getProductImages(@PathVariable(name = "id") String id) {
-        return plannerService.findById(new Long(id)).getImages();
+        return setLogoVAT(logoToLogoCommand.convert(p), country);
     }
 
     @PostMapping("/default/contact")
@@ -111,5 +110,21 @@ public class DefaultController {
         model.put("from", from);
         contactMessage.setModel(model);
         return contactMessage;
+    }
+
+    private PlannerCommand setPlannerVAT(PlannerCommand command, String country) {
+        if (Arrays.stream(europeanUnion).anyMatch(country::equals)) {
+            double vat = command.getPrice() * 0.27;
+            command.setVat(vat);
+        }
+        return command;
+    }
+
+    private LogoCommand setLogoVAT(LogoCommand command, String country) {
+        if (Arrays.stream(europeanUnion).anyMatch(country::equals)) {
+            double vat = command.getPrice() * 0.27;
+            command.setVat(vat);
+        }
+        return command;
     }
 }

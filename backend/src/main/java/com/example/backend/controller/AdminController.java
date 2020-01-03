@@ -14,13 +14,11 @@ import com.example.backend.converter.LogoToLogoCommand;
 import com.example.backend.converter.PlannerToPlannerCommand;
 import com.example.backend.dto.LogoDto;
 import com.example.backend.dto.PlannerDto;
-import com.example.backend.dto.ProductDto;
 import com.example.backend.exception.NotFoundException;
 import com.example.backend.model.Category;
 import com.example.backend.model.Image;
 import com.example.backend.model.Logo;
 import com.example.backend.model.Planner;
-import com.example.backend.model.Product;
 import com.example.backend.model.SignUpEmail;
 import com.example.backend.repository.CategoryRepository;
 import com.example.backend.repository.SignUpRepository;
@@ -278,15 +276,6 @@ public class AdminController {
                 .stream()
                 .sorted((image1, image2) -> image2.getId().compareTo(image1.getId()))
                 .collect(Collectors.toList());
-    }
-
-    @GetMapping("/admin/categories")
-    public List<String> getAllCategories() {
-        List<String> categories = new ArrayList<>();
-        for (Categories c : Categories.values()) {
-            categories.add(c.name());
-        }
-        return categories;
     }
 
     @PostMapping("/admin/add/new2")

@@ -37,10 +37,10 @@ public class PasswordForgotController {
         return new PasswordForgotDto();
     }
 
-    @GetMapping
-    public String displayForgotPasswordPage() {
-        return "forgot-password";
-    }
+    // @GetMapping
+    // public String displayForgotPasswordPage() {
+    //     return "forgot-password";
+    // }
 
     @PostMapping(value= "/forgot_password")
     public ResponseEntity<?> processForgotPasswordForm(@RequestParam("forgotPasswordModel") String email, HttpServletRequest request) {

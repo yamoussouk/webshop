@@ -20,10 +20,18 @@ public class OrderDetailsToOrderDetailsCommand implements Converter<OrderDetails
 
     private final LogoRepository logoRepository;
     private final PlannerRepository plannerRepository;
+    private final LogoToLogoCommand logoToLogoCommand;
+    private final PlannerToPlannerCommand plannerToPlannerCommand;
+    private final ImageToImageCommand imageToImageCommand;
 
-    public OrderDetailsToOrderDetailsCommand(LogoRepository logoRepository, PlannerRepository plannerRepository) {
+    public OrderDetailsToOrderDetailsCommand(LogoRepository logoRepository, PlannerRepository plannerRepository, 
+    LogoToLogoCommand logoToLogoCommand, PlannerToPlannerCommand plannerToPlannerCommand,
+    ImageToImageCommand imageToImageCommand) {
         this.plannerRepository = plannerRepository;
         this.logoRepository = logoRepository;
+        this.logoToLogoCommand = logoToLogoCommand;
+        this.plannerToPlannerCommand = plannerToPlannerCommand;
+        this.imageToImageCommand = imageToImageCommand;
     }
 
     @Synchronized
@@ -45,18 +53,18 @@ public class OrderDetailsToOrderDetailsCommand implements Converter<OrderDetails
             o.setStartingDay(details.getStartingDay());
         }
         if (details.getLogoText() != null) {
-            o.setLogoProduct(this.logoRepository.findById(details.getProductID()).get());
+            o.setLogoProduct(this.logoToLogoCommand.convert(this.logoRepository.findById(details.getProductID()).get()));
         } else {
-            o.setPlannerProduct(this.plannerRepository.findById(details.getProductID()).get());
+            o.setPlannerProduct(this.plannerToPlannerCommand.convert(this.plannerRepository.findById(details.getProductID()).get()));
         }
         if (details.getLogoText() != null) {
             Logo logo = this.logoRepository.findById(details.getProductID()).get();
-            Image im = logo.getImages().stream().filter(i -> i.getImageUrl().contains("cover")).findFirst().get();
-            o.setImage(im);
+            Image im = logo.getImages().get(0);
+            o.setImage(this.imageToImageCommand.convert(im));
         } else {
             Planner planner = this.plannerRepository.findById(details.getProductID()).get();
-            Image im = planner.getImages().stream().filter(i -> i.getImageUrl().contains("cover")).findFirst().get();
-            o.setImage(im);
+            Image im = planner.getImages().get(0);
+            o.setImage(this.imageToImageCommand.convert(im));
         }
         return o;
     }
