@@ -41,7 +41,7 @@ public class LogoServiceImpl implements LogoService {
         if (Logo.isPresent()) {
             return Logo.get();
         } else {
-            throw new NotFoundException("Product with given id has not found!");
+            return null;
         }
     }
 

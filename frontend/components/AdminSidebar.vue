@@ -74,6 +74,23 @@
             </b-collapse>
           </li>
           <li class="nav-item">
+            <span v-b-toggle.discount-collapse class="sidebar-menu-item nav-link">
+              <i class="ni ni-shop text-primary" />
+              <span class="nav-link-text">Discounts</span>
+              <b class="caret" />
+            </span>
+            <b-collapse id="discount-collapse">
+              <ul class="nav">
+                <li class="nav-item">
+                  <nuxt-link class="nav-link" to="/admin/discount/set">
+                    <i class="ni ni-shop text-primary" />
+                    <span class="nav-link-text">Set Discount</span>
+                  </nuxt-link>
+                </li>
+              </ul>
+            </b-collapse>
+          </li>
+          <li class="nav-item">
             <nuxt-link class="sidebar-menu-item" to="/admin/subscribers">
               <i class="ni ni-shop text-primary" />
               <span class="nav-link-text">Subscribers</span>

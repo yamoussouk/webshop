@@ -18,6 +18,7 @@ public class LogoCommand {
     private int quantity;
     private int enabled;
     private double vat;
+    private double discount;
 
     public int getQuantity() {
         return quantity;
@@ -108,6 +109,13 @@ public class LogoCommand {
 
     public double getVat() {
         return this.vat;
+    }
+    public void setDiscount(double discount) {
+        this.discount = discount;
+    }
+
+    public double getDiscount() {
+        return this.discount;
     }
 }
 

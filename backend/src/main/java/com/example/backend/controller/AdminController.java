@@ -25,6 +25,7 @@ import com.example.backend.repository.SignUpRepository;
 import com.example.backend.service.ImageService;
 import com.example.backend.service.LogoService;
 import com.example.backend.service.PlannerService;
+import com.example.backend.service.TaskExecutorService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.springframework.http.HttpStatus;
@@ -46,6 +47,7 @@ public class AdminController {
     private final CategoryRepository categoryRepository;
     private final PlannerToPlannerCommand PlannerToPlannerCommand = new PlannerToPlannerCommand();
     private final LogoToLogoCommand logoToLogoCommand = new LogoToLogoCommand();
+    private final TaskExecutorService taskExecutorService;
 
     public AdminController(ImageService imageService, PlannerService PlannerService, SignUpRepository signUpRepository, CategoryRepository categoryRepository, LogoService logoService) {
         this.imageService = imageService;
@@ -53,6 +55,7 @@ public class AdminController {
         this.signUpRepository = signUpRepository;
         this.categoryRepository = categoryRepository;
         this.logoService = logoService;
+        this.taskExecutorService = new TaskExecutorService(this.logoService, this.PlannerService);
     }
 
     @GetMapping("admin/planners/all")
@@ -309,6 +312,30 @@ public class AdminController {
         List<SignUpEmail> subscribers = new ArrayList<>();
         this.signUpRepository.findAll().iterator().forEachRemaining(subscribers::add);
         return subscribers;
+    }
+
+    @PostMapping("/admin/discount/set")
+    public ResponseEntity<?> setDiscount(@RequestParam("percent") double percent,
+     @RequestParam("from") String from, @RequestParam("to") String to,
+      @RequestParam("products") List<Integer> products) {
+        // create a task which stops the discount
+        // and somehow make it reachable for later use
+        // think about how to cancel runnable waiting to run
+        // think about how to cancel runnable already run (finish reset task, reset products discount to zero)
+        List<Planner> planners = new ArrayList<>();
+        List<Logo> logos = new ArrayList<>();
+        for (Integer product : products) {
+            Logo l = this.logoService.findById(new Long(product));
+            if (l == null) {
+                Planner pl = this.PlannerService.findById(new Long(product));
+                planners.add(pl);
+            } else {
+                logos.add(l);
+            }
+        }
+        this.taskExecutorService.executeTaskT(new Long(from), percent, planners, logos);
+        this.taskExecutorService.executeTaskT(new Long(to), new Double(0), planners, logos);
+		return new ResponseEntity<>("User is already signed up!", HttpStatus.OK);
     }
 }
 

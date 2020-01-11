@@ -22,6 +22,7 @@ public class PlannerCommand {
     private String size;
     private String startingDay;
     private double vat;
+    private double discount;
 
     public int getQuantity() {
         return quantity;
@@ -136,6 +137,13 @@ public class PlannerCommand {
 
     public double getVat() {
         return this.vat;
+    }
+    public void setDiscount(double discount) {
+        this.discount = discount;
+    }
+
+    public double getDiscount() {
+        return this.discount;
     }
 }
 

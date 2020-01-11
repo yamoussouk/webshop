@@ -37,6 +37,7 @@ public class Product {
     private Integer quantity;
     private int enabled;
     private String type;
+    private double discount;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
@@ -158,5 +159,12 @@ public class Product {
 
     public String getType() {
         return this.type;
+    }
+    public void setDiscount(double discount) {
+        this.discount = discount;
+    }
+
+    public double getDiscount() {
+        return this.discount;
     }
 }
