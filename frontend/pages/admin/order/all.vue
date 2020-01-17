@@ -13,14 +13,18 @@
                       <span class="media-meta pull-right">{{ formatPurchaseTime(order) }}</span>
                       <h4 class="title">
                         {{ getOrderName(order) }}
-                        <span class="pull-right pagado"></span>
+                        <span class="pull-right pagado" />
                       </h4>
-                      <p class="summary">$ {{ order.price }}</p>
-                      <p class="summary">$ {{ order.vat }}</p>
+                      <p class="summary">
+                        $ {{ order.price }}
+                      </p>
+                      <p class="summary">
+                        $ {{ order.vat }}
+                      </p>
                     </div>
                     <div class="button_wrapper">
                       <nuxt-link :to="`${order.id}`">
-                        <img class="details" :src="'/page_assets/details.png'" alt="order information"/>
+                        <img :src="'/page_assets/details.png'" class="details" alt="order information">
                       </nuxt-link>
                     </div>
                   </div>

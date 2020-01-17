@@ -2,50 +2,58 @@
   <div class="main-content">
     <h1>Set Discount</h1>
     <div class="discount-dropdown">
-        <p>Select percentage of the discount:</p>
-      <b-form-select v-model="discountPercentage" :options="__makePercentages()"></b-form-select>
+      <p>Select percentage of the discount:</p>
+      <b-form-select v-model="discountPercentage" :options="__makePercentages()" />
     </div>
     <div class="discount-range">
       <no-ssr>
         <div class="range-from">
           <p>Select a starting date:</p>
           <date-pick
-          ref="dateFrom"
-          placeholder="Select From Date"
-          v-model="dateFrom"
-          :format="format"
-          :clear-button="true"
-          :disabledDates="disabledFrom"></date-pick>
+            ref="dateFrom"
+            v-model="dateFrom"
+            :format="format"
+            :clear-button="true"
+            :disabledDates="disabledFrom"
+            placeholder="Select From Date"
+          />
         </div>
         <div class="range-from">
           <p>Select an end date:</p>
           <date-pick
-          ref="dateTo"
-          placeholder="Select To Date"
-          v-model="dateTo"
-          :format="format"
-          :clear-button="true"
-          :disabledDates="disabledTo"></date-pick>
+            ref="dateTo"
+            v-model="dateTo"
+            :format="format"
+            :clear-button="true"
+            :disabledDates="disabledTo"
+            placeholder="Select To Date"
+          />
         </div>
       </no-ssr>
     </div>
     <div class="discount-products">
       <div class="products-frame">
-        <b-form-select v-model="group" :options="categories()"></b-form-select>
+        <b-form-select v-model="group" :options="categories()" />
         <ul v-show="group != ''">
           <li v-for="product in filteredList" :key="product.id" class="discount-product">
             <div>
               <img :src="'/uploaded/' + product.id + '/' + product.image[0].imageUrl" alt="product image">
               <p>{{ product.name }}</p>
-              <p @click="remove(product.id)">x</p>
+              <p @click="remove(product.id)">
+                x
+              </p>
             </div>
           </li>
         </ul>
       </div>
     </div>
     <div class="set-discount">
-      <button @click="set">SET DISCOUNT</button>
-      <button @click="reset">RESET</button>
+      <button @click="set">
+        SET DISCOUNT
+      </button>
+      <button @click="reset">
+        RESET
+      </button>
     </div>
   </div>
 </template>
@@ -102,6 +110,9 @@ export default {
     filteredList () {
       return this.products.filter(e => e.categories.includes(this.group))
     }
+  },
+  mounted () {
+    this.products = this.logos.concat(this.planners)
   },
   methods: {
     categories () {
@@ -173,9 +184,6 @@ export default {
           console.log(error)
         })
     }
-  },
-  mounted () {
-    this.products = this.logos.concat(this.planners)
   }
 }
 </script>

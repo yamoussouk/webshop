@@ -11,7 +11,7 @@
                     Product name
                   </label>
                   <h3 class="mb-0">
-                    <input :value="product.name" type="text" class="form-control" @input="updateName($event)">
+                    <input :value="product.name" @input="updateName($event)" type="text" class="form-control">
                   </h3>
                 </div>
               </div>
@@ -22,7 +22,7 @@
                       Product price
                     </label>
                     <div class="has-name">
-                      <input :value="product.price" type="number" class="form-control" @input="updatePrice($event)">
+                      <input :value="product.price" @input="updatePrice($event)" type="number" class="form-control">
                     </div>
                   </div>
                   <div class="col-md-6 desc">
@@ -34,7 +34,7 @@
                       Select category
                     </label>
                     <div class="has-name">
-                      <select v-model="categories" multiple="multiple" class="form-control" @change="updateCategory($event)">
+                      <select v-model="categories" @change="updateCategory($event)" multiple="multiple" class="form-control">
                         <option>Inserts</option>
                         <option>Daily Planners</option>
                         <option>Lifestyle Planners</option>
@@ -48,7 +48,7 @@
                       Product download link
                     </label>
                     <div class="has-name">
-                      <input :value="product.downloadLink" type="text" class="form-control" @input="updateDllink($event)">
+                      <input :value="product.downloadLink" @input="updateDllink($event)" type="text" class="form-control">
                     </div>
                   </div>
                 </div>
@@ -62,7 +62,7 @@
                 </div>
                 <div class="row">
                   <div class="col-md-12">
-                    <button class="submitButton" @click="save">
+                    <button @click="save" class="submitButton">
                       Save Product
                     </button>
                   </div>

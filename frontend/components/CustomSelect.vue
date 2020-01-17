@@ -1,8 +1,8 @@
 <template>
   <div :ref="refs" :class="{ __disabled: disabled }" class="select">
-    <div class="select_label" @click="toggle">
+    <div @click="toggle" class="select_label">
       <span>{{ getLabel(value) }}</span>
-      <img :src="'/page_assets/arrow-02.png'" alt="select arrow" :class="{opened : opened}">
+      <img :src="'/page_assets/arrow-02.png'" :class="{opened : opened}" alt="select arrow">
     </div>
     <div v-if="opened" class="select_options">
       <div
@@ -10,13 +10,13 @@
         :key="o.id"
         :value="getVal(value)"
         :class="{__active: getVal(o) == getVal(value)}"
-        class="select_option"
         @click="change(o)"
+        class="select_option"
       >
         {{ getLabel(o) }}
       </div>
     </div>
-    <div v-if="opened" class="select_overlay" @click="toggle" />
+    <div v-if="opened" @click="toggle" class="select_overlay" />
   </div>
 </template>
 

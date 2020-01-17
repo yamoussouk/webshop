@@ -2,7 +2,7 @@
   <div class="sign_up_form">
     <h1>Sign up for my NewsLetter</h1>
     <div class="emaillist">
-      <form action="#" method="post" @submit="signUp">
+      <form @submit="signUp" action="#" method="post">
         <input v-model="email" placeholder="e-mail">
         <button type="submit">
           Sign Up

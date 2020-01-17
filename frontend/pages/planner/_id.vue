@@ -13,25 +13,25 @@
           <custom-select
             ref="ref_size"
             v-model="selected_size"
-            refs="size"
             :options="sizes"
+            refs="size"
             value-key="id"
             label-key="name"
           />
           <custom-select
             ref="ref_day"
             v-model="selected_day"
-            refs="day"
             :options="days"
+            refs="day"
             value-key="id"
             label-key="name"
           />
         </div>
         <div class="product_cart_buttons">
-          <button class="product_add_to_cart_button" @click="add(product)">
+          <button @click="add(product)" class="product_add_to_cart_button">
             add to cart
           </button>
-          <button class="product_quick_buy_button" @click="buynow(product)">
+          <button @click="buynow(product)" class="product_quick_buy_button">
             buy it now
           </button>
         </div>
@@ -40,7 +40,9 @@
         <div ref="product_details" class="product_details_planner">
           <p v-html="product.longDescription" />
         </div>
-        <button class="show_more_button" @click="toggle($event)">Show {{button_text}}</button>
+        <button @click="toggle($event)" class="show_more_button">
+          Show {{ button_text }}
+        </button>
       </div>
     </div>
   </div>

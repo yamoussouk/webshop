@@ -10,14 +10,14 @@
         <div class="checkout_table_mobile">
           <div v-for="item in cart" :key="item.id" class="checkout_mobile_item_wrapper">
             <div class="checkout_mobile_image_wrapper">
-              <img v-if="item.image" class="image" alt="product-image" :src="'/uploaded/' + item.id + '/' + item.image.imageUrl">
+              <img v-if="item.image" :src="'/uploaded/' + item.id + '/' + item.image.imageUrl" class="image" alt="product-image">
             </div>
             <div class="checkout_mobile_description_wrapper">
               <div class="checkout_mobile_description">
                 <span class="name">{{ item.name }}</span>
                 <span v-if="item.size" class="size">{{ item.size }}</span>
                 <span v-if="item.startingDay" class="starting_day">{{ item.startingDay }}</span>
-                <span v-if="item.logoText" class="logo_text" :title="item.logoText">{{ item.logoText }}</span>
+                <span v-if="item.logoText" :title="item.logoText" class="logo_text">{{ item.logoText }}</span>
               </div>
               <div class="price_mobile_wrapper">
                 <div class="price">
@@ -39,7 +39,7 @@
           </div>
           <div class="coupon_input">
             <input v-model="coupon" type="text">
-            <button type="button" @click="applyCoupon">
+            <button @click="applyCoupon" type="button">
               Apply
             </button>
           </div>
@@ -55,7 +55,7 @@
         </div>
         <div class="button_wrapper">
           <transition name="fade">
-            <div v-show="!proceed" id="browse">
+            <div id="browse" v-show="!proceed">
               <button type="button">
                 <nuxt-link to="/shop">
                   browse more
@@ -64,13 +64,13 @@
             </div>
           </transition>
           <div id="checkout">
-            <button type="button" @click="proceedCheckout">
+            <button @click="proceedCheckout" type="button">
               checkout
             </button>
           </div>
         </div>
         <transition name="fade">
-          <checkout-module v-show="proceed" :items="items" :total="total" :result.sync="result" :email.sync="email"/>
+          <checkout-module v-show="proceed" :items="items" :total="total" :result.sync="result" :email.sync="email" />
         </transition>
       </div>
       <div v-else class="empty-cart">
@@ -124,41 +124,6 @@ export default {
       return this.$store.state.localStorage.payPalCompatibleCart
     }
   },
-  methods: {
-    emptyLocalCart () {
-      this.$store.commit('localStorage/emptyLocalCart')
-    },
-    validEmail (email) {
-      const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-      return re.test(email)
-    },
-    validCardNumber (number) {
-      const re = /^$/
-      return re.test(number)
-    },
-    applyCoupon () {
-      // eslint-disable-next-line
-      axios.get('http://localhost:8083/default/coupon/' + this.coupon
-      ).then((response) => {
-        if (typeof response.data === 'number') {
-          this.discount = parseFloat(response.data) / 100
-        } else {
-          console.log('error', response.data)
-        }
-      })
-        .catch(function (error) {
-          console.log(error)
-          this.success = true
-          this.message = 'Something went wrong with applying the coupon'
-        })
-    },
-    proceedCheckout () {
-      this.proceed = !this.proceed
-    },
-    removeFromCart (index) {
-      this.$store.commit('localStorage/removeFromLocalCartByIndex', index)
-    }
-  },
   watch: {
     // eslint-disable-next-line
     result: function(val) {
@@ -199,6 +164,41 @@ export default {
       } else {
         this.errors.push('Purchase cancelled! Try it again.')
       }
+    }
+  },
+  methods: {
+    emptyLocalCart () {
+      this.$store.commit('localStorage/emptyLocalCart')
+    },
+    validEmail (email) {
+      const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      return re.test(email)
+    },
+    validCardNumber (number) {
+      const re = /^$/
+      return re.test(number)
+    },
+    applyCoupon () {
+      // eslint-disable-next-line
+      axios.get('http://localhost:8083/default/coupon/' + this.coupon
+      ).then((response) => {
+        if (typeof response.data === 'number') {
+          this.discount = parseFloat(response.data) / 100
+        } else {
+          console.log('error', response.data)
+        }
+      })
+        .catch(function (error) {
+          console.log(error)
+          this.success = true
+          this.message = 'Something went wrong with applying the coupon'
+        })
+    },
+    proceedCheckout () {
+      this.proceed = !this.proceed
+    },
+    removeFromCart (index) {
+      this.$store.commit('localStorage/removeFromLocalCartByIndex', index)
     }
   }
 }

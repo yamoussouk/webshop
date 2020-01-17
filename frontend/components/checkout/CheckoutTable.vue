@@ -1,18 +1,18 @@
 <template>
   <div class="checkout_wrapper_inner">
-    <div v-for="(item, index) in cart" :key="item.id" class="checkout_row" :class="{ alone : isAlone}">
+    <div v-for="(item, index) in cart" :key="item.id" :class="{ alone : isAlone}" class="checkout_row">
       <div class="index_wrapper">
         <span>{{ index + 1 }}</span>
       </div>
       <div class="description_wrapper">
         <div class="image_wrapper">
-          <img v-if="item.image" class="image" alt="product-image" :src="'/uploaded/' + item.id + '/' + item.image.imageUrl">
+          <img v-if="item.image" :src="'/uploaded/' + item.id + '/' + item.image.imageUrl" class="image" alt="product-image">
         </div>
         <div class="description">
           <span class="name">{{ item.name }}</span>
           <span v-if="item.size" class="size">{{ item.size }}</span>
           <span v-if="item.startingDay" class="starting_day">{{ item.startingDay }}</span>
-          <span v-if="item.logoText" class="logo_text" :title="item.logoText">{{ item.logoText }}</span>
+          <span v-if="item.logoText" :title="item.logoText" class="logo_text">{{ item.logoText }}</span>
         </div>
       </div>
       <div class="price_wrapper">

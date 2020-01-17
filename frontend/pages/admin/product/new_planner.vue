@@ -60,7 +60,7 @@
               </div>
               <div class="row">
                 <div class="col-md-12">
-                  <button class="submitButton" @click="addNew">
+                  <button @click="addNew" class="submitButton">
                     Add Product
                   </button>
                 </div>

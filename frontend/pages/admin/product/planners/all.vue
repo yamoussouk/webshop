@@ -36,8 +36,8 @@
                       <nuxt-link :to="`${product.id}`">
                         <img :src="'/edit-button.png'" alt="edit button">
                       </nuxt-link>
-                      <img :src="freezeSource(product.id)" alt="freeze button" @click="productEnable(product.id)">
-                      <img v-b-modal.ensure-modal :src="'/remove-button.png'" alt="remove button" @click="setId(product.id)">
+                      <img :src="freezeSource(product.id)" @click="productEnable(product.id)" alt="freeze button">
+                      <img v-b-modal.ensure-modal :src="'/remove-button.png'" @click="setId(product.id)" alt="remove button">
                     </div>
                   </div>
                 </div>
@@ -49,10 +49,10 @@
     </div>
     <b-modal id="ensure-modal" hide-footer>
       <p>Are you sure want to remove the product?</p>
-      <b-button class="mt-3" block @click="$bvModal.hide('ensure-modal')">
+      <b-button @click="$bvModal.hide('ensure-modal')" class="mt-3" block>
         Cancel
       </b-button>
-      <b-button class="mt-3" block @click="remove(tempId)">
+      <b-button @click="remove(tempId)" class="mt-3" block>
         Remove
       </b-button>
     </b-modal>

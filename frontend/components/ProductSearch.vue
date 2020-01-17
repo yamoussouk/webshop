@@ -3,9 +3,9 @@
     <span>
       <img :src="'/page_assets/magnifier.png'" alt="magnifier">
     </span>
-      <div class="search_field">
-        <input id="product_search_field" placeholder="search items" :value="search" @keyup="onChange($event)">
-      </div>
+    <div class="search_field">
+      <input id="product_search_field" :value="search" @keyup="onChange($event)" placeholder="search items">
+    </div>
   </div>
 </template>
 

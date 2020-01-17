@@ -13,10 +13,10 @@
           <input ref="logotext" v-model="logoText" type="text" class="logo_text" placeholder="Add logo text">
         </div>
         <div class="product_cart_buttons">
-          <button class="product_add_to_cart_button" @click="add(product)">
+          <button @click="add(product)" class="product_add_to_cart_button">
             add to cart
           </button>
-          <button class="product_quick_buy_button" @click="buynow(product)">
+          <button @click="buynow(product)" class="product_quick_buy_button">
             buy it now
           </button>
         </div>
@@ -25,7 +25,9 @@
         <div ref="product_details" :style="styleObject" class="product_details">
           <p v-html="product.longDescription" />
         </div>
-        <button class="show_more_button" @click="toggle($event)">Show {{button_text}}</button>
+        <button @click="toggle($event)" class="show_more_button">
+          Show {{ button_text }}
+        </button>
       </div>
     </div>
   </div>
@@ -56,9 +58,6 @@ export default {
       styleObject: {}
     }
   },
-  mounted () {
-    this.setHeight()
-  },
   async asyncData ({ params, store }) {
     // EU IP
     const ip = '109.74.53.10'
@@ -70,6 +69,9 @@ export default {
       continentCode: res.data.geoplugin_continentCode })
     const { data } = await axios.get(`http://localhost:8083/default/logo/${params.id}/${res.data.geoplugin_countryCode}`)
     return { product: data }
+  },
+  mounted () {
+    this.setHeight()
   },
   methods: {
     currentImage () {

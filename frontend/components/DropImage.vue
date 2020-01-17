@@ -5,70 +5,70 @@
         <div class="image">
           <img ref="dropicon0" class="drop-file-icon" src="/dropfile.png" alt="drop file here" data-counter="0">
           <div ref="preview-wrapper0" class="preview-wrapper">
-            <a ref="removebutton0" class="remove" @click="removeFile( 0 )" />
+            <a ref="removebutton0" @click="removeFile( 0 )" class="remove" />
             <img ref="preview0" class="preview">
           </div>
         </div>
         <div class="image">
           <img ref="dropicon1" class="drop-file-icon" src="/dropfile.png" alt="drop file here" data-counter="1">
           <div ref="preview-wrapper1" class="preview-wrapper">
-            <a ref="removebutton1" class="remove" @click="removeFile( 1 )" />
+            <a ref="removebutton1" @click="removeFile( 1 )" class="remove" />
             <img ref="preview1" class="preview">
           </div>
         </div>
         <div class="image">
           <img ref="dropicon2" class="drop-file-icon" src="/dropfile.png" alt="drop file here" data-counter="2">
           <div ref="preview-wrapper2" class="preview-wrapper">
-            <a ref="removebutton2" class="remove" @click="removeFile( 2 )" />
+            <a ref="removebutton2" @click="removeFile( 2 )" class="remove" />
             <img ref="preview2" class="preview">
           </div>
         </div>
         <div class="image">
           <img ref="dropicon3" class="drop-file-icon" src="/dropfile.png" alt="drop file here" data-counter="3">
           <div ref="preview-wrapper3" class="preview-wrapper">
-            <a ref="removebutton3" class="remove" @click="removeFile( 3 )" />
+            <a ref="removebutton3" @click="removeFile( 3 )" class="remove" />
             <img ref="preview3" class="preview">
           </div>
         </div>
         <div class="image">
           <img ref="dropicon4" class="drop-file-icon" src="/dropfile.png" alt="drop file here" data-counter="4">
           <div ref="preview-wrapper4" class="preview-wrapper">
-            <a ref="removebutton4" class="remove" @click="removeFile( 4 )" />
+            <a ref="removebutton4" @click="removeFile( 4 )" class="remove" />
             <img ref="preview4" class="preview">
           </div>
         </div>
         <div class="image">
           <img ref="dropicon5" class="drop-file-icon" src="/dropfile.png" alt="drop file here" data-counter="5">
           <div ref="preview-wrapper5" class="preview-wrapper">
-            <a ref="removebutton5" class="remove" @click="removeFile( 5 )" />
+            <a ref="removebutton5" @click="removeFile( 5 )" class="remove" />
             <img ref="preview5" class="preview">
           </div>
         </div>
         <div class="image">
           <img ref="dropicon6" class="drop-file-icon" src="/dropfile.png" alt="drop file here" data-counter="6">
           <div ref="preview-wrapper6" class="preview-wrapper">
-            <a ref="removebutton6" class="remove" @click="removeFile( 6 )" />
+            <a ref="removebutton6" @click="removeFile( 6 )" class="remove" />
             <img ref="preview6" class="preview">
           </div>
         </div>
         <div class="image">
           <img ref="dropicon7" class="drop-file-icon" src="/dropfile.png" alt="drop file here" data-counter="7">
           <div ref="preview-wrapper7" class="preview-wrapper">
-            <a ref="removebutton7" class="remove" @click="removeFile( 7 )" />
+            <a ref="removebutton7" @click="removeFile( 7 )" class="remove" />
             <img ref="preview7" class="preview">
           </div>
         </div>
         <div class="image">
           <img ref="dropicon8" class="drop-file-icon" src="/dropfile.png" alt="drop file here" data-counter="8">
           <div ref="preview-wrapper8" class="preview-wrapper">
-            <a ref="removebutton8" class="remove" @click="removeFile( 8 )" />
+            <a ref="removebutton8" @click="removeFile( 8 )" class="remove" />
             <img ref="preview8" class="preview">
           </div>
         </div>
         <div class="image">
           <img ref="dropicon9" class="drop-file-icon" src="/dropfile.png" alt="drop file here" data-counter="9">
           <div ref="preview-wrapper9" class="preview-wrapper">
-            <a ref="removebutton9" class="remove" @click="removeFile( 9 )" />
+            <a ref="removebutton9" @click="removeFile( 9 )" class="remove" />
             <img ref="preview9" class="preview">
           </div>
         </div>

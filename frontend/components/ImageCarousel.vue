@@ -3,10 +3,10 @@
     <div class="card-img">
       <img :src="currentImage" alt="">
       <div class="actions">
-        <span class="prev" @click="prevImage">
+        <span @click="prevImage" class="prev">
           <img id="prev-arrow" :src="'/page_assets/arrow-02.png'" alt="left-arrow">
         </span>
-        <span class="next" @click="nextImage">
+        <span @click="nextImage" class="next">
           <img id="next-arrow" :src="'/page_assets/arrow-02.png'" alt="right-arrow">
         </span>
       </div>

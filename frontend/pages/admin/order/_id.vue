@@ -9,16 +9,18 @@
               <span class="media-meta pull-right">{{ formatPurchaseTime(order) }}</span>
               <h4 class="title">
                 {{ getOrderName(detail) }}
-                <span class="pull-right pagado"></span>
+                <span class="pull-right pagado" />
               </h4>
-              <p class="summary">$ {{ getPrice(detail) }}</p>
+              <p class="summary">
+                $ {{ getPrice(detail) }}
+              </p>
             </div>
           </div>
         </td>
         <td class="product_details">
-            <span v-show="detail.size">Size: {{ detail.size }}</span>
-            <span v-show="detail.startingDay">Starting day: {{ detail.startingDay }}</span>
-            <span v-show="detail.logoText">Logo text: {{ detail.logoText }}</span>
+          <span v-show="detail.size">Size: {{ detail.size }}</span>
+          <span v-show="detail.startingDay">Starting day: {{ detail.startingDay }}</span>
+          <span v-show="detail.logoText">Logo text: {{ detail.logoText }}</span>
         </td>
       </tr>
       <tr class="order_details">

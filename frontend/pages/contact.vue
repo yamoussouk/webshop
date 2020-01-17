@@ -4,7 +4,7 @@
     <input v-model="email" type="email" class="email_input">
     <span id="message_label">MESSAGE</span>
     <textarea v-model="text" class="message_input" />
-    <div v-show="error" id="error">
+    <div id="error" v-show="error">
       Something went wrong. Try it again!
     </div>
     <span id="send" @click="sendEmail">send</span>

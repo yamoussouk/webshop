@@ -7,13 +7,13 @@
             <img :src="'/page_assets/magnifier.png'" alt="magnifier">
           </span>
           <div class="search_field">
-            <input id="product_search_field" placeholder="search items" :value="search" @keyup="onChange($event)">
+            <input id="product_search_field" :value="search" @keyup="onChange($event)" placeholder="search items">
           </div>
         </div>
       </div>
       <div class="sidebar_categories">
         <ul>
-          <li v-for="(category, index) in cats" :key="index" ref="cats" @click="filterCategory(category.toUpperCase(), index)">
+          <li ref="cats" v-for="(category, index) in cats" :key="index" @click="filterCategory(category.toUpperCase(), index)">
             {{ category.toUpperCase() }}
           </li>
         </ul>
@@ -41,14 +41,14 @@
         <p>"I am very happy whit this purchase. Definitely made my planner setup very easy."</p>
       </div>
     </div>
-    <div class="sidebar_mobile" @click="toggleMenu">
+    <div @click="toggleMenu" class="sidebar_mobile">
       <div class="sidebar_button_wrapper">
         <span>SECTIONS</span>
-        <span><img :class="{opened : openSubmenu}" alt="dropdown-carrot" :src="'/page_assets/arrow-02.png'"/></span>
+        <span><img :class="{opened : openSubmenu}" :src="'/page_assets/arrow-02.png'" alt="dropdown-carrot"></span>
       </div>
       <div v-show="openSubmenu" class="sidebar_mobile_menu_wrapper">
         <ul>
-          <li v-for="(category, index) in cats" :key="index" ref="catsmobile" @click="filterCategory(category.toUpperCase(), index)">
+          <li ref="catsmobile" v-for="(category, index) in cats" :key="index" @click="filterCategory(category.toUpperCase(), index)">
             <span>{{ category.toUpperCase() }}</span>
           </li>
         </ul>

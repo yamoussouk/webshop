@@ -4,12 +4,12 @@
     <div class="table_container">
       <table class="table table-filter">
         <tr v-for="(value, key) in vat" :key="value">
-            <td>
-              {{ key }}
-            </td>
-            <td>
-              $ {{ value }}
-            </td>
+          <td>
+            {{ key }}
+          </td>
+          <td>
+            $ {{ value }}
+          </td>
         </tr>
       </table>
     </div>

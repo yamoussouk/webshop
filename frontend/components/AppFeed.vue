@@ -2,12 +2,12 @@
   <div class="instagram_feed">
     <h1>Recent posts</h1>
     <transition name="welcome">
-      <vue-instagram :key="componentKey" token="288735132.1677ed0.ab1ad3a0c04d4a1b85c1edd79ee56f1e" :count="counter" media-type="image" class="columns is-multiline is-mobile">
+      <vue-instagram :key="componentKey" :count="counter" token="288735132.1677ed0.ab1ad3a0c04d4a1b85c1edd79ee56f1e" media-type="image" class="columns is-multiline is-mobile">
         <template slot="feeds" slot-scope="props">
           <li class="fancy-list">
             <a :href="props.feed.link"><img :src="props.feed.images.standard_resolution.url"></a>
           </li>
-          <input type="hidden" :value="feedUrl(props)">
+          <input :value="feedUrl(props)" type="hidden">
         </template>
         <template slot="error" slot-scope="props">
           <div class="fancy-alert">
@@ -19,10 +19,10 @@
     <div class="fix" />
     <div class="feed_buttons">
       <div class="left_wrapper">
-        <a class="follow_button" :href="followUrl()" target="_blank"><span>Follow</span></a>
+        <a :href="followUrl()" class="follow_button" target="_blank"><span>Follow</span></a>
       </div>
       <div class="right_wrapper">
-        <span class="show_more" @click="increaseCounter"><span>Show more</span></span>
+        <span @click="increaseCounter" class="show_more"><span>Show more</span></span>
       </div>
     </div>
   </div>
