@@ -87,6 +87,12 @@
                     <span class="nav-link-text">Set Discount</span>
                   </nuxt-link>
                 </li>
+                <li class="nav-item">
+                  <nuxt-link class="nav-link" to="/admin/discount/all">
+                    <i class="ni ni-shop text-primary" />
+                    <span class="nav-link-text">Running Discounts</span>
+                  </nuxt-link>
+                </li>
               </ul>
             </b-collapse>
           </li>

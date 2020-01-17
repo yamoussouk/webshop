@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -14,6 +15,7 @@ import com.example.backend.converter.LogoToLogoCommand;
 import com.example.backend.converter.PlannerToPlannerCommand;
 import com.example.backend.dto.LogoDto;
 import com.example.backend.dto.PlannerDto;
+import com.example.backend.dto.TaskDetailsDto;
 import com.example.backend.exception.NotFoundException;
 import com.example.backend.model.Category;
 import com.example.backend.model.Image;
@@ -315,7 +317,7 @@ public class AdminController {
     }
 
     @PostMapping("/admin/discount/set")
-    public ResponseEntity<?> setDiscount(@RequestParam("percent") double percent,
+    public Map<String, Map<String, String>> setDiscount(@RequestParam("percent") double percent,
      @RequestParam("from") String from, @RequestParam("to") String to,
       @RequestParam("products") List<Integer> products) {
         // create a task which stops the discount
@@ -333,9 +335,23 @@ public class AdminController {
                 logos.add(l);
             }
         }
-        this.taskExecutorService.executeTaskT(new Long(from), percent, planners, logos);
-        this.taskExecutorService.executeTaskT(new Long(to), new Double(0), planners, logos);
-		return new ResponseEntity<>("User is already signed up!", HttpStatus.OK);
+        TaskDetailsDto dto = new TaskDetailsDto();
+        dto.setFrom(new Long(from));
+        dto.setTo(new Long(to));
+        dto.setPercent(percent);
+        dto.setPlanners(planners);
+        dto.setLogos(logos);
+        return this.taskExecutorService.createTask(dto);
+    }
+
+    @GetMapping("/admin/discount/all")
+    public Map<String, Map<String, String>> getAllDiscount() {
+        return this.taskExecutorService.getTasks();
+    }
+
+    @GetMapping("/admin/discount/cancel/{id}")
+    public Map<String, Map<String, String>> cancelDiscount(@PathVariable(name = "id") String id) {
+        return this.taskExecutorService.cancelTask(id);
     }
 }
 
