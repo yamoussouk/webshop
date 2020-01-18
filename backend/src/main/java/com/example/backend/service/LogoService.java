@@ -4,7 +4,6 @@ import com.example.backend.command.LogoCommand;
 import com.example.backend.model.Logo;
 
 import java.util.List;
-import java.util.Set;
 
 public interface LogoService {
 

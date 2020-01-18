@@ -2,14 +2,12 @@ package com.example.backend.converter;
 
 import com.example.backend.command.ImageCommand;
 import com.example.backend.command.PlannerCommand;
-import com.example.backend.model.Image;
 import com.example.backend.model.Product;
-import com.example.backend.model.User;
 import lombok.Synchronized;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
-import java.util.Set;
+import java.util.List;
 
 import javax.validation.constraints.NotNull;
 
@@ -37,7 +35,7 @@ public class PlannerCommandToPlanner implements Converter<PlannerCommand, Produc
         product.setShortDescription(PlannerCommand.getShortDescription());
         product.setLongDescription(PlannerCommand.getLongDescription());
         product.setCategory(PlannerCommand.getCategory());
-        Set<ImageCommand> images = PlannerCommand.getImage();
+        List<ImageCommand> images = PlannerCommand.getImage();
         for (ImageCommand i : images) {
             product.setImage(this.imageCommandToImage.convert(i));
         }

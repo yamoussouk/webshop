@@ -1,8 +1,8 @@
 package com.example.backend.dto;
 
 import com.example.backend.constraint.FieldMatch;
-import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.NotEmpty;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.AssertTrue;
 
 @FieldMatch.List({

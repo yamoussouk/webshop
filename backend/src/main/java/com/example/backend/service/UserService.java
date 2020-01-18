@@ -5,7 +5,6 @@ import com.example.backend.dto.UserRegistrationDto;
 import com.example.backend.model.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
-import java.util.Map;
 import java.util.Set;
 
 public interface UserService extends UserDetailsService {

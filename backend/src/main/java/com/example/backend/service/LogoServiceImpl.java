@@ -2,7 +2,6 @@ package com.example.backend.service;
 
 import com.example.backend.command.LogoCommand;
 import com.example.backend.converter.LogoToLogoCommand;
-import com.example.backend.exception.NotFoundException;
 import com.example.backend.model.Logo;
 import com.example.backend.repository.LogoRepository;
 import lombok.extern.slf4j.Slf4j;

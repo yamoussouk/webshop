@@ -4,8 +4,6 @@ import com.example.backend.command.OrderCommand;
 import com.example.backend.command.OrderDetailsCommand;
 import com.example.backend.model.OrderDetails;
 import com.example.backend.model.Orders;
-import com.example.backend.model.Product;
-import com.example.backend.repository.ProductRepository;
 import lombok.Synchronized;
 import org.springframework.stereotype.Component;
 
@@ -17,14 +15,9 @@ import javax.validation.constraints.NotNull;
 @Component
 public class OrderToOrderCommand {
 
-    private ProductRepository productRepository;
-    private final PlannerToPlannerCommand productConverter;
     private final OrderDetailsToOrderDetailsCommand orderDetailsConverter;
 
-    public OrderToOrderCommand(ProductRepository productRepository, PlannerToPlannerCommand productConverter,
-    OrderDetailsToOrderDetailsCommand orderDetailsConverter) {
-        this.productRepository = productRepository;
-        this.productConverter = productConverter;
+    public OrderToOrderCommand(OrderDetailsToOrderDetailsCommand orderDetailsConverter) {
         this.orderDetailsConverter = orderDetailsConverter;
     }
 

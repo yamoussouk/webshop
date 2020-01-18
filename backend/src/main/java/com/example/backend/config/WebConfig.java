@@ -7,14 +7,14 @@ import org.springframework.mobile.device.site.SitePreferenceHandlerMethodArgumen
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 
 import java.util.List;
 
-public class WebConfig extends WebMvcConfigurerAdapter {
+public class WebConfig extends WebMvcConfigurationSupport {
 
     @Override
-    public void addCorsMappings(CorsRegistry registry) {
+    public void addCorsMappings(final CorsRegistry registry) {
         registry.addMapping("/**")
                 .allowedMethods("HEAD", "GET", "PUT", "POST", "DELETE", "PATCH");
     }
@@ -38,13 +38,13 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     }
 
     @Override
-    public void addInterceptors(InterceptorRegistry registry) {
+    public void addInterceptors(final InterceptorRegistry registry) {
         registry.addInterceptor(deviceResolverHandlerInterceptor());
         registry.addInterceptor(sitePreferenceHandlerInterceptor());
     }
     @Override
     public void addArgumentResolvers(
-            List<HandlerMethodArgumentResolver> argumentResolvers) {
+            final List<HandlerMethodArgumentResolver> argumentResolvers) {
         argumentResolvers.add(sitePreferenceHandlerMethodArgumentResolver());
     }
 

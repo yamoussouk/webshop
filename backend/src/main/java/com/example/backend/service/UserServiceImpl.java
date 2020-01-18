@@ -1,6 +1,5 @@
 package com.example.backend.service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.example.backend.command.UserCommand;
 import com.example.backend.converter.UserCommandToUser;
 import com.example.backend.converter.UserToUserCommand;
@@ -20,7 +19,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -29,7 +27,6 @@ import java.util.stream.Collectors;
 @Qualifier("original")
 public class UserServiceImpl implements UserService {
 
-    private final Long ADMIN = 1L;
     private final Long USER = 2L;
 
     @Autowired

@@ -1,7 +1,7 @@
 package com.example.backend.dto;
 
 import com.example.backend.constraint.FieldMatch;
-import org.hibernate.validator.constraints.NotEmpty;
+import javax.validation.constraints.NotEmpty;
 
 @FieldMatch(first = "password", second = "confirmPassword", message = "The password fields must match")
 public class PasswordResetDto {

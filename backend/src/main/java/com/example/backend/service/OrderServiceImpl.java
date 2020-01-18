@@ -1,14 +1,11 @@
 package com.example.backend.service;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import com.example.backend.command.OrderCommand;
 import com.example.backend.converter.OrderToOrderCommand;
 import com.example.backend.model.Logo;
-import com.example.backend.model.Mail;
 import com.example.backend.model.OrderDetails;
 import com.example.backend.model.Orders;
 import com.example.backend.model.Planner;
@@ -24,7 +21,6 @@ public class OrderServiceImpl implements OrderService {
     private OrdersRepository ordersRepository;
     private UserRepository userRepository;
     private OrderDetailsRepository orderDetailsRepository;
-    private EmailService mailService;
     private OrderToOrderCommand ordersConverter;
 
     public OrderServiceImpl(OrdersRepository ordersRepository, 
@@ -32,7 +28,6 @@ public class OrderServiceImpl implements OrderService {
     OrderToOrderCommand ordersConverter) {
         this.ordersRepository = ordersRepository;
         this.userRepository = userRepository;
-        this.mailService = mailService;
         this.orderDetailsRepository = orderDetailsRepository;
         this.ordersConverter = ordersConverter;
     }

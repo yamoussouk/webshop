@@ -42,6 +42,9 @@ public class AuthenticationRestController {
     @Value("${jwt.header}")
     private String tokenHeader;
 
+    @Value("${email.where.from.activation.arrives}")
+    private String businessEmail;
+
     @Autowired
     private AuthenticationManager authenticationManager;
 
@@ -137,8 +140,8 @@ public class AuthenticationRestController {
         tokenRepository.save(token);
 
         Mail mail = new Mail();
-        //TODO: change email address
-        mail.setFrom("valaki@gmail.com");
+
+        mail.setFrom(businessEmail);
         mail.setTo(user.getEmail());
         mail.setSubject("Activate registration!");
 

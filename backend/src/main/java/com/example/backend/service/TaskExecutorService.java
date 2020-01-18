@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
@@ -129,9 +128,9 @@ public class TaskExecutorService {
         Date date = new Date();
         long timeMilli = date.getTime();
         Map<String, Map<String, String>> taskCollection = new HashMap<>();
-        Iterator it = this.runningTasks.entrySet().iterator();
+        Iterator<Map.Entry<Integer, TaskExecutorService.DataSet>> it = this.runningTasks.entrySet().iterator();
         while (it.hasNext()) {
-            Map.Entry pair = (Map.Entry)it.next();
+            Map.Entry<Integer, TaskExecutorService.DataSet> pair = it.next();
             Map<String, String> temp = new HashMap<>();
             DataSet tempSet = (DataSet) pair.getValue();
             temp.put("from", tempSet.getFromTask().getDelay(TimeUnit.MILLISECONDS) + timeMilli + "");
@@ -145,16 +144,16 @@ public class TaskExecutorService {
     }
 
     public class DataSet {
-        private ScheduledFuture fromTask;
-        private ScheduledFuture toTask;
+        private ScheduledFuture<?> fromTask;
+        private ScheduledFuture<?> toTask;
         private double percent;
         private List<String> productNames;
         private List<Long> productIDs;
-        public void setFromTask(ScheduledFuture fromTask) {
-            this.fromTask = fromTask;
+        public void setFromTask(ScheduledFuture<?> scheduledFuture) {
+            this.fromTask = scheduledFuture;
         }
-        public void setToTask(ScheduledFuture toTask) {
-            this.toTask = toTask;
+        public void setToTask(ScheduledFuture<?> scheduledFuture) {
+            this.toTask = scheduledFuture;
         }
         public void setPercent(double percent) {
             this.percent = percent;
@@ -165,10 +164,10 @@ public class TaskExecutorService {
         public void setProductIDs(List<Long> ids) {
             this.productIDs = ids;
         }
-        public ScheduledFuture getFromTask() {
+        public ScheduledFuture<?> getFromTask() {
             return this.fromTask;
         }
-        public ScheduledFuture getToTask() {
+        public ScheduledFuture<?> getToTask() {
             return this.toTask;
         }
         public double getPercent() {

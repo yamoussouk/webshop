@@ -2,9 +2,7 @@ package com.example.backend.converter;
 
 import com.example.backend.command.ImageCommand;
 import com.example.backend.command.LogoCommand;
-import com.example.backend.model.Image;
 import com.example.backend.model.Logo;
-import com.example.backend.model.User;
 import lombok.Synchronized;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;

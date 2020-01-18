@@ -4,7 +4,6 @@ import com.example.backend.command.PlannerCommand;
 import com.example.backend.model.Planner;
 
 import java.util.List;
-import java.util.Set;
 
 public interface PlannerService {
 

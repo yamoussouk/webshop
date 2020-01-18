@@ -6,9 +6,7 @@ import com.example.backend.model.Product;
 import com.example.backend.repository.ImageRepository;
 import com.example.backend.repository.ProductRepository;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,10 +33,6 @@ public class ImageServiceImpl implements ImageService {
     private final PlannerService PlannerService;
     private final ImageRepository imageRepository;
 
-    @Autowired
-    private ResourceLoader resourceLoader;
-
-    private final String UPLOADED_FOLDER = "src/main/resources/static/images/";
     private final String WDIR = System.getProperty("user.dir");
     private final String UPLOADED = WDIR + "/frontend/static/uploaded/";
 
