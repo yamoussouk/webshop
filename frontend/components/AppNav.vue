@@ -44,27 +44,27 @@
             </span>
           </div>
           <ul>
-            <li>
+            <li @click="toggle">
               <nuxt-link exact to="/">
                 <span>HOME</span>
               </nuxt-link>
             </li>
-            <li>
+            <li @click="toggle">
               <nuxt-link to="/shop">
                 <span>SHOP</span>
               </nuxt-link>
             </li>
-            <li>
+            <li @click="toggle">
               <nuxt-link to="/freebies">
                 <span>FREEBIES</span>
               </nuxt-link>
             </li>
-            <li>
+            <li @click="toggle">
               <nuxt-link to="/aboutme">
                 <span>ABOUT ME</span>
               </nuxt-link>
             </li>
-            <li>
+            <li @click="toggle">
               <nuxt-link to="/contact">
                 <span>CONTACT</span>
               </nuxt-link>
