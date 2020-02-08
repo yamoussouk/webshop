@@ -13,6 +13,7 @@ public class LogoDto {
     private String logoText;
     private int enabled;
     private List<String> categories;
+    private String sku;
 
     public String getName() {
         return this.name;
@@ -50,5 +51,13 @@ public class LogoDto {
     }
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getSku() {
+        return this.sku;
+    }
+
+    public void setSku(String sku) {
+        this.sku = sku;
     }
 }

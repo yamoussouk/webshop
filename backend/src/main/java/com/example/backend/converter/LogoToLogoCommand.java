@@ -50,6 +50,7 @@ public class LogoToLogoCommand implements Converter<Logo, LogoCommand> {
         }
         LogoCommand.setImage(images);
         LogoCommand.setEnabled(Logo.getEnabled());
+        LogoCommand.setSku(Logo.getSku());
         return LogoCommand;
     }
 }

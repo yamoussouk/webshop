@@ -12,6 +12,7 @@ public class ProductDto {
     private String downloadLink;
     private boolean enabled;
     private List<String> categories;
+    private String sku;
 
     public String getName() {
         return this.name;
@@ -43,6 +44,14 @@ public class ProductDto {
 
     public List<String> getCategories () {
         return this.categories;
+    }
+
+    public String getSku() {
+        return this.sku;
+    }
+
+    public void setSku(String sku) {
+        this.sku = sku;
     }
 }
 

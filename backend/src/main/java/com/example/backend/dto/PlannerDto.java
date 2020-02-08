@@ -15,6 +15,7 @@ public class PlannerDto {
     private List<String> categories;
     private String size;
     private String startingDay;
+    private String sku;
 
     public String getName() {
         return this.name;
@@ -62,5 +63,13 @@ public class PlannerDto {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getSku() {
+        return this.sku;
+    }
+
+    public void setSku(String sku) {
+        this.sku = sku;
     }
 }

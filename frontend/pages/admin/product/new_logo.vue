@@ -22,6 +22,14 @@
                   </div>
                   <div class="form-group">
                     <label class="form-control-label">
+                      Logo SKU
+                    </label>
+                    <div class="has-name">
+                      <input v-model="form.sku" type="text" placeholder="Logo SKU" class="form-control">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-control-label">
                       Select category
                     </label>
                     <div class="has-name">
@@ -104,7 +112,8 @@ export default {
         'price': parseFloat(this.form.price),
         'categories': this.form.categories,
         'enabled': this.form.enabled,
-        'longDescription': this.form.longDescription
+        'longDescription': this.form.longDescription,
+        'sku': this.form.sku
       }
       const headers = {
         'Authorization': this.auth.accessToken
@@ -134,6 +143,7 @@ export default {
       this.form.price = 0
       this.form.files.length = 0
       this.form.longDescription = ''
+      this.form.sku = ''
       this.form.categories.length = 0
       this.$refs.dropImage.resetImages()
     }

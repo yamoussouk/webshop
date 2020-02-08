@@ -209,6 +209,7 @@ public class AdminController {
         p.setCategory(getCategories(dto.getCategories()));
         List<Image> i = plannerImagesLeft(dto.getId(), removed);
         p.setImages(i);
+        p.setSku(dto.getSku());
         return p;
     }
 
@@ -227,6 +228,7 @@ public class AdminController {
         p.setCategory(getCategories(dto.getCategories()));
         List<Image> i = logoImagesLeft(dto.getId(), removed);
         p.setImages(i);
+        p.setSku(dto.getSku());
         return p;
     }
 
@@ -244,6 +246,8 @@ public class AdminController {
             return productImages;
         } catch (NotFoundException e) {
             return new ArrayList<Image>();
+        } catch (NullPointerException e) {
+            return new ArrayList<Image>();
         }
     }
 
@@ -260,6 +264,8 @@ public class AdminController {
             }
             return productImages;
         } catch (NotFoundException e) {
+            return new ArrayList<Image>();
+        } catch (NullPointerException e) {
             return new ArrayList<Image>();
         }
     }

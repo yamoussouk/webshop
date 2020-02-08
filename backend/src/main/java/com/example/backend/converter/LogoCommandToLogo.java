@@ -41,6 +41,7 @@ public class LogoCommandToLogo implements Converter<LogoCommand, Logo> {
         }
         logo.setQuantity(logoCommand.getQuantity());
         logo.setEnabled(logoCommand.getEnabled());
+        logo.setSku(logoCommand.getSku());
         return logo;
     }
 }

@@ -24,6 +24,12 @@
                     <div class="has-name">
                       <input :value="product.price" @input="updatePrice($event)" type="number" class="form-control">
                     </div>
+                    <label class="form-control-label">
+                      Product SKU
+                    </label>
+                    <div class="has-name">
+                      <input :value="product.sku" @input="updateSku($event)" type="text" class="form-control">
+                    </div>
                   </div>
                   <div class="col-md-6 desc">
                     <label class="form-control-label">Product description</label>
@@ -91,6 +97,7 @@ export default {
       form: {
         name: '',
         price: 0,
+        sku: '',
         content: '',
         dllink: '',
         original: [],
@@ -131,6 +138,9 @@ export default {
     updatePrice (e) {
       this.form.price = e.target.value
     },
+    updateSku (e) {
+      this.form.sku = e.target.value
+    },
     updateContent (e) {
       this.form.content = e.target.value
     },
@@ -145,6 +155,7 @@ export default {
         'name': this.form.name === '' ? this.product.name : this.form.name,
         'longDescription': this.form.content,
         'price': this.form.price === 0 ? this.product.price : this.form.price,
+        'sku': this.form.sku === 0 ? this.product.sku : this.form.sku,
         'categories': this.form.categories,
         'quantity': 1,
         'enabled': this.product.enabled

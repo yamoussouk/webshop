@@ -39,6 +39,7 @@ public class PlannerCommandToPlanner implements Converter<PlannerCommand, Produc
         for (ImageCommand i : images) {
             product.setImage(this.imageCommandToImage.convert(i));
         }
+        product.setSku(PlannerCommand.getSku());
         product.setQuantity(PlannerCommand.getQuantity());
         return product;
     }

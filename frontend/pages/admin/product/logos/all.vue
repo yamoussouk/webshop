@@ -73,9 +73,6 @@ export default {
   computed: {
     ...mapGetters(['logos', 'auth'])
   },
-  mounted () {
-    console.log(this.logos)
-  },
   methods: {
     ...mapActions(['changeLogoEnabled', 'removeLogo']),
     freezeSource (id) {

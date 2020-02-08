@@ -53,6 +53,7 @@ public class PlannerToPlannerCommand implements Converter<Planner, PlannerComman
         PlannerCommand.setImage(images);
         PlannerCommand.setEnabled(planner.getEnabled());
         PlannerCommand.setDownloadLink(planner.getDownloadLink());
+        PlannerCommand.setSku(planner.getSku());
         return PlannerCommand;
     }
 }
