@@ -70,8 +70,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         httpSecurity
                 .addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
 
-        httpSecurity.authorizeRequests().antMatchers("/h2-console/**").permitAll();
-
         httpSecurity.headers().frameOptions().disable();
 
         httpSecurity
@@ -79,8 +77,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(
                         "/registration**",
                         "/reset-password**",
-                        "/subscribe**",
-                        "/admin/**").permitAll()
+                        "/subscribe**").permitAll()
                 .antMatchers(
                         "/js/**",
                         "/css/**",
@@ -90,7 +87,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/activate-registration",
                         "/webjars/**").permitAll()
                 .antMatchers("/auth/**").permitAll()
-                .antMatchers("/**").permitAll()
+                .antMatchers("/default/**").permitAll()
+                .antMatchers("/order/**").permitAll()
                 .antMatchers("/user/**").permitAll()
                 .antMatchers("/admin/**").authenticated()
                 .anyRequest().authenticated();

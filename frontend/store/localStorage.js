@@ -1,5 +1,6 @@
 export const state = () => ({
-  localCart: []
+  localCart: [],
+  discount: 0
 })
 
 export const getters = {
@@ -33,6 +34,9 @@ export const getters = {
       cart.push(el)
     }
     return cart
+  },
+  discount: (state) => {
+    return state.discount
   }
 }
 
@@ -48,6 +52,12 @@ export const mutations = {
   },
   emptyLocalCart: (state) => {
     state.localCart = []
+  },
+  setDiscount: (state, discount) => {
+    state.discount = discount
+  },
+  emptyDiscount: (state) => {
+    state.discount = 0
   }
 }
 
@@ -63,5 +73,11 @@ export const actions = {
   },
   emptyLocalCart: ({ commit }) => {
     commit('emptyLocalCart')
+  },
+  setDiscount: ({ commit, discount }) => {
+    commit('setDiscount', discount)
+  },
+  emptyDiscount: ({ commit }) => {
+    commit('emptyDiscount')
   }
 }

@@ -57,14 +57,15 @@ public class CouponServiceImpl implements CouponService {
     }
 
     @Override
-    public List<Coupon> getAll(boolean enabled) {
+    public List<Coupon> getAll() {
         List<Coupon> allCoupons = new ArrayList<>();
         this.couponRepository.findAll().iterator().forEachRemaining(allCoupons::add);
-        if(enabled) {
-            return allCoupons.stream().filter(coupon -> coupon.getEnabled() == 1).collect(Collectors.toList());
-        } else {
-            return allCoupons;
-        }
+        // if(enabled) {
+        //     return allCoupons.stream().filter(coupon -> coupon.getEnabled() == 1).collect(Collectors.toList());
+        // } else {
+        //     return allCoupons;
+        // }
+        return allCoupons;
     }
 
     @Override
@@ -75,5 +76,10 @@ public class CouponServiceImpl implements CouponService {
         } else {
             return null;
         }
+    }
+
+    @Override
+    public Coupon saveCoupon(Coupon c) {
+        return this.couponRepository.save(c);
     }
 }

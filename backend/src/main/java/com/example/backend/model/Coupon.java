@@ -18,6 +18,12 @@ public class Coupon {
 
     public Coupon () {}
 
+    public Coupon(String name, int percent, int enabled) {
+        this.name = name;
+        this.percent = percent;
+        this.enabled = enabled;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }

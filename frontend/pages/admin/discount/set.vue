@@ -89,7 +89,7 @@ export default {
       disabledFrom: {
         customPredictor (date) {
           const today = new Date()
-          if (date.getDate() <= today.getDate()) {
+          if (date <= today) {
             return true
           }
         }
@@ -98,7 +98,7 @@ export default {
         customPredictor (date) {
           const today = new Date()
           today.setHours(24)
-          if (date.getDate() <= today.getDate()) {
+          if (date <= today) {
             return true
           }
         }

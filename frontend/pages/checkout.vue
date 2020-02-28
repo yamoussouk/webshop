@@ -33,7 +33,7 @@
           </div>
         </div>
         <!-- end of mobile checkout -->
-        <div class="checkout_subtotal_row">
+        <div v-if="discount == 0" class="checkout_subtotal_row">
           <div class="coupon_row">
             <span>COUPON:</span>
           </div>
@@ -42,6 +42,11 @@
             <button @click="applyCoupon" type="button">
               Apply
             </button>
+          </div>
+        </div>
+        <div v-else  class="checkout_subtotal_row_applied">
+          <div class="coupon_row_applied">
+            <span>Coupon applied, discount: {{ discount * 100 + '%' }}</span>
           </div>
         </div>
 
@@ -102,7 +107,7 @@ export default {
       back: false,
       email: '',
       coupon: null,
-      discount: 0,
+      // discount: 0,
       success: false,
       message: '',
       proceed: false,
@@ -122,6 +127,10 @@ export default {
     },
     items () {
       return this.$store.state.localStorage.payPalCompatibleCart
+    },
+    discount () {
+      console.log(this.$store.state.localStorage.discount)
+      return this.$store.state.localStorage.discount
     }
   },
   watch: {
@@ -169,6 +178,7 @@ export default {
   methods: {
     emptyLocalCart () {
       this.$store.commit('localStorage/emptyLocalCart')
+      this.$store.commit('localStorage/emptyDiscount')
     },
     validEmail (email) {
       const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
@@ -183,7 +193,8 @@ export default {
       axios.get('http://localhost:8083/default/coupon/' + this.coupon
       ).then((response) => {
         if (typeof response.data === 'number') {
-          this.discount = parseFloat(response.data) / 100
+          this.$store.commit('localStorage/setDiscount', parseFloat(response.data) / 100)
+          // this.discount = parseFloat(response.data) / 100
         } else {
           console.log('error', response.data)
         }
@@ -325,6 +336,19 @@ export default {
   }
   .checkout_table_mobile {
     display: none;
+  }
+  .checkout_subtotal_row_applied {
+    width: 100%;
+    float: none;
+    text-align: center;
+    background-color: #fff;
+    margin: 2% 0;
+  }
+  .coupon_row_applied {
+    margin-left: 0;
+    text-align: center;
+    font-size: 55px;
+    position: relative;
   }
 }
 @media only screen and (max-width: 1920px){

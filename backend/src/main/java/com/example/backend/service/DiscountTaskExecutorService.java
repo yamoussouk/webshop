@@ -22,7 +22,7 @@ import org.springframework.scheduling.concurrent.ConcurrentTaskScheduler;
 import org.springframework.stereotype.Service;
 
 @Service
-public class TaskExecutorService {
+public class DiscountTaskExecutorService {
 
     private TaskScheduler scheduler;
     ScheduledExecutorService localExecutor = Executors.newSingleThreadScheduledExecutor();
@@ -34,7 +34,7 @@ public class TaskExecutorService {
     private Map<Integer, DataSet> runningTasks = new HashMap<>();
     private int taskKey = 0;
 
-    public TaskExecutorService(LogoService logoService, PlannerService plannerService) {
+    public DiscountTaskExecutorService(LogoService logoService, PlannerService plannerService) {
         this.logoService = logoService;
         this.plannerService = plannerService;
     }
@@ -128,9 +128,9 @@ public class TaskExecutorService {
         Date date = new Date();
         long timeMilli = date.getTime();
         Map<String, Map<String, String>> taskCollection = new HashMap<>();
-        Iterator<Map.Entry<Integer, TaskExecutorService.DataSet>> it = this.runningTasks.entrySet().iterator();
+        Iterator<Map.Entry<Integer, DiscountTaskExecutorService.DataSet>> it = this.runningTasks.entrySet().iterator();
         while (it.hasNext()) {
-            Map.Entry<Integer, TaskExecutorService.DataSet> pair = it.next();
+            Map.Entry<Integer, DiscountTaskExecutorService.DataSet> pair = it.next();
             Map<String, String> temp = new HashMap<>();
             DataSet tempSet = (DataSet) pair.getValue();
             temp.put("from", tempSet.getFromTask().getDelay(TimeUnit.MILLISECONDS) + timeMilli + "");

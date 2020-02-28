@@ -6,11 +6,12 @@ import com.example.backend.model.Coupon;
 
 public interface CouponService {
 
-    List<Coupon> getAll(boolean enabled);
+    List<Coupon> getAll();
     void addCoupon(Coupon coupon);
     Coupon getCouponById(Long id);
     Coupon getCouponByName(String name);
     void deleteCouponById(Long id);
     void changeEnabledCouponById(Long id);
     void modifyCoupon(Coupon coupon);
+    Coupon saveCoupon(Coupon coupon);
 }
