@@ -12,4 +12,5 @@ public interface PlannerService {
     PlannerCommand findCommandById(Long id);
     void deleteById(Long idToDelete);
     Planner savePlanner(Planner product);
+    Planner findByName(String name);
 }

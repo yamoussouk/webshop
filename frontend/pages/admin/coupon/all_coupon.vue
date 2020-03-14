@@ -6,7 +6,21 @@
           <div v-for="coupon in coupons" :key="coupon.id" class="card">
             <div class="card mb-4">
               <div class="card-body">
-                <div v-if="!editMode" class="row">
+                <div v-show="coupon.editMode === true" class="row">
+                  <div class="col-md-2 desc">
+                    <div><input v-model="tempName" type="text" class="form-control"></div>
+                  </div>
+                  <div class="col-md-9 percentage">
+                    <span><input v-model="tempPercent" type="number" class="form-control"></span>
+                  </div>
+                  <div class="col-md-1 settings">
+                    <div>
+                      <img :src="'/verified-button.png'" @click="save(coupon.id, $event.target)" alt="save button">
+                      <img :src="'/freeze-button.png'" @click="cancel(coupon.id, $event.target)" alt="cancel button">
+                    </div>
+                  </div>
+                </div>
+                <div v-show="coupon.editMode !== true" class="row">
                   <div class="col-md-2 desc">
                     <div>{{ coupon.name }}</div>
                   </div>
@@ -22,23 +36,12 @@
                   </div>
                   <div class="col-md-1 settings">
                     <div>
-                      <img :src="'/edit-button.png'" @click="edit(coupon.id)" alt="edit button">
-                      <img :src="freezeSource(coupon.id)" @click="couponEnable(coupon.id)" alt="freeze button">
-                      <img v-b-modal.ensure-modal :src="'/remove-button.png'" @click="setId(coupon.id)" alt="remove button">
-                    </div>
-                  </div>
-                </div>
-                <div v-else class="row">
-                  <div class="col-md-2 desc">
-                    <div><input v-model="tempName" type="text" class="form-control"></div>
-                  </div>
-                  <div class="col-md-9 percentage">
-                    <span><input v-model="tempPercent" type="number" class="form-control"></span>
-                  </div>
-                  <div class="col-md-1 settings">
-                    <div>
-                      <img :src="'/verified-button.png'" @click="save(coupon.id)" alt="save button">
-                      <img :src="'/freeze-button.png'" @click="cancel()" alt="cancel button">
+                      <img v-if="coupon.currentEdit || coupon.to !== ''" :src="'/edit-button.png'" alt="disabled edit button" class="disabled">
+                      <img v-else :src="'/edit-button.png'" :ref="'edit_' + coupon.id" @click="edit(coupon.id, $event.target)" alt="edit button">
+                      <img v-if="!coupon.currentEdit" :src="freezeSource(coupon.id)" @click="couponEnable(coupon.id)" alt="freeze button">
+                      <img v-else :src="freezeSource(coupon.id)" alt="disabled freeze button" class="disabled">
+                      <img v-if="!coupon.currentEdit" v-b-modal.ensure-modal :src="'/remove-button.png'" @click="setId(coupon.id)" alt="remove button">
+                      <img v-else :src="'/remove-button.png'" alt="disabled remove button" class="disabled">
                     </div>
                   </div>
                 </div>
@@ -61,6 +64,7 @@
 </template>
 
 <script>
+import Vue from 'vue'
 import { mapGetters } from 'vuex'
 import axios from 'axios'
 
@@ -86,7 +90,10 @@ export default {
     axios.get('http://localhost:8083/admin/coupon/all', { headers: headers }
     ).then((response) => {
       this.coupons = response.data
-      console.log(this.coupons)
+      Object.keys(this.coupons).forEach(function (c) {
+        this.coupons[c].editMode = false
+        this.coupons[c].currentEdit = false
+      }.bind(this))
     })
   },
   methods: {
@@ -104,13 +111,20 @@ export default {
       const headers = {
         'Authorization': this.auth.accessToken
       }
+      const formData = new FormData()
+      const o = this.__getObjectById(id)
+      const type = this.coupons[o].from === '' ? 'normal' : 'range'
+      formData.append('type', type)
       // eslint-disable-next-line
-      axios.get('http://localhost:8083/admin/enable/coupon/' + id, { headers: headers }
+      axios.post('http://localhost:8083/admin/enable/coupon/' + id, formData, { headers: headers }
       ).then(() => {
         const t = this.__getObjectById(id)
         const neg = this.__getEnabledById(id) ? '0' : '1'
         this.coupons[t].enabled = neg
-        console.log(this.coupons)
+        if (type === 'range') {
+          this.coupons[t].from = ''
+          this.coupons[t].to = ''
+        }
       })
     },
     remove (id) {
@@ -120,7 +134,7 @@ export default {
       // eslint-disable-next-line
       axios.get('http://localhost:8083/admin/delete/coupon/' + id, { headers: headers }
       ).then(() => {
-        this.coupons.splice(this.coupons.find(pr => parseInt(pr.id) === parseInt(id)), 1)
+        Vue.delete(this.coupons, this.__getObjectById(id))
         this.tempId = ''
         this.$bvModal.hide('ensure-modal')
       })
@@ -128,19 +142,35 @@ export default {
     setId (id) {
       this.tempId = id
     },
-    edit (id) {
-      const c = this.coupons.find(pr => parseInt(pr.id) === parseInt(id))
-      this.editMode = !this.editMode
+    edit (id, target) {
+      const idx = this.__getObjectById(id)
+      const c = this.coupons[idx]
+      c.editMode = !c.editMode
+      Vue.set(this.coupons, idx, c)
       this.tempName = c.name
       this.tempPercent = c.percent
+      const itemsToDisable = Object.keys(this.coupons).filter(key => parseInt(this.coupons[key].id) !== parseInt(id))
+      for (const item of itemsToDisable) {
+        const idx = this.__getObjectById(this.coupons[item].id)
+        const c = this.coupons[idx]
+        Vue.set(c, 'currentEdit', true)
+      }
     },
-    cancel () {
-      this.editMode = !this.editMode
+    cancel (id, target) {
+      const idx = this.__getObjectById(id)
+      const c = this.coupons[idx]
+      c.editMode = !c.editMode
+      Vue.set(this.coupons, idx, c)
       this.tempName = ''
       this.tempPercent = 0
+      const itemsToDisable = Object.keys(this.coupons).filter(key => parseInt(this.coupons[key].id) !== parseInt(id))
+      for (const item of itemsToDisable) {
+        this.coupons[item].currentEdit = false
+      }
     },
-    save (id) {
-      const c = this.coupons.find(pr => parseInt(pr.id) === parseInt(id))
+    save (id, target) {
+      const idx = this.__getObjectById(id)
+      const c = this.coupons[idx]
       const headers = {
         'Authorization': this.auth.accessToken,
         'Content-Type': 'application/json'
@@ -157,7 +187,12 @@ export default {
       axios.post('http://localhost:8083/admin/coupon/save', JSON.stringify(formObject), { headers: headers }
       ).then((response) => {
         this.coupons = response.data
-        this.editMode = !this.editMode
+        Object.keys(this.coupons).forEach(function (c) {
+          this.coupons[c].editMode = false
+          this.coupons[c].currentEdit = false
+        }.bind(this))
+        this.tempName = ''
+        this.tempPercent = 0
       })
     },
     convertDate (timestamp) {
@@ -207,5 +242,8 @@ export default {
 .product-thumbnail {
   width: 64px;
   height: 64px;
+}
+.disabled {
+  filter: opacity(0.5);
 }
 </style>

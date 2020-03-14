@@ -61,5 +61,10 @@ public class PlannerServiceImpl implements PlannerService {
     public Planner savePlanner(Planner product) {
         return plannerRepository.save(product);
     }
+
+    @Override
+    public Planner findByName(String name) {
+        return plannerRepository.findByName(name);
+    }
 }
 

@@ -1,11 +1,21 @@
 <template>
   <div class="main-content">
     <h1>Set Discount</h1>
+    <div class="discount-name">
+      <p>Add a name to the discount:</p>
+        <input v-model="discountName" type="text" class="form-control" required/>
+    </div>
     <div class="discount-dropdown">
       <p>Select percentage of the discount:</p>
       <b-form-select v-model="discountPercentage" :options="__makePercentages()" />
     </div>
-    <div class="discount-range">
+    <div>
+        <b-form-group label="How would you like to set the discount?">
+        <b-form-radio v-model="discountRange" name="some-radios" value="without">Without range</b-form-radio>
+        <b-form-radio v-model="discountRange" name="some-radios" value="with">With range</b-form-radio>
+        </b-form-group>
+    </div>
+    <div v-if="discountRange === 'with'" class="discount-range">
       <no-ssr>
         <div class="range-from">
           <p>Select a starting date:</p>
@@ -55,21 +65,33 @@
         RESET
       </button>
     </div>
+    <error :text="errorText" :left="errorLeft" :right="errorRight" :visible="errorVisible" :cancel.sync="errorVisible"/>
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
 import axios from 'axios'
+import Error from '~/components/Error.vue'
 
 export default {
   middleware: 'authenticated',
   components: {
-    'date-pick': () => import('vuejs-datepicker')
+    'date-pick': () => import('vuejs-datepicker'),
+    Error
   },
   data () {
     return {
+      errorText: '',
+      errorLeft: '',
+      errorRight: '',
+      errorVisible: false,
+      nameEq: false,
+      productEq: false,
+      futureEq: false,
       discountPercentage: 0,
+      discountName: '',
+      discountRange: '',
       group: '',
       percentages: [
         { text: '10%', value: 10 },
@@ -86,6 +108,7 @@ export default {
       dateTo: null,
       format: 'yyyy.MM.dd',
       products: [],
+      discounts: {},
       disabledFrom: {
         customPredictor (date) {
           const today = new Date()
@@ -113,6 +136,17 @@ export default {
   },
   mounted () {
     this.products = this.logos.concat(this.planners)
+  },
+  created () {
+    const headers = {
+      'Authorization': this.auth.accessToken
+    }
+    // eslint-disable-next-line
+    axios.get('http://localhost:8083/admin/discount/all', { headers: headers }
+    ).then((response) => {
+      this.discounts = response.data
+      console.log(this.discounts)
+    })
   },
   methods: {
     categories () {
@@ -153,36 +187,82 @@ export default {
     reset () {
       this.group = ''
       this.discountPercentage = ''
-      this.$refs.dateFrom.selectedDate = ''
-      this.$refs.dateTo.selectedDate = ''
     },
     set () {
-      const headers = {
-        'Authorization': this.auth.accessToken
+      Object.keys(this.discounts).forEach(function (key) {
+        if (this.discounts[key].name === this.discountName) {
+          this.nameEq = true
+        }
+      }.bind(this))
+      if (this.nameEq) {
+        this.errorText = 'With ' + this.discountName + ' name a discount already exists.'
+        this.errorRight = 'Close'
+        this.errorVisible = true
+        this.nameEq = false
+      } else {
+        const choosenProducts = this.filteredList.map(e => e.id)
+        Object.keys(this.discounts).forEach(function (key) {
+          const ids = this.discounts[key].productIds.split(', ')
+          if (ids.some(r => choosenProducts.includes(parseInt(r)))) {
+            this.productEq = true
+          }
+        }.bind(this))
+        if (this.productEq) {
+          Object.keys(this.discounts).forEach(function (key) {
+            if (this.discounts[key].to !== '') {
+              this.futureEq = true
+            }
+          }.bind(this))
+          if (this.futureEq) {
+            this.errorText = 'To this product a future discount is already set.'
+            this.errorRight = 'Close'
+            this.errorVisible = true
+            this.futureEq = false
+            this.productEq = false
+          } else {
+            this.errorText = 'To this product a discount is already set.'
+            this.errorRight = 'Close'
+            this.errorVisible = true
+            this.productEq = false
+          }
+        } else {
+          const headers = {
+            'Authorization': this.auth.accessToken
+          }
+          let df = null
+          let dt = null
+          const formData = new FormData()
+          if (this.dateFrom !== null && this.dateTo !== null) {
+            df = new Date(this.dateFrom)
+            dt = new Date(this.dateTo)
+            df.setHours(0)
+            dt.setHours(0)
+            df.setMinutes(0)
+            dt.setMinutes(0)
+            df.setSeconds(0)
+            dt.setSeconds(0)
+            formData.append('from', Date.parse(df))
+            formData.append('to', Date.parse(dt))
+          } else {
+            formData.append('from', df)
+            formData.append('to', dt)
+          }
+          formData.append('percent', this.discountPercentage)
+          formData.append('name', this.discountName)
+          formData.append('products', choosenProducts)
+          formData.append('enabled', this.discountRange === 'without' ? 1 : 0)
+          // eslint-disable-next-line
+          axios.post('http://localhost:8083/admin/discount/set', formData, {
+            // eslint-disable-next-line
+            headers: headers
+          }).then((response) => {
+            this.reset()
+          })
+            .catch(function (error) {
+              console.log(error)
+            })
+        }
       }
-      const df = new Date(this.dateFrom)
-      const dt = new Date(this.dateTo)
-      df.setHours(0)
-      dt.setHours(0)
-      df.setMinutes(0)
-      dt.setMinutes(0)
-      df.setSeconds(0)
-      dt.setSeconds(0)
-      const formData = new FormData()
-      formData.append('percent', this.discountPercentage)
-      formData.append('from', Date.parse(df))
-      formData.append('to', Date.parse(dt))
-      formData.append('products', this.filteredList.map(e => e.id))
-      // eslint-disable-next-line
-      axios.post('http://localhost:8083/admin/discount/set', formData, {
-        // eslint-disable-next-line
-        headers: headers
-      }).then((response) => {
-        this.reset()
-      })
-        .catch(function (error) {
-          console.log(error)
-        })
     }
   }
 }

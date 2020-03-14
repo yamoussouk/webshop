@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface PlannerRepository extends CrudRepository<Planner, Long> {
-    
+    Planner findByName(String name);
 }

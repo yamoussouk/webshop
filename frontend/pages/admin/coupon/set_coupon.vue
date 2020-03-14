@@ -110,6 +110,8 @@ export default {
         dt.setSeconds(0)
         formData.append('from', Date.parse(df))
         formData.append('to', Date.parse(dt))
+        // formData.append('from', '1583442670000')
+        // formData.append('to', '1583442730000')
       }
       formData.append('name', this.couponName)
       formData.append('percent', this.couponPercentage)

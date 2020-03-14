@@ -3,11 +3,13 @@ package com.example.backend.service;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 import com.example.backend.model.Coupon;
 
@@ -35,11 +37,11 @@ public class CouponTaskExecutorService {
             public void run() {
                 coupon.setEnabled(enabled);
                 couponService.saveCoupon(coupon);
+                if (idx != 0) {
+                    runningTasks.remove(idx);
+                }
             }
         };
-        if (idx != 0) {
-            runningTasks.remove(idx);
-        }
         return aRunnable;
     }
 
@@ -55,8 +57,8 @@ public class CouponTaskExecutorService {
             scheduler = new ConcurrentTaskScheduler(localExecutor);
             final String from = (String) details.get("from");
             final String to = (String) details.get("to");
-            final Runnable fromRunnable = createRunnable(coupon, 0, this.couponService, 0);
-            final Runnable toRunnable = createRunnable(coupon, 1, this.couponService, this.taskKey);
+            final Runnable fromRunnable = createRunnable(coupon, 1, this.couponService, 0);
+            final Runnable toRunnable = createRunnable(coupon, 0, this.couponService, this.taskKey);
             final DataSet taskSet = new DataSet();
             taskSet.setFromTask(scheduler.schedule(fromRunnable, new Date(new Long(from))));
             taskSet.setToTask(scheduler.schedule(toRunnable, new Date(new Long(to))));
@@ -73,18 +75,18 @@ public class CouponTaskExecutorService {
     }
 
     @Async
-    public Map<String, Map<String, String>> cancelTask(final String index, CouponService couponService) {
-        // mivan, ha az egyik már elindult
-        final DataSet taskSet = this.runningTasks.get(Integer.parseInt(index));
-        final boolean isDone = taskSet.getFromTask().isDone();
-        if (isDone) {
-            Coupon coupon = couponService.getCouponByName(taskSet.getName());
-            coupon.setEnabled(0);
-        } else {
-            taskSet.getFromTask().cancel(false);
+    public Map<String, Map<String, String>> cancelTask(final String index) {
+        // cancels task from running tasks by coupon id
+        final List<Map.Entry<Integer, DataSet>> tasks =  this.runningTasks
+        .entrySet()
+        .stream()
+        .filter(d -> String.valueOf(d.getValue().getId()).equals(index))
+        .collect(Collectors.toList());
+        for (Map.Entry<Integer, DataSet> task : tasks) {
+            task.getValue().getFromTask().cancel(false);
+            task.getValue().getToTask().cancel(false);
+            this.runningTasks.remove(task.getKey());
         }
-        taskSet.getToTask().cancel(false);
-        this.runningTasks.remove(Integer.parseInt(index));
         return getTasks();
     }
 
@@ -106,6 +108,21 @@ public class CouponTaskExecutorService {
             taskCollection.put(String.valueOf(pair.getKey()), temp);
         }
         return taskCollection;
+    }
+
+    public void createTaskPreparator (final String name, final int percent, final String from, final String to) {
+        if (from == null || to == null) {
+            final Coupon coupon = new Coupon(name, percent, 1);
+            this.couponService.saveCoupon(coupon);
+        } else {
+            final Map<String, Object> details = new HashMap<>();
+            details.put("name", name);
+            details.put("percent", percent);
+            details.put("enabled", 0);
+            details.put("from", from);
+            details.put("to", to);
+            createTask(details);
+        }
     }
 
     public class DataSet {

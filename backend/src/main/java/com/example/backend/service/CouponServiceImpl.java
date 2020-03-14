@@ -1,9 +1,13 @@
 package com.example.backend.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Optional;
-import java.util.stream.Collectors;
+import java.util.Map.Entry;
 
 import com.example.backend.model.Coupon;
 import com.example.backend.repository.CouponRepository;
@@ -18,9 +22,11 @@ import lombok.extern.slf4j.Slf4j;
 public class CouponServiceImpl implements CouponService {
 
     private final CouponRepository couponRepository;
+    private final CouponTaskExecutorService couponTaskExecutorService;
 
     public CouponServiceImpl(CouponRepository couponRepository) {
         this.couponRepository = couponRepository;
+        this.couponTaskExecutorService = new CouponTaskExecutorService(this);
     }
 
     @Override
@@ -81,5 +87,73 @@ public class CouponServiceImpl implements CouponService {
     @Override
     public Coupon saveCoupon(Coupon c) {
         return this.couponRepository.save(c);
+    }
+
+    @Override
+    public void enableCoupon(final String id, final String type) {
+        if (type.equals("range")) {
+            this.couponTaskExecutorService.cancelTask(id);
+        }
+        final Coupon c = getCouponById(new Long(id));
+        final int en = c.getEnabled();
+        if (en == 0) {
+            c.setEnabled(1);
+        } else {
+            c.setEnabled(0);
+        }
+        saveCoupon(c);
+    }
+
+    @Override
+    public Map<String, Map<String, String>> mergeCoupons(final List<Coupon> coupons, final Map<String, Map<String, String>> tasks) {
+        Map<String, Map<String, String>> allTogether = new HashMap<>();
+        int keyCounter = 0;
+        try {
+            boolean isIn = false;
+            for (final Coupon coupon : coupons) {
+                String couponId = String.valueOf(coupon.getId());
+                Iterator<Entry<String, Map<String, String>>> it = tasks.entrySet().iterator();
+                String foundKey = "";
+                while (it.hasNext()) {
+                    Map.Entry pair = (Map.Entry)it.next();
+                    Object t = ((Map) pair.getValue()).get("id");
+                    if (t.equals(couponId)) {
+                        isIn = true;
+                        foundKey = pair.getKey().toString();
+                    }
+                }
+                Map<String, String> temp = new HashMap<>();
+                temp.put("id", String.valueOf(coupon.getId()));
+                temp.put("name", coupon.getName());
+                temp.put("percent", String.valueOf(coupon.getPercent()));
+                temp.put("enabled", String.valueOf(coupon.getEnabled()));
+                if (!isIn) {
+                    temp.put("from", "");
+                    temp.put("to", "");
+                } else {
+                    temp.put("from", tasks.get(foundKey).get("from"));
+                    temp.put("to", tasks.get(foundKey).get("to"));
+                }
+                allTogether.put(String.valueOf(keyCounter), temp);
+                keyCounter++;
+                isIn = false;
+            }
+            return allTogether;
+        } catch (NoSuchElementException e) {
+            Map<String, Map<String, String>> converted = new HashMap<>();
+            int counter = 0;
+            for (Coupon c : coupons) {
+                Map<String, String> temp = new HashMap<>();
+                temp.put("id", String.valueOf(c.getId()));
+                temp.put("name", c.getName());
+                temp.put("percent", String.valueOf(c.getPercent()));
+                temp.put("enabled", String.valueOf(c.getEnabled()));
+                temp.put("from", "");
+                temp.put("to", "");
+                converted.put(String.valueOf(counter), temp);
+                counter++;
+            }
+            return converted;
+        }
     }
 }

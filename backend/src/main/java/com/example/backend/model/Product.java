@@ -37,7 +37,6 @@ public class Product {
     private Integer quantity;
     private int enabled;
     private String type;
-    private double discount;
     private String sku;
 
     @ManyToMany(fetch = FetchType.LAZY)
@@ -56,16 +55,15 @@ public class Product {
                     name = "product_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(
                     name = "image_id", referencedColumnName = "id"))
-    //@OneToMany(mappedBy = "product", orphanRemoval = true, cascade = CascadeType.PERSIST)
-    //@JsonManagedReference
     @JsonBackReference
     private List<Image> images = new ArrayList<>();
+
+    private double discount;
 
     public void setImage(Image image) {
         this.images.add(image);
     }
 
-    
     // @ManyToMany(fetch = FetchType.LAZY)
     // @JoinTable(
     //         name = "order_products",
@@ -161,13 +159,6 @@ public class Product {
     public String getType() {
         return this.type;
     }
-    public void setDiscount(double discount) {
-        this.discount = discount;
-    }
-
-    public double getDiscount() {
-        return this.discount;
-    }
 
     public String getSku() {
         return this.sku;
@@ -175,5 +166,13 @@ public class Product {
 
     public void setSku(String sku) {
         this.sku = sku;
+    }
+
+    public double getDiscount() {
+        return this.discount;
+    }
+
+    public void setDiscount(double discount) {
+        this.discount = discount;
     }
 }

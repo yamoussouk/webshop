@@ -2,7 +2,6 @@ package com.example.backend.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -19,21 +18,24 @@ import com.example.backend.converter.LogoToLogoCommand;
 import com.example.backend.converter.PlannerToPlannerCommand;
 import com.example.backend.dto.LogoDto;
 import com.example.backend.dto.PlannerDto;
-import com.example.backend.dto.TaskDetailsDto;
 import com.example.backend.exception.NotFoundException;
 import com.example.backend.model.Category;
 import com.example.backend.model.Coupon;
+import com.example.backend.model.Discount;
 import com.example.backend.model.Image;
 import com.example.backend.model.Logo;
 import com.example.backend.model.Planner;
 import com.example.backend.model.SignUpEmail;
 import com.example.backend.repository.CategoryRepository;
+import com.example.backend.repository.DiscountRepository;
 import com.example.backend.repository.SignUpRepository;
 import com.example.backend.service.CouponService;
+import com.example.backend.service.DiscountService;
 import com.example.backend.service.CouponTaskExecutorService;
 import com.example.backend.service.ImageService;
 import com.example.backend.service.LogoService;
 import com.example.backend.service.PlannerService;
+import com.example.backend.service.ProductServiceImpl;
 import com.example.backend.service.DiscountTaskExecutorService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -57,21 +59,27 @@ public class AdminController {
     private final CategoryRepository categoryRepository;
     private final PlannerToPlannerCommand PlannerToPlannerCommand = new PlannerToPlannerCommand();
     private final LogoToLogoCommand logoToLogoCommand = new LogoToLogoCommand();
-    private final DiscountTaskExecutorService DiscountTaskExecutorService;
+    private final DiscountTaskExecutorService discountTaskExecutorService;
     private final CouponService couponService;
+    private final DiscountService discountService;
     private final CouponTaskExecutorService couponTaskExecutorService;
+    private final ProductServiceImpl productService;
 
     public AdminController(final ImageService imageService, final PlannerService PlannerService, 
     final SignUpRepository signUpRepository, final CategoryRepository categoryRepository, 
-    final LogoService logoService, final CouponService couponService, final CouponTaskExecutorService couponTaskExecutorService) {
+    final LogoService logoService, final CouponService couponService, 
+    final CouponTaskExecutorService couponTaskExecutorService, final DiscountService discountService,
+    DiscountRepository discountRepository) {
         this.imageService = imageService;
         this.PlannerService = PlannerService;
         this.signUpRepository = signUpRepository;
         this.categoryRepository = categoryRepository;
         this.logoService = logoService;
-        this.DiscountTaskExecutorService = new DiscountTaskExecutorService(this.logoService, this.PlannerService);
         this.couponService = couponService;
         this.couponTaskExecutorService = couponTaskExecutorService;
+        this.discountService = discountService;
+        this.productService = new ProductServiceImpl(PlannerService, logoService);
+        this.discountTaskExecutorService = new DiscountTaskExecutorService(discountRepository, discountService, this.productService);
     }
 
     @GetMapping("admin/planners/all")
@@ -337,72 +345,77 @@ public class AdminController {
     }
 
     @PostMapping("/admin/discount/set")
-    public Map<String, Map<String, String>> setDiscount(@RequestParam("percent") final double percent,
-     @RequestParam("from") final String from, @RequestParam("to") final String to,
-      @RequestParam("products") final List<Integer> products) {
-        // create a task which stops the discount
-        // and somehow make it reachable for later use
-        // think about how to cancel runnable waiting to run
-        // think about how to cancel runnable already run (finish reset task, reset products discount to zero)
-        final List<Planner> planners = new ArrayList<>();
-        final List<Logo> logos = new ArrayList<>();
-        for (final Integer product : products) {
-            final Logo l = this.logoService.findById(new Long(product));
-            if (l == null) {
-                final Planner pl = this.PlannerService.findById(new Long(product));
-                planners.add(pl);
+    public ResponseEntity<?> setDiscount(
+        @RequestParam("name") final String name,
+        @RequestParam("percent") final int percent,
+        @RequestParam("enabled") final int enabled,
+        @RequestParam("from") final String from, 
+        @RequestParam("to") final String to,
+        @RequestParam("products") final List<Integer> products) {
+         if(discountService.getDiscountByName(name) == null) {
+            boolean found = this.discountTaskExecutorService.hasAnyProductFutureDiscount(products);
+            if (!found) {
+                this.discountTaskExecutorService.createTaskPreparator(products, name, percent, from, to);
+                return new ResponseEntity<>("Discount saved", HttpStatus.OK);
             } else {
-                logos.add(l);
+                return new ResponseEntity<>("On given product there is a set discount in the future.", HttpStatus.OK);
             }
-        }
-        final TaskDetailsDto dto = new TaskDetailsDto();
-        dto.setFrom(new Long(from));
-        dto.setTo(new Long(to));
-        dto.setPercent(percent);
-        dto.setPlanners(planners);
-        dto.setLogos(logos);
-        return this.DiscountTaskExecutorService.createTask(dto);
+         } else {
+            return new ResponseEntity<>("Discount with the given name exists", HttpStatus.OK);
+         }
     }
 
     @GetMapping("/admin/discount/all")
     public Map<String, Map<String, String>> getAllDiscount() {
-        return this.DiscountTaskExecutorService.getTasks();
+        final List<Discount> discounts = this.discountService.getAll();
+        final Map<String, Map<String, String>> v = this.discountTaskExecutorService.getTasks();
+        Map<String, Map<String, String>> t = this.discountService.mergeDiscounts(discounts, v);
+        return t;
     }
 
     @GetMapping("/admin/discount/cancel/{id}")
     public Map<String, Map<String, String>> cancelDiscount(@PathVariable(name = "id") final String id) {
-        return this.DiscountTaskExecutorService.cancelTask(id);
+        return this.discountTaskExecutorService.cancelTask(id);
+    }
+
+    @GetMapping("/admin/delete/discount/{id}")
+    public void deleteDiscountById(@PathVariable(name = "id") final String id) {
+        this.discountTaskExecutorService.cancelTask(id);
+        this.discountService.deleteDiscountById(Long.parseLong(id));
+    }
+
+    @PostMapping("/admin/enable/discount/{id}")
+    public ResponseEntity<?> setDiscountEnabled(@PathVariable(name = "id") final String id, 
+     @RequestParam("type") final String type) {
+        this.discountService.enableDiscount(id, type);
+        return ResponseEntity.ok("Discount enable saved");
     }
 
     @GetMapping("/admin/coupon/all")
     public Map<String, Map<String, String>> getAllCoupons() {
         final List<Coupon> coupons = this.couponService.getAll();
         final Map<String, Map<String, String>> v = this.couponTaskExecutorService.getTasks();
-        Map<String, Map<String, String>> t = mergeCoupons(coupons, v);
+        Map<String, Map<String, String>> t = couponService.mergeCoupons(coupons, v);
         return t;
     }
 
-    @GetMapping("/admin/enable/coupon/{id}")
-    public ResponseEntity<?> setCouponEnabled(@PathVariable(name = "id") final String id) {
-        final Coupon c = this.couponService.getCouponById(new Long(id));
-        final int en = c.getEnabled();
-        if (en == 0) {
-            c.setEnabled(1);
-        } else {
-            c.setEnabled(0);
-        }
-        this.couponService.saveCoupon(c);
+    @PostMapping("/admin/enable/coupon/{id}")
+    public ResponseEntity<?> setCouponEnabled(@PathVariable(name = "id") final String id, 
+     @RequestParam("type") final String type) {
+        this.couponService.enableCoupon(id, type);
         return ResponseEntity.ok("Coupon enable saved");
     }
 
     @GetMapping("/admin/delete/coupon/{id}")
     public void deleteCouponById(@PathVariable(name = "id") final String id) {
+        this.couponTaskExecutorService.cancelTask(id);
         this.couponService.deleteCouponById(Long.parseLong(id));
     }
 
     @PostMapping("/admin/coupon/save")
-    public void saveCoupon(@RequestBody final Coupon coupon) {
+    public Map<String, Map<String, String>> saveCoupon(@RequestBody final Coupon coupon) {
         this.couponService.saveCoupon(coupon);
+        return getAllCoupons();
     }
 
     @PostMapping("/admin/coupon/set")
@@ -411,68 +424,6 @@ public class AdminController {
      @RequestParam("percent") final int percent,
      @RequestParam(value = "from", required = false) final String from, 
      @RequestParam(value = "to", required = false) final String to) {
-        if (from == null || to == null) {
-            final Coupon coupon = new Coupon(name, percent, 1);
-            this.couponService.saveCoupon(coupon);
-        } else {
-            final Map<String, Object> details = new HashMap<>();
-            details.put("name", name);
-            details.put("percent", percent);
-            details.put("enabled", 0);
-            details.put("from", from);
-            details.put("to", to);
-            this.couponTaskExecutorService.createTask(details);
-        }
-    }
-
-    private Map<String, Map<String, String>> mergeCoupons(final List<Coupon> coupons, final Map<String, Map<String, String>> tasks) {
-        Map<String, Map<String, String>> allTogether = new HashMap<>();
-        int keyCounter = 0;
-        try {
-            boolean isIn = false;
-            for (final Coupon coupon : coupons) {
-                String couponId = String.valueOf(coupon.getId());
-                Iterator it = tasks.entrySet().iterator();
-                String foundKey = "";
-                while (it.hasNext()) {
-                    Map.Entry pair = (Map.Entry)it.next();
-                    Object t = ((Map) pair.getValue()).get("id");
-                    if (t.equals(couponId)) {
-                        isIn = true;
-                        foundKey = pair.getKey().toString();
-                    }
-                }
-                if (!isIn) {
-                    Map<String, String> temp = new HashMap<>();
-                    temp.put("id", String.valueOf(coupon.getId()));
-                    temp.put("name", coupon.getName());
-                    temp.put("percent", String.valueOf(coupon.getPercent()));
-                    temp.put("enabled", String.valueOf(coupon.getEnabled()));
-                    temp.put("from", "");
-                    temp.put("to", "");
-                    allTogether.put(String.valueOf(keyCounter), temp);
-                } else {
-                    allTogether.put(String.valueOf(keyCounter), tasks.get(foundKey));
-                }
-                keyCounter++;
-            }
-            return allTogether;
-        } catch (NoSuchElementException e) {
-            Map<String, Map<String, String>> converted = new HashMap<>();
-            int counter = 0;
-            for (Coupon c : coupons) {
-                Map<String, String> temp = new HashMap<>();
-                temp.put("id", String.valueOf(c.getId()));
-                temp.put("name", c.getName());
-                temp.put("percent", String.valueOf(c.getPercent()));
-                temp.put("enabled", String.valueOf(c.getEnabled()));
-                temp.put("from", "");
-                temp.put("to", "");
-                converted.put(String.valueOf(counter), temp);
-                counter++;
-            }
-            return converted;
-        }
+        this.couponTaskExecutorService.createTaskPreparator(name, percent, from, to);
     }
 }
-
