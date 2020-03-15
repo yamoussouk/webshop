@@ -3,6 +3,8 @@ package com.example.backend.service;
 import com.example.backend.command.LogoCommand;
 import com.example.backend.model.Logo;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import java.util.List;
 
 public interface LogoService {
@@ -12,4 +14,7 @@ public interface LogoService {
     LogoCommand findCommandById(Long id);
     void deleteById(Long idToDelete);
     Logo saveLogo(Logo product);
+    void saveLogoPreparator(final String product, final MultipartFile[] file);
+    void enableLogo(final String id);
+    public LogoCommand updateLogo(final String product, final MultipartFile[] files, final List<String> removed);
 }

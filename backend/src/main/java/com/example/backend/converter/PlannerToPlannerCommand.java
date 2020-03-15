@@ -6,6 +6,8 @@ import com.example.backend.model.Category;
 import com.example.backend.model.Image;
 import com.example.backend.model.Planner;
 import lombok.Synchronized;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
@@ -19,11 +21,10 @@ import javax.validation.constraints.NotNull;
 @Component
 public class PlannerToPlannerCommand implements Converter<Planner, PlannerCommand> {
 
-    final ImageToImageCommand imageToImageCommand;
+    @Autowired
+    private ImageToImageCommand imageToImageCommand;
 
-    public PlannerToPlannerCommand() {
-        this.imageToImageCommand = new ImageToImageCommand();
-    }
+    public PlannerToPlannerCommand() {}
 
     @Synchronized
     @NotNull

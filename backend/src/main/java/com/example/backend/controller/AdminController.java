@@ -1,44 +1,27 @@
 package com.example.backend.controller;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.example.backend.command.LogoCommand;
 import com.example.backend.command.PlannerCommand;
 import com.example.backend.converter.LogoToLogoCommand;
 import com.example.backend.converter.PlannerToPlannerCommand;
-import com.example.backend.dto.LogoDto;
-import com.example.backend.dto.PlannerDto;
-import com.example.backend.exception.NotFoundException;
-import com.example.backend.model.Category;
 import com.example.backend.model.Coupon;
 import com.example.backend.model.Discount;
-import com.example.backend.model.Image;
-import com.example.backend.model.Logo;
-import com.example.backend.model.Meta;
-import com.example.backend.model.Planner;
 import com.example.backend.model.SignUpEmail;
-import com.example.backend.repository.CategoryRepository;
-import com.example.backend.repository.DiscountRepository;
-import com.example.backend.repository.MetaRepository;
 import com.example.backend.repository.SignUpRepository;
 import com.example.backend.service.CouponService;
-import com.example.backend.service.DiscountService;
 import com.example.backend.service.CouponTaskExecutorService;
-import com.example.backend.service.ImageService;
+import com.example.backend.service.DiscountService;
+import com.example.backend.service.DiscountTaskExecutorService;
 import com.example.backend.service.LogoService;
 import com.example.backend.service.PlannerService;
-import com.example.backend.service.ProductServiceImpl;
-import com.example.backend.service.DiscountTaskExecutorService;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -52,85 +35,60 @@ import org.springframework.web.multipart.MultipartFile;
 @RestController
 public class AdminController {
 
-    private final ImageService imageService;
-    private final PlannerService PlannerService;
-    private final LogoService logoService;
-    private final SignUpRepository signUpRepository;
-    private final CategoryRepository categoryRepository;
-    private final PlannerToPlannerCommand PlannerToPlannerCommand = new PlannerToPlannerCommand();
-    private final LogoToLogoCommand logoToLogoCommand = new LogoToLogoCommand();
+    @Autowired
+    private PlannerService plannerService;
+    @Autowired
+    private LogoService logoService;
+    @Autowired
+    private SignUpRepository signUpRepository;
+    @Autowired
+    private PlannerToPlannerCommand plannerToPlannerCommand;
+    @Autowired
+    private LogoToLogoCommand logoToLogoCommand;
+
     private final DiscountTaskExecutorService discountTaskExecutorService;
     private final CouponService couponService;
     private final DiscountService discountService;
     private final CouponTaskExecutorService couponTaskExecutorService;
-    private final ProductServiceImpl productService;
-    private final MetaRepository metaRepository;
 
-    public AdminController(final ImageService imageService, final PlannerService PlannerService, 
-    final SignUpRepository signUpRepository, final CategoryRepository categoryRepository, 
-    final LogoService logoService, final CouponService couponService, 
-    final CouponTaskExecutorService couponTaskExecutorService, final DiscountService discountService,
-    DiscountRepository discountRepository, MetaRepository metaRepository) {
-        this.imageService = imageService;
-        this.PlannerService = PlannerService;
-        this.signUpRepository = signUpRepository;
-        this.categoryRepository = categoryRepository;
-        this.logoService = logoService;
+    public AdminController(
+        final CouponService couponService,
+        final DiscountService discountService) {
         this.couponService = couponService;
-        this.couponTaskExecutorService = couponTaskExecutorService;
         this.discountService = discountService;
-        this.productService = new ProductServiceImpl(PlannerService, logoService);
-        this.discountTaskExecutorService = new DiscountTaskExecutorService(discountRepository, discountService, this.productService);
-        this.metaRepository = metaRepository;
+        this.discountTaskExecutorService = new DiscountTaskExecutorService(discountService);
+        this.couponTaskExecutorService = new CouponTaskExecutorService(couponService);
     }
 
     @GetMapping("admin/planners/all")
     public List<PlannerCommand> getAllPlanners() {
-        final List<Planner> products =  this.PlannerService.getPlanners(false);
-        final List<PlannerCommand> returnedValue = new ArrayList<PlannerCommand>();
-        for (final Planner p : products) {
-            returnedValue.add(PlannerToPlannerCommand.convert(p));
-        }
-        return returnedValue;
+        return this.plannerService.getPlanners(false)
+            .stream()
+            .map(p -> plannerToPlannerCommand.convert(p))
+            .collect(Collectors.toList());
     }
 
     @GetMapping("admin/logos/all")
     public List<LogoCommand> getAllLogos() {
-        final List<Logo> products =  this.logoService.getLogos(false);
-        final List<LogoCommand> returnedValue = new ArrayList<LogoCommand>();
-        for (final Logo p : products) {
-            returnedValue.add(logoToLogoCommand.convert(p));
-        }
-        return returnedValue;
+        return this.logoService.getLogos(false)
+            .stream()
+            .map(p -> logoToLogoCommand.convert(p))
+            .collect(Collectors.toList());
     }
 
     @PostMapping("/admin/add/new/planner")
     public void addNewPlanner(@RequestParam("product") final String product, @RequestParam("imagefile") final MultipartFile[] file) {
-        final Planner p = mapPlannerDto(product, null);
-        final List<Image> fileSet = new ArrayList<Image>();
-        for (final MultipartFile i : file) {
-            final Image img = imageService.saveImageFile(p.getId(), i);
-            fileSet.add(img);
-        }
-        p.setImages(fileSet);
-        this.PlannerService.savePlanner(p);
+        this.plannerService.savePlannerPreparator(product, file);
     }
 
     @PostMapping("/admin/add/new/logo")
     public void addNewLogo(@RequestParam("product") final String product, @RequestParam("imagefile") final MultipartFile[] file) {
-        final Logo p = mapLogoDto(product, null);
-        final List<Image> fileSet = new ArrayList<Image>();
-        for (final MultipartFile i : file) {
-            final Image img = imageService.saveImageFile(p.getId(), i);
-            fileSet.add(img);
-        }
-        p.setImages(fileSet);
-        this.logoService.saveLogo(p);
+        this.logoService.saveLogoPreparator(product, file);
     }
 
     @GetMapping("/admin/delete/planner/{id}")
     public void deletePlannerById(@PathVariable(name = "id") final String id) {
-        this.PlannerService.deleteById(Long.parseLong(id));
+        this.plannerService.deleteById(Long.parseLong(id));
     }
 
     @GetMapping("/admin/delete/logo/{id}")
@@ -140,27 +98,13 @@ public class AdminController {
 
     @GetMapping("/admin/enable/planner/{id}")
     public ResponseEntity<?> setPlannerEnabled(@PathVariable(name = "id") final String id) {
-        final Planner p = this.PlannerService.findById(new Long(id));
-        final int en = p.getEnabled();
-        if (en == 0) {
-            p.setEnabled(1);
-        } else {
-            p.setEnabled(0);
-        }
-        this.PlannerService.savePlanner(p);
+        this.plannerService.enablePlanner(id);
         return ResponseEntity.ok("Enabled changed");
     }
 
     @GetMapping("/admin/enable/logo/{id}")
     public ResponseEntity<?> setLogoEnabled(@PathVariable(name = "id") final String id) {
-        final Logo p = this.logoService.findById(new Long(id));
-        final int en = p.getEnabled();
-        if (en == 0) {
-            p.setEnabled(1);
-        } else {
-            p.setEnabled(0);
-        }
-        this.logoService.saveLogo(p);
+        this.logoService.enableLogo(id);
         return ResponseEntity.ok("Enabled changed");
     }
 
@@ -168,175 +112,14 @@ public class AdminController {
     public PlannerCommand updatePlanner(@RequestParam("product") final String product, 
         @RequestParam("imagefile") final MultipartFile[] files, 
         @RequestParam(value="removed", required = false) final List<String> removed) {
-        final Planner p = this.mapPlannerDto(product, removed);
-
-        for (final MultipartFile i : files) {
-            final Image img = imageService.saveImageFile(p.getId(), i);
-            p.setOneImage(img);
-        }
-        this.PlannerService.savePlanner(p);
-        return this.PlannerToPlannerCommand.convert(p);
+        return this.plannerService.updatePlannerPreparator(product, removed, files);
     }
 
     @PostMapping("/admin/update/logo/")
     public LogoCommand updateLogo(@RequestParam("product") final String product, 
         @RequestParam("imagefile") final MultipartFile[] files, 
         @RequestParam(value="removed", required = false) final List<String> removed) {
-        final Logo p = this.mapLogoDto(product, removed);
-
-        for (final MultipartFile i : files) {
-            final Image img = imageService.saveImageFile(p.getId(), i);
-            p.setOneImage(img);
-        }
-        this.logoService.saveLogo(p);
-        return this.logoToLogoCommand.convert(p);
-    }
-
-    private Planner mapPlannerDto(final String product, final List<String> removed) {
-        final ObjectMapper mapper = new ObjectMapper();
-        PlannerDto p = null;
-        try {
-
-            p = mapper.readValue(product, PlannerDto.class);
-        } catch (final IOException e) {
-            e.printStackTrace();
-        }
-        final Planner pr = convertdtoToPlanner(p, removed);
-        return this.PlannerService.savePlanner(pr);
-    }
-
-    private Logo mapLogoDto(final String product, final List<String> removed) {
-        final ObjectMapper mapper = new ObjectMapper();
-        LogoDto p = null;
-        try {
-
-            p = mapper.readValue(product, LogoDto.class);
-        } catch (final IOException e) {
-            e.printStackTrace();
-        }
-        final Logo pr = convertdtoToLogo(p, removed);
-        return this.logoService.saveLogo(pr);
-    }
-
-    private Planner convertdtoToPlanner (final PlannerDto dto, final List<String> removed) {
-        final Planner p = new Planner();
-        if (dto.getId() != 0) {
-            p.setId(dto.getId());
-        }
-        p.setName(dto.getName());
-        p.setShortDescription(dto.getShortDescription());
-        p.setLongDescription(dto.getLongDescription());
-        p.setPrice(dto.getPrice());
-        p.setQuantity(1);
-        p.setDownloadLink(dto.getDownloadLink());
-        p.setEnabled(dto.getEnabled());
-        p.setCategory(getCategories(dto.getCategories()));
-        final List<Image> i = plannerImagesLeft(dto.getId(), removed);
-        p.setImages(i);
-        p.setSku(dto.getSku());
-        p.setLastUpdated(String.valueOf(new Date().getTime()));
-        Set<Meta> metas = new HashSet<>();
-        for (Meta m : dto.getMetaTags()) {
-            metas.add(this.metaRepository.save(m));
-        }
-        p.setMeta(metas);
-        return p;
-    }
-
-    private Logo convertdtoToLogo(final LogoDto dto, final List<String> removed) {
-        final Logo p = new Logo();
-        if (dto.getId() != 0) {
-            p.setId(dto.getId());
-        }
-        p.setName(dto.getName());
-        p.setShortDescription(dto.getShortDescription());
-        p.setLongDescription(dto.getLongDescription());
-        p.setPrice(dto.getPrice());
-        p.setQuantity(1);
-        p.setLogoText(dto.getLogoText());
-        p.setEnabled(dto.getEnabled());
-        p.setCategory(getCategories(dto.getCategories()));
-        final List<Image> i = logoImagesLeft(dto.getId(), removed);
-        p.setImages(i);
-        p.setSku(dto.getSku());
-        p.setLastUpdated(String.valueOf(new Date().getTime()));
-        Set<Meta> metas = new HashSet<>();
-        for (Meta m : dto.getMetaTags()) {
-            metas.add(this.metaRepository.save(m));
-        }
-        p.setMeta(metas);
-        return p;
-    }
-
-    private List<Image> plannerImagesLeft(final Long productId, final List<String> removed) {
-        try {
-            final Planner p = this.PlannerService.findById(productId);
-            final List<Image> productImages = p.getImages();
-            if (removed != null) {
-                for (final String imageId : removed) {
-                    productImages.removeIf(obj -> obj.getId().equals(new Long(imageId)));
-                    final Image img = imageService.findById(new Long(imageId));
-                    imageService.deleteImage(p, img);
-                }
-            }
-            return productImages;
-        } catch (final NotFoundException e) {
-            return new ArrayList<Image>();
-        } catch (final NullPointerException e) {
-            return new ArrayList<Image>();
-        }
-    }
-
-    private List<Image> logoImagesLeft(final Long productId, final List<String> removed) {
-        try {
-            final Logo p = this.logoService.findById(productId);
-            final List<Image> productImages = p.getImages();
-            if (removed != null) {
-                for (final String imageId : removed) {
-                    productImages.removeIf(obj -> obj.getId().equals(new Long(imageId)));
-                    final Image img = imageService.findById(new Long(imageId));
-                    imageService.deleteImage(p, img);
-                }
-            }
-            return productImages;
-        } catch (final NotFoundException e) {
-            return new ArrayList<Image>();
-        } catch (final NullPointerException e) {
-            return new ArrayList<Image>();
-        }
-    }
-
-    private Set<Category> getCategories (final List<String> categories) {
-        final Set<Category> cat = new HashSet<Category>();
-        for (final String c : categories) {
-            final Category temp = this.categoryRepository.findByName(c);
-            cat.add(temp);
-        }
-        return cat;
-    }
-    @PostMapping("/admin/add/new/image")
-    public List<Image> addNewImage(@RequestParam final MultipartFile[] files) {
-        for (final MultipartFile file : files) {
-            imageService.saveOneImage(file);
-        }
-        return imageService.getAllImages()
-                .stream()
-                .sorted((image1, image2) -> image2.getId().compareTo(image1.getId()))
-                .collect(Collectors.toList());
-    }
-
-    @PostMapping("/admin/add/new2")
-    public void addNewProduct(@RequestParam final MultipartFile[] files) {
-        for (final MultipartFile file : files) {
-            imageService.saveImageFile(1L, file);
-        }
-    }
-
-    @PostMapping("/admin/add/new/photo")
-    public void addNewPhotosToProduct(@RequestParam("file-1") final MultipartFile[] files, @RequestParam(value = "uid") final String uid) {
-        for (final MultipartFile file : files) {
-            imageService.saveImageFile(Long.valueOf(uid), file);
-        }
+        return this.logoService.updateLogo(product, files, removed);
     }
 
     @PostMapping("/subscribe")
@@ -401,7 +184,10 @@ public class AdminController {
     @PostMapping("/admin/enable/discount/{id}")
     public ResponseEntity<?> setDiscountEnabled(@PathVariable(name = "id") final String id, 
      @RequestParam("type") final String type) {
-        this.discountService.enableDiscount(id, type);
+        if (type.equals("range")) {
+            this.discountTaskExecutorService.cancelTask(id);
+        }
+        this.discountService.enableDiscount(id);
         return ResponseEntity.ok("Discount enable saved");
     }
 
@@ -416,7 +202,10 @@ public class AdminController {
     @PostMapping("/admin/enable/coupon/{id}")
     public ResponseEntity<?> setCouponEnabled(@PathVariable(name = "id") final String id, 
      @RequestParam("type") final String type) {
-        this.couponService.enableCoupon(id, type);
+        if (type.equals("range")) {
+            this.couponTaskExecutorService.cancelTask(id);
+        }
+        this.couponService.enableCoupon(id);
         return ResponseEntity.ok("Coupon enable saved");
     }
 

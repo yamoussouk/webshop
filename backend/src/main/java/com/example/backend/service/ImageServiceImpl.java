@@ -1,19 +1,16 @@
 package com.example.backend.service;
 
-import com.example.backend.command.PlannerCommand;
 import com.example.backend.model.Image;
 import com.example.backend.model.Product;
 import com.example.backend.repository.ImageRepository;
 import com.example.backend.repository.ProductRepository;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.http.MediaType;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StreamUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -29,18 +26,15 @@ import java.util.Random;
 @Service
 public class ImageServiceImpl implements ImageService {
 
-    private final ProductRepository productRepository;
-    private final PlannerService PlannerService;
-    private final ImageRepository imageRepository;
+    @Autowired
+    private ProductRepository productRepository;
+    @Autowired
+    private ImageRepository imageRepository;
 
     private final String WDIR = System.getProperty("user.dir");
     private final String UPLOADED = WDIR + "/frontend/static/uploaded/";
 
-    public ImageServiceImpl( ProductRepository productRepository, PlannerService PlannerService, ImageRepository imageRepository) {
-        this.PlannerService = PlannerService;
-        this.productRepository = productRepository;
-        this.imageRepository = imageRepository;
-    }
+    public ImageServiceImpl() {}
 
     @Override
     @Transactional
@@ -98,20 +92,6 @@ public class ImageServiceImpl implements ImageService {
         } catch (IOException e) {
             //log.error("Error occurred", e);
             e.printStackTrace();
-        }
-    }
-
-    @Override
-    @Transactional
-    public void renderImage(Long id, String imageUrl, HttpServletResponse response) throws IOException {
-        PlannerCommand PlannerCommand = PlannerService.findCommandById(id);
-        ClassPathResource imgFile = new ClassPathResource("static/images/" + PlannerCommand.getId() + "/" + imageUrl);
-        System.out.println("TODO: DELETE IT! " + imgFile);
-        response.setContentType(MediaType.IMAGE_JPEG_VALUE);
-        try {
-            StreamUtils.copy(imgFile.getInputStream(), response.getOutputStream());
-        } catch (IOException e) {
-            StreamUtils.copy(new ClassPathResource("static/images/noimage.jpg").getInputStream(), response.getOutputStream());
         }
     }
 

@@ -16,5 +16,5 @@ public interface CouponService {
     void modifyCoupon(Coupon coupon);
     Coupon saveCoupon(Coupon coupon);
     Map<String, Map<String, String>> mergeCoupons(final List<Coupon> coupons, final Map<String, Map<String, String>> tasks);
-    void enableCoupon(final String id, final String type);
+    void enableCoupon(final String id);
 }

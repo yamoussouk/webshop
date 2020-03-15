@@ -3,18 +3,20 @@ package com.example.backend.service;
 import com.example.backend.exception.NotFoundException;
 import com.example.backend.model.Product;
 import lombok.extern.slf4j.Slf4j;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Slf4j
 @Service
-public class ProductServiceImpl {
-    private final PlannerService plannerService;
-    private final LogoService logoService;
+public class ProductServiceImpl implements ProductService {
 
-    public ProductServiceImpl(PlannerService plannerService, LogoService logoService) {
-        this.plannerService = plannerService;
-        this.logoService = logoService;
-    }
+    @Autowired
+    private PlannerService plannerService;
+    @Autowired
+    private LogoService logoService;
+
+    public ProductServiceImpl() {}
 
     public Product getProduct(Long id) {
         try {

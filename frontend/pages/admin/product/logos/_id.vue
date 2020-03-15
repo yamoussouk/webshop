@@ -30,13 +30,6 @@
                     <div class="has-name">
                       <input :value="product.sku" @input="updateSku($event)" type="text" class="form-control">
                     </div>
-                     <label class="form-control-label">
-                      Product Meta tags
-                    </label>
-                    <div class="has-name">
-                      <input :value="product.sku" @input="updateSku($event)" type="text" class="form-control">
-                      <input :value="product.sku" @input="updateSku($event)" type="text" class="form-control">
-                    </div>
                     <p>Last updated: <br> {{ convertDate(product.lastUpdated) }}</p>
                   </div>
                   <div class="col-md-6 desc">

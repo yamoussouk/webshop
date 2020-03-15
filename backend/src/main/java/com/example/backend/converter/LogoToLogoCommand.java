@@ -6,6 +6,8 @@ import com.example.backend.model.Category;
 import com.example.backend.model.Image;
 import com.example.backend.model.Logo;
 import lombok.Synchronized;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
@@ -17,11 +19,10 @@ import javax.validation.constraints.NotNull;
 @Component
 public class LogoToLogoCommand implements Converter<Logo, LogoCommand> {
 
-    final ImageToImageCommand imageToImageCommand;
+    @Autowired
+    private ImageToImageCommand imageToImageCommand;
 
-    public LogoToLogoCommand() {
-        this.imageToImageCommand = new ImageToImageCommand();
-    }
+    public LogoToLogoCommand() {}
 
     @Synchronized
     @NotNull

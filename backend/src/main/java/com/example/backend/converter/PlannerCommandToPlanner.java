@@ -2,7 +2,6 @@ package com.example.backend.converter;
 
 import com.example.backend.command.ImageCommand;
 import com.example.backend.command.PlannerCommand;
-import com.example.backend.model.Planner;
 import com.example.backend.model.Product;
 import lombok.Synchronized;
 import org.springframework.core.convert.converter.Converter;

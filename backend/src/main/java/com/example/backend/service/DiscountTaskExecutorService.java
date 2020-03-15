@@ -18,6 +18,7 @@ import com.example.backend.model.Discount;
 import com.example.backend.model.Product;
 import com.example.backend.repository.DiscountRepository;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.TaskScheduler;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.concurrent.ConcurrentTaskScheduler;
@@ -29,16 +30,13 @@ public class DiscountTaskExecutorService {
     private TaskScheduler scheduler;
     ScheduledExecutorService localExecutor = Executors.newSingleThreadScheduledExecutor();
     private final DiscountService discountService;
-    private final DiscountRepository discountRepository;
-    private final ProductServiceImpl productServiceImpl;
+    @Autowired
+    private DiscountRepository discountRepository;
     private Map<Integer, DataSet> runningTasks = new HashMap<>();
     private int taskKey = 0;
 
-    public DiscountTaskExecutorService(DiscountRepository discountRepository, DiscountService discountService,
-            ProductServiceImpl productServiceImpl) {
-        this.discountRepository = discountRepository;
+    public DiscountTaskExecutorService(DiscountService discountService) {
         this.discountService = discountService;
-        this.productServiceImpl = productServiceImpl;
     }
 
     /*
@@ -53,7 +51,7 @@ public class DiscountTaskExecutorService {
             public void run() {
                 boolean zero = enabled == 0 ? true : false;
                 List<Product> ps = discount.getProducts().stream()
-                        .map(prod_id -> productServiceImpl.getProduct(prod_id)).collect(Collectors.toList());
+                        .map(prod_id -> discountService.getProductService().getProduct(prod_id)).collect(Collectors.toList());
                 discountService.setDiscountOnProducts(ps, discount.getPercent(), false);
                 if (zero) {
                     discount.setEnabled(0);
@@ -76,8 +74,13 @@ public class DiscountTaskExecutorService {
         Runnable fromRunnable = createRunnable(discount, 0);
         Runnable toRunnable = createRunnable(discount, 1);
         List<Long> productIds = discount.getProducts().stream().map(p -> p).collect(Collectors.toList());
-        List<String> productNames = discount.getProducts().stream().map(p -> productServiceImpl.getProduct(p).getName())
-                .collect(Collectors.toList());
+        List<String> productNames = discount
+                                    .getProducts()
+                                    .stream()
+                                    .map(p -> discountService.getProductService()
+                                    .getProduct(p)
+                                    .getName())
+                                    .collect(Collectors.toList());
         // add tasks to a map to be searched by index and increase key
         DataSet taskSet = new DataSet();
         taskSet.setId(discount.getId());
@@ -150,7 +153,7 @@ public class DiscountTaskExecutorService {
         if (from.equals("null") || to.equals("null")) {
             d.setEnabled(1);
             discountService.saveDiscount(d);
-            List<Product> ps = d.getProducts().stream().map(prod_id -> productServiceImpl.getProduct(prod_id)).collect(Collectors.toList());
+            List<Product> ps = d.getProducts().stream().map(prod_id -> discountService.getProductService().getProduct(prod_id)).collect(Collectors.toList());
             discountService.setDiscountOnProducts(ps, d.getPercent(), false);
         } else {
             discountService.saveDiscount(d);

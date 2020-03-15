@@ -8,6 +8,7 @@ import com.example.backend.model.Product;
 
 public interface DiscountService {
 
+    ProductService getProductService ();
     List<Discount> getAll();
     void addDiscount(Discount discount);
     Discount getDiscountById(Long id);
@@ -18,5 +19,5 @@ public interface DiscountService {
     Discount saveDiscount(Discount discount);
     void setDiscountOnProducts(List<Product> products, int percent, boolean zero);
     Map<String, Map<String, String>> mergeDiscounts(final List<Discount> discounts, final Map<String, Map<String, String>> tasks);
-    void enableDiscount(final String id, final String type);
+    void enableDiscount(final String id);
 }

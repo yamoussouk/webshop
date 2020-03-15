@@ -5,14 +5,15 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.NoSuchElementException;
 import java.util.Optional;
-import java.util.Map.Entry;
 
+import com.example.backend.exception.NotFoundException;
 import com.example.backend.model.Coupon;
 import com.example.backend.repository.CouponRepository;
-import com.example.backend.exception.NotFoundException;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import lombok.extern.slf4j.Slf4j;
@@ -21,13 +22,10 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 public class CouponServiceImpl implements CouponService {
 
-    private final CouponRepository couponRepository;
-    private final CouponTaskExecutorService couponTaskExecutorService;
+    @Autowired
+    private CouponRepository couponRepository;
 
-    public CouponServiceImpl(CouponRepository couponRepository) {
-        this.couponRepository = couponRepository;
-        this.couponTaskExecutorService = new CouponTaskExecutorService(this);
-    }
+    public CouponServiceImpl() {}
 
     @Override
     public void addCoupon(Coupon coupon) {
@@ -90,10 +88,7 @@ public class CouponServiceImpl implements CouponService {
     }
 
     @Override
-    public void enableCoupon(final String id, final String type) {
-        if (type.equals("range")) {
-            this.couponTaskExecutorService.cancelTask(id);
-        }
+    public void enableCoupon(final String id) {
         final Coupon c = getCouponById(new Long(id));
         final int en = c.getEnabled();
         if (en == 0) {

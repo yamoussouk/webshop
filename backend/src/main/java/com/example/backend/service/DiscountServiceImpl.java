@@ -5,17 +5,18 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.NoSuchElementException;
 import java.util.Optional;
-import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
+import com.example.backend.exception.NotFoundException;
 import com.example.backend.model.Discount;
 import com.example.backend.model.Product;
 import com.example.backend.repository.DiscountRepository;
 import com.example.backend.repository.ProductRepository;
-import com.example.backend.exception.NotFoundException;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import lombok.extern.slf4j.Slf4j;
@@ -24,19 +25,18 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 public class DiscountServiceImpl implements DiscountService {
 
-    private final DiscountRepository discountRepository;
-    private final ProductRepository productRepository;
-    private final ProductServiceImpl productServiceImpl;
-    private final DiscountTaskExecutorService discountTaskExecutorService;
+    @Autowired
+    private DiscountRepository discountRepository;
+    @Autowired
+    private ProductRepository productRepository;
+    @Autowired
+    private ProductService productService;
 
-    public DiscountServiceImpl(DiscountRepository discountRepository,
-     ProductRepository productRepository,
-     ProductServiceImpl productServiceImpl) {
-        this.discountRepository = discountRepository;
-        this.productRepository = productRepository;
-        this.productServiceImpl = productServiceImpl;
-        this.discountTaskExecutorService = 
-        new DiscountTaskExecutorService(this.discountRepository, this, this.productServiceImpl);
+    public DiscountServiceImpl() {}
+
+    @Override
+    public ProductService getProductService () {
+        return this.productService;
     }
 
     @Override
@@ -131,7 +131,7 @@ public class DiscountServiceImpl implements DiscountService {
                 temp.put("name", discount.getName());
                 temp.put("percent", String.valueOf(discount.getPercent()));
                 temp.put("enabled", String.valueOf(discount.getEnabled()));
-                temp.put("productNames", discount.getProducts().stream().map(p -> productServiceImpl.getProduct(p).getName()).collect(Collectors.joining(", ")));
+                temp.put("productNames", discount.getProducts().stream().map(p -> productService.getProduct(p).getName()).collect(Collectors.joining(", ")));
                 temp.put("productIds", discount.getProducts().stream().map(p -> String.valueOf(p)).collect(Collectors.joining(", ")));
                 if (!isIn) {
                     temp.put("from", "");
@@ -154,7 +154,7 @@ public class DiscountServiceImpl implements DiscountService {
                 temp.put("name", c.getName());
                 temp.put("percent", String.valueOf(c.getPercent()));
                 temp.put("enabled", String.valueOf(c.getEnabled()));
-                temp.put("productNames", c.getProducts().stream().map(p -> productServiceImpl.getProduct(p).getName()).collect(Collectors.joining(", ")));
+                temp.put("productNames", c.getProducts().stream().map(p -> productService.getProduct(p).getName()).collect(Collectors.joining(", ")));
                 temp.put("productIds", c.getProducts().stream().map(p -> String.valueOf(p)).collect(Collectors.joining(", ")));
                 temp.put("from", "");
                 temp.put("to", "");
@@ -166,19 +166,16 @@ public class DiscountServiceImpl implements DiscountService {
     }
 
     @Override
-    public void enableDiscount(final String id, final String type) {
-        if (type.equals("range")) {
-            this.discountTaskExecutorService.cancelTask(id);
-        }
+    public void enableDiscount(final String id) {
         final Discount d = getDiscountById(new Long(id));
         final int en = d.getEnabled();
         if (en == 0) {
             d.setEnabled(1);
-            List<Product> ps = d.getProducts().stream().map(prod_id -> productServiceImpl.getProduct(prod_id)).collect(Collectors.toList());
+            List<Product> ps = d.getProducts().stream().map(prod_id -> productService.getProduct(prod_id)).collect(Collectors.toList());
             setDiscountOnProducts(ps, d.getPercent(), true);
         } else {
             d.setEnabled(0);
-            List<Product> ps = d.getProducts().stream().map(prod_id -> productServiceImpl.getProduct(prod_id)).collect(Collectors.toList());
+            List<Product> ps = d.getProducts().stream().map(prod_id -> productService.getProduct(prod_id)).collect(Collectors.toList());
             setDiscountOnProducts(ps, d.getPercent(), false);
         }
         saveDiscount(d);
