@@ -1,6 +1,9 @@
 package com.example.backend.dto;
 
 import java.util.List;
+import java.util.Set;
+
+import com.example.backend.model.Meta;
 
 public class LogoDto {
 
@@ -14,6 +17,8 @@ public class LogoDto {
     private int enabled;
     private List<String> categories;
     private String sku;
+    private String lastUpdated;
+    private Set<Meta> metaTags;
 
     public String getName() {
         return this.name;
@@ -59,5 +64,21 @@ public class LogoDto {
 
     public void setSku(String sku) {
         this.sku = sku;
+    }
+
+    public String getLastUpdated() {
+        return this.lastUpdated;
+    }
+
+    public void setLastUpdated(String time) {
+        this.lastUpdated = time;
+    }
+
+    public Set<Meta> getMetaTags() {
+        return this.metaTags;
+    }
+
+    public void setMetaTags(Set<Meta> meta) {
+        this.metaTags = meta;
     }
 }

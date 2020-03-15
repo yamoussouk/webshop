@@ -52,6 +52,21 @@
                   </div>
                   <div class="form-group">
                     <label class="form-control-label">
+                      Meta tags
+                    </label>
+                    <div class="has-name">
+                      <ul>
+                        <li v-for="(m, index) in form.meta" :key="index">
+                          <input type="text" v-model="m.name">
+                          <input type="text" v-model="m.content">
+                          <button @click="deleteMeta(index)">Delete</button>
+                        </li>
+                      </ul>
+                      <button @click="addMeta">Add row</button>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-control-label">
                       Product download link
                     </label>
                     <div class="has-name">
@@ -103,7 +118,8 @@ export default {
         files: [],
         categories: [],
         enabled: 0,
-        longDescription: ''
+        longDescription: '',
+        meta: []
       },
       success: false,
       message: ''
@@ -113,6 +129,15 @@ export default {
     ...mapGetters(['auth'])
   },
   methods: {
+    addMeta () {
+      this.form.meta.push({
+        name: '',
+        content: ''
+      })
+    },
+    deleteMeta (index) {
+      this.form.meta.splice(index, 1)
+    },
     addImages (imageFile) {
       this.form.files.push(imageFile)
     },
@@ -126,7 +151,8 @@ export default {
         'categories': this.form.categories,
         'enabled': this.form.enabled,
         'longDescription': this.form.longDescription,
-        'sku': this.form.sku
+        'sku': this.form.sku,
+        'metaTags': this.form.meta
       }
       const headers = {
         'Authorization': this.auth.accessToken

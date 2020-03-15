@@ -54,6 +54,8 @@ public class PlannerToPlannerCommand implements Converter<Planner, PlannerComman
         PlannerCommand.setEnabled(planner.getEnabled());
         PlannerCommand.setDownloadLink(planner.getDownloadLink());
         PlannerCommand.setSku(planner.getSku());
+        PlannerCommand.setLastUpdated(planner.getLastUpdated());
+        PlannerCommand.setMetaTags(planner.getMeta());
         return PlannerCommand;
     }
 }

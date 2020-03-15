@@ -30,21 +30,54 @@
                     <div class="has-name">
                       <input :value="product.sku" @input="updateSku($event)" type="text" class="form-control">
                     </div>
+                     <label class="form-control-label">
+                      Product Meta tags
+                    </label>
+                    <div class="has-name">
+                      <input :value="product.sku" @input="updateSku($event)" type="text" class="form-control">
+                      <input :value="product.sku" @input="updateSku($event)" type="text" class="form-control">
+                    </div>
+                    <p>Last updated: <br> {{ convertDate(product.lastUpdated) }}</p>
                   </div>
                   <div class="col-md-6 desc">
                     <label class="form-control-label">Product description</label>
                     <vue-editor v-model="form.content" />
                   </div>
-                  <div class="form-group col-md-2 categories">
-                    <label class="form-control-label">
-                      Select category
-                    </label>
-                    <div class="has-name">
-                      <select v-model="form.categories" @change="updateCategory($event)" multiple="multiple" class="form-control">
-                        <option>Single Logo</option>
-                        <option>Logo Set</option>
-                        <option>Custom Logo</option>
-                      </select>
+                  <div class="col-md-4">
+                    <div class="row">
+                      <div class="form-group col-md-6 categories">
+                        <label class="form-control-label">
+                          Select category
+                        </label>
+                        <div class="has-name">
+                          <select v-model="form.categories" @change="updateCategory($event)" multiple="multiple" class="form-control">
+                            <option>Single Logo</option>
+                            <option>Logo Set</option>
+                            <option>Custom Logo</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="form-group col-md-6 dllink">
+                        <label class="form-control-label">
+                          Product download link
+                        </label>
+                        <div class="has-name">
+                          <input :value="product.downloadLink" @input="updateDllink($event)" type="text" class="form-control">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="form-group col-md-12 metas">
+                        Meta tags:
+                        <ul>
+                          <li v-for="(m, index) in form.metas" :key="index">
+                            <input type="text" v-model="m.name">
+                            <input type="text" v-model="m.content">
+                            <button @click="deleteMeta(index)">Delete</button>
+                          </li>
+                        </ul>
+                        <button @click="addMeta">Add row</button>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -104,7 +137,8 @@ export default {
         files: [],
         removed: [],
         cats: [],
-        categories: []
+        categories: [],
+        metas: []
       },
       showDismissibleAlert: false,
       message: '',
@@ -122,6 +156,7 @@ export default {
     this.form.original = [...this.product.image]
     this.form.content = this.product.longDescription
     this.form.categories = this.product.categories
+    this.form.metas = JSON.parse(JSON.stringify(this.product.metaTags))
   },
   methods: {
     ...mapActions(['saveLogo', 'setLogoCategory', 'refreshLogo']),
@@ -158,7 +193,8 @@ export default {
         'sku': this.form.sku === 0 ? this.product.sku : this.form.sku,
         'categories': this.form.categories,
         'quantity': 1,
-        'enabled': this.product.enabled
+        'enabled': this.product.enabled,
+        'metaTags': this.form.metas
       }
       const headers = {
         'Authorization': this.auth.accessToken,
@@ -191,6 +227,25 @@ export default {
           this.message = 'Something went wrong!'
           this.type = 'danger'
         })
+    },
+    convertDate (timestamp) {
+      const date = new Date(timestamp / 1000 * 1000)
+      const year = date.getFullYear()
+      const month = '0' + (date.getMonth() + 1)
+      const day = '0' + date.getDate()
+      const hour = date.getHours()
+      const minute = date.getMinutes()
+      const second = date.getSeconds()
+      return year + '-' + month.substr(-2) + '-' + day.substr(-2) + ' ' + hour + ':' + minute + ':' + second
+    },
+    addMeta () {
+      this.form.metas.push({
+        name: '',
+        content: ''
+      })
+    },
+    deleteMeta (index) {
+      this.form.metas.splice(index, 1)
     }
   }
 }

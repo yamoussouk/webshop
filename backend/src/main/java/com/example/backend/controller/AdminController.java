@@ -2,12 +2,10 @@ package com.example.backend.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Date;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -24,10 +22,12 @@ import com.example.backend.model.Coupon;
 import com.example.backend.model.Discount;
 import com.example.backend.model.Image;
 import com.example.backend.model.Logo;
+import com.example.backend.model.Meta;
 import com.example.backend.model.Planner;
 import com.example.backend.model.SignUpEmail;
 import com.example.backend.repository.CategoryRepository;
 import com.example.backend.repository.DiscountRepository;
+import com.example.backend.repository.MetaRepository;
 import com.example.backend.repository.SignUpRepository;
 import com.example.backend.service.CouponService;
 import com.example.backend.service.DiscountService;
@@ -64,12 +64,13 @@ public class AdminController {
     private final DiscountService discountService;
     private final CouponTaskExecutorService couponTaskExecutorService;
     private final ProductServiceImpl productService;
+    private final MetaRepository metaRepository;
 
     public AdminController(final ImageService imageService, final PlannerService PlannerService, 
     final SignUpRepository signUpRepository, final CategoryRepository categoryRepository, 
     final LogoService logoService, final CouponService couponService, 
     final CouponTaskExecutorService couponTaskExecutorService, final DiscountService discountService,
-    DiscountRepository discountRepository) {
+    DiscountRepository discountRepository, MetaRepository metaRepository) {
         this.imageService = imageService;
         this.PlannerService = PlannerService;
         this.signUpRepository = signUpRepository;
@@ -80,6 +81,7 @@ public class AdminController {
         this.discountService = discountService;
         this.productService = new ProductServiceImpl(PlannerService, logoService);
         this.discountTaskExecutorService = new DiscountTaskExecutorService(discountRepository, discountService, this.productService);
+        this.metaRepository = metaRepository;
     }
 
     @GetMapping("admin/planners/all")
@@ -232,6 +234,12 @@ public class AdminController {
         final List<Image> i = plannerImagesLeft(dto.getId(), removed);
         p.setImages(i);
         p.setSku(dto.getSku());
+        p.setLastUpdated(String.valueOf(new Date().getTime()));
+        Set<Meta> metas = new HashSet<>();
+        for (Meta m : dto.getMetaTags()) {
+            metas.add(this.metaRepository.save(m));
+        }
+        p.setMeta(metas);
         return p;
     }
 
@@ -251,6 +259,12 @@ public class AdminController {
         final List<Image> i = logoImagesLeft(dto.getId(), removed);
         p.setImages(i);
         p.setSku(dto.getSku());
+        p.setLastUpdated(String.valueOf(new Date().getTime()));
+        Set<Meta> metas = new HashSet<>();
+        for (Meta m : dto.getMetaTags()) {
+            metas.add(this.metaRepository.save(m));
+        }
+        p.setMeta(metas);
         return p;
     }
 

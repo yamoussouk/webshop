@@ -51,6 +51,8 @@ public class LogoToLogoCommand implements Converter<Logo, LogoCommand> {
         LogoCommand.setImage(images);
         LogoCommand.setEnabled(Logo.getEnabled());
         LogoCommand.setSku(Logo.getSku());
+        LogoCommand.setLastUpdated(Logo.getLastUpdated());
+        LogoCommand.setMetaTags(Logo.getMeta());
         return LogoCommand;
     }
 }

@@ -38,6 +38,16 @@ public class Product {
     private int enabled;
     private String type;
     private String sku;
+    private String lastUpdated;
+    
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "product_meta",
+            joinColumns = @JoinColumn(
+                    name = "product_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(
+                    name = "meta_id", referencedColumnName = "id"))
+    private Set<Meta> meta = new HashSet<>();
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
@@ -174,5 +184,21 @@ public class Product {
 
     public void setDiscount(double discount) {
         this.discount = discount;
+    }
+
+    public void setLastUpdated(String time) {
+        this.lastUpdated = time;
+    }
+
+    public void setMeta(Set<Meta> metaTags) {
+        this.meta = metaTags;
+    }
+
+    public String getLastUpdated() {
+        return this.lastUpdated;
+    }
+
+    public Set<Meta> getMeta() {
+        return this.meta;
     }
 }

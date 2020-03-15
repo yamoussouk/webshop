@@ -15,7 +15,7 @@
                   <div class="col-md-2">
                     <div class="row">
                       <div class="col-md-6">
-                        <img :src="'/uploaded/' + product.id + '/' + product.image[0].imageUrl" alt="product-image" class="product-thumbnail">
+                        <img v-if="product.image.length > 0" :src="'/uploaded/' + product.id + '/' + product.image[0].imageUrl" alt="product-image" class="product-thumbnail">
                       </div>
                       <div class="col-md-6 price">
                         <p>{{ product.price }}</p>

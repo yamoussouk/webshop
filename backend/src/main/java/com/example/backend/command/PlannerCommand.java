@@ -1,7 +1,7 @@
 package com.example.backend.command;
 
 import com.example.backend.model.Category;
-import com.example.backend.command.ImageCommand;
+import com.example.backend.model.Meta;
 
 import java.util.Set;
 import java.util.List;
@@ -24,6 +24,8 @@ public class PlannerCommand {
     private double vat;
     private double discount;
     private String sku;
+    private String lastUpdated;
+    private Set<Meta> metaTags;
 
     public int getQuantity() {
         return quantity;
@@ -153,6 +155,22 @@ public class PlannerCommand {
 
     public void setSku(String sku) {
         this.sku = sku;
+    }
+
+    public String getLastUpdated() {
+        return this.lastUpdated;
+    }
+
+    public void setLastUpdated(String time) {
+        this.lastUpdated = time;
+    }
+
+    public Set<Meta> getMetaTags() {
+        return this.metaTags;
+    }
+
+    public void setMetaTags(Set<Meta> meta) {
+        this.metaTags = meta;
     }
 }
 
